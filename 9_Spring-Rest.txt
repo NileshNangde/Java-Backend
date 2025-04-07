@@ -1,0 +1,490 @@
+
+
+ **Spring Rest**   Insted of sharing the code to other company we share the data in the form of xml or  JSON
+ ----------------
+
+ 1) What is RestFul Services   (REST - REpresentational STateFull)
+                               (REST API - Representational State Transfer Application programming Interface)
+    ++++++++++++++++++++++++
+    -> RestFull Service is one distributed technology to develop the distributed application 
+    -> Distributed application means then appliation with interoperability 
+    -> Interoperable : means any operating system can understand any programming language 
+    -> Intereoperability means platform indendent and language independent
+    -> Like one application can communicate with another application
+    -> for ex java application can communicate with python application
+    -> And mainly we develop this distributed application for B 2 B communication
+    -> B 2 B communication is to reuse the business services of another application into our application
+
+ 2) what is the architecture of REST and how the communication happent between Consumer and Provider
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> REST Architecture is the combination of Provider and Consumer
+   -> Provider / Resource - Provider means Resource application
+                            or we can also say that The application which is giving services to other applications is called as Provider application.
+   -> Consumer / Client   - Consumer means Client application
+                            or we can also say that The application which is accessing services from other applications is called as Consumer application.
+   ->How communication will happen between Provider & Consumer ?
+     -----------------------------------------------------------
+	-> HTTP protocol will act as mediator between Consumer and Provider
+	-> Consumer and Provider will exchange data in the form of XML / JSON
+	   Note: XML and JSON are intereoperable.
+
+ 3) What are the different Java based Distributed Technologies available in market to develop the Distributed application
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	1) CORBA ( Common Object Request Broker Architecture)
+	2) RMI   ( Remote Method Invocation)
+	3) EJB   ( Enterprise Java Beans )
+	4) SOAP Webservices
+	5) RESTFul Services (Trending)
+   -> Which technology your compnay used to develop distributed application 
+	  ----------------------------------------------------------------------
+	  -> We are using RestFull services in our company to develop the distributed application
+
+  4) What is mean by WebServices and what are the different ways to develop WebServices
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> WebService is one mechanism to link two application (provider - Consumer) together with the help of Http protocols
+    -> WebServices is platform independent , Architecture indepedent and language indepedent
+    -> Webservice says Consumer service is any where , Provider service is any where I can link them
+    -> Exchanging data in WebServices is in the format of either XML or JSON format 
+    -> SOAP WebServices and REST WebServices are the types of WebServices
+
+  5) What is difference between SOAP WebServices and REST WebServices
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Now a days JSON format data to exchange on internet is popular day by day because it is easy to understand ,read , and to implement 
+    -> REST Webservices support JSON format data to exchange the data all over the internet
+    -> SOAP is only Support XML format data to exchange the data 
+
+  6) Tell me something about API like
+    +++++++++++++++++++++++++++++++++ 
+     Like What is mean by API ,  What is the main purpose of API , What are the types of API , What are the common protocols of API
+     What are the main components of API 
+    --------------------------------------
+    -> API means Application programming interface 
+    -> TO communicate software applications with each others we use the API
+    -> The Main purpose of API is to integrate two different application/api  and inter communication can be possible to share 
+       data and functionality between them
+    -> Data is share by using Http protocols
+    -> API Request -> EndPoints , methods(get , post , put) , parameters , Request header , Request body
+    -> API Response -> Status code , Response Header , Response Body 
+    -> REST Api is one of the api protocal I am using in my company to develop the application
+    
+  7) What is mean by HTTP Protocol or Http  ex: http://nileshnangde
+    ++++++++++++++++++++++++++++++++++++++
+    -> HTTP means Hyper Text Transfer Protocol
+    -> It act as mediator between Client and Server
+    -> Communication between client computers and web servers is done by sending HTTP Requests and receiving HTTP Responses
+    -> The main components of Http protocols are
+		1) Http Request
+		2) Http Response
+		3) HTTP Methods
+		4) HTTP Status Codes
+    -> Note : But remainber HTTP is stateless protocol (can't remember previous requests) (every request is the fresh request)
+
+  8) Explain what are the different Http methods 
+    ++++++++++++++++++++++++++++++++++++++++++++
+    ->  Every REST API method should be mapped to HTTP Method.( provider and consumer)
+		GET --> To get resource/data from server
+		POST --> To insert/create record at server
+		PUT --> To update data at server
+		DELETE --> To delete data at server
+
+  9) What Are HTTP Status Codes? Explain =>  total 60 status codes are there
+      +++++++++++++++++++++++++++++++++++
+      -> Every REST API method should be mapped to HTTP Method if that method is provider or consumer
+      -> Http methods are mainly 4 they are get,post ,put and delete
+      -> When client send the request to server then along with the data server is also send the status code 
+      -> There are 5 main types of status codes 
+      -> Status code which are start form 100 to 199 they are related to Information(Information provide sucessfully)
+                                          200 to 299 - related to Success (OK) ( get successfully response from server to client)
+                                          300 to 399 - Redirection  (we send request to one server and that server send your request to another server)
+                                          400 - 499  - Client Error
+                                          500 - 599  - Server Error
+      	Status Codes frequently used
+      	----------------------------
+        ->  200   OK                    [your request is process successfully]
+        ->  201   Created               [ for post request we use , reuest process and created]
+        ->  204   No Content            [request is processed but server nothing to return]
+        ->  400   Bad Request           [incorrect information you are sending]
+        ->  404   Not found             [URL is incorrect ]
+        ->  405   Method not allowed    [request method is bind to get but you are sending post request]
+        ->  406   Not Acceptable        [server providing json but you are accepting xml]
+        ->  415   Unsupport Media Type  [ what ever the content we are sending that is not supported by server]
+        ->  500   Internal Server Error  
+        note: this all status code send by server to client
+        ---------------------------------------------------
+
+   10) Explain Http Request and Http Response
+    +++++++++++++++++++++++++++++++++++++++++
+     Http Request
+     ------------
+		-> HTTP request contains below parts
+		1) Request Line (Request Type + URL)  GET + www.ashokit.in/courses/101 
+		                                      request type is GET , POST , PUT ,DELETE
+		2) Request Header (metadata)     Content-Type= JSON means I am sending JSON data through request Body
+		                                 Context-Type= XML 
+		                                 This type of information is we add in Request Header
+		3) Request Body (Payload)     if business data is secure then request data is send through request body
+		                               or Heavy data send to server then send through Request Body 
+	 HTTP Response
+	 -------------
+		-> HTTP response contains below parts
+		1) Response Line (Status Code + Status Msg)
+		2) Response Header (metadata)    : metadata represent which format data is comming / how much data is comming
+		3) Response Body (Payload)   note : Payload represent business data
+		   response body represent payload
+
+  11) Explain JSON format data in REST Services and its APIs 
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      -> JSON stands for  Java Script Object Notation
+      -> And this is one type of data in the form of key-value format
+      -> JSON is universal format of data to exchange data over internet
+      -> As part of REST API development, we need to convert Java Obj data to JSON format and JSON data to Java Object
+      -> Java don't directly support to convert java object to json and vice versa.
+      -> For that we have third party apis like Jackson api and Gson api to work with JSON data in Java applications
+      -> Here important note is while developing Rest API we Dont use Jackson or GSON api , Dispatcher servlet internally take care to convert 
+         json to java object  or vice versa  by using Jackson and GSON api , we just need to add the dipendency
+      ->  {
+              "id" : 101,
+              "name" : "Ashok",
+               "address" : {
+                           "city" : "Hyd",
+                           "state" : "TG"
+                            }
+            }
+   
+
+  12) Explain XML format data in REST Services and its APIs
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> XML stands for Extensible Markup Language
+     -> This XML format data is intereoperable data means this data can understand by all over the intenet
+     -> This XML format represent data in the form of element format <id>101</id>
+     -> Every element is combination of start tag and end tag
+      JAX-B  ( Java Architecture For XML Binding)
+      -----
+     -> JAX-B api is used by java to convert java object into XML format or vice versa
+     -> Note: Upto JDK 1.8v, JAX-B is part of JDK itself. But from Java 1.9 version it is not part of JDK
+     -> If we want to work with JAX-B api from java 1.9v then we have to add dependency in pom.xml file
+     -> In JAX-B Marshalling and Un-Marshalling is there to convert java object to xml or vice versa
+     -> Marshelling: Converting java obj to xml 
+     -> Un-Marshalling : Converting xml to java obj
+     -> Note: To perform marshalling or Un-marshalling we need to create Binding class first.
+     -> and that class annotate with @XmlRootElement annotation 
+
+  13) Explain the working of Jackson api
+     ++++++++++++++++++++++++++++++++++++++
+     -> In Jackson api there is one predefine class called ObjectMapper class which have methods to convert java to json and vice versa
+     -> writeValue() method is used to convert java to json
+     -> readValue() method is used to convert json to java
+     -> ex : ObjectMapper mapper = new ObjectMapper();
+             Customer c = mapper.readValue(f, Customer.class);
+
+  14) Explain working of Gson api
+     +++++++++++++++++++++++++++++
+     -> In Gson api Gson class is there having methods to convert java to json and vice versa
+     -> In this api we have predefined class i.e 'Gson'
+     -> Gson gson = new Gson ( );
+     -> gson.toJson(file, obj); // convert java obj to json
+     -> gson.fromJson(file, Type); // convert json to java obj
+
+  15) Explain how to develop the Provider and Consumer development
+     +++++++++++++++++++++++++++++++++++++++++++++++++
+     -> The app which is providing services to other apps is called as Provider
+     -> Provider is also called as REST API.
+     -> Here in Provider the REST controller class is declare with @RestController annotation
+     -> Write the Required methods and map them to URL + HTTP protocol methods
+     -> Note  : If we dont write custom status code then Dispatcher servlet by default send blindly status code
+     -> We use ResponseEntity  as a method return type: to send custom status code 
+     -> Note: Generally for Get success request code = 200  (success)
+                           Post success request code = 201 (created)
+                            HttpStatus.OK  = 200
+                            HttpStatus.CREATED =201
+
+  16) What are the annotations we use to develop the REST api 
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     @RestController : When we declare the class as @RestController which indicates that class is controller class 
+                       Which means this class handles request and response from the client 
+                       This annotation indicates automatic Serilization : means automatically handles the conversion of response objects 
+                       into the desired format (e.g., JSON, XML) based on the client's request headers.
+                       @RestController = @Controller + @ResponseBody
+     @Controller     : Same as @RestCOntroller : but use for B2C communication : or html page
+     @GetMapping : Map the method to HTTP GET Request
+     @PostMapping : Map the method to HTTP POST Request
+     @ResponseBody:  send data through body
+     @RequestBody : To read payload from HTTP Request Body (To take all values)  send data through body
+     @RequestParam : to take input as Query Parameter
+     @PathVariable : to take input as Path Parameter
+     ResponseEntity : It is used to send the custom http response and status code to the client
+                      ResponseEntity<LibraryApiResponse<BookDto>> addBook()  -> method return type with and as param
+                      return new ResponseEntity<>(response , HttpStatus())
+                      or
+                      return ResponseEntity.status(HttpStatus.OK).body(response);
+  
+  17) How to declare Global Constant in spring boot app
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Constants are define with the help of private   static final 
+ 
+
+  17) How Provider and Consumer communicate with each other
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> There are two ways for external service communication
+     -> WebClient and RestTemplate
+     -> Note : RestTemplate --> Class    ---> Sync 
+               WebClient    --> Interface --> Sync & Async
+
+     -> WebClient
+       -----------
+     -> WebClient is a predefined interface introduced in Spring 5.x version
+     -> Using WebClient we can send HTTP Requests (GET, POST, PUT, DELETE)
+     -> WebClient supports both Synchronus & Asynchronus communications
+     -> To use WebClient, we need to add "web-flux-starter" in pom.xml file
+     -> // get the instance of webclient (impl class)
+        WebClient webClient = WebClient.create();
+     -> Ticket ticket = webClient.post()
+                 .uri(BOOK_TICKET_URL)
+                 .bodyValue(passenger)
+                 .retrieve()
+                 .bodyToMono(Ticket.class)
+                 .block();
+
+
+  18) What is mean by Sync & Async Communication
+    +++++++++++++++++++++++++++++++++++++++++++++
+     -> Sync Communication : After sending the request thread will wait for Response
+     -> ASync Communication : After sending the request thread will not wait for response
+
+  19) can we send data throuh GET request , How - thorough GET request , QUery and Path parameter
+      ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  20) Explain what is Query parameter
+     +++++++++++++++++++++++++++++++++
+     -> Query param we use to send the data through GET request to the server 
+     -> Here Request body is not in use to send data to server
+     -> Ex : https://www.youtube.com/watch?v=8eVaci9WvP8
+     -> Ex:  ticket-number, emp-id, book-id, customer-id etc..
+     -> Note: GET request will not contain Request Body so we have to use either Query Param or Path Param to send data to server.
+     Technical Points about Query Param
+     ----------------------------------
+     -> Query Params will represent data in key - value format
+     -> Query Params will start with '?' symbol
+     -> Query Params will be seperated using '&'(Ampersand) symbol
+     -> Query Params should present only at end of the URL  : IMP
+     -> To read Query Params from URL we will use @RequestParam annotation
+     -> @GetMapping("/user")
+        public User getUser(@RequestParam("userid") Integer userId) {
+        User user = dataMap.get(userId);
+        return user;
+        }
+     -> Ex : URL : http://localhost:8080/user?userid=202
+
+
+  22) Explain what is Path parameter
+     ++++++++++++++++++++++++++++++++
+     -> Path param we use to send the data through GET request to the server 
+     -> Here Request body is not in use to send data to server
+     -> Path Param will represent data directley
+     -> Path Params can present anywhere in the URL
+     -> Path Param will start with '/' and will be seperated by '/'
+     -> We need to represent Path Parameters position in the URL pattern like below
+        Ex:  @GetMapping("/user/{id}/data")
+     -> To read Path Parameters we will use @PathVariable annotation
+     ->  @GetMapping("/user/{id}/data")
+         public User getUser(@PathVariable("id") Integer userId) {
+         User user = dataMap.get(userId);
+         return user;
+         }
+     -> URL : URL : http://localhost:8080/user/202/data
+
+  23) When to use QUery parameter and when to use Path Parameter
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      -> Query Parameter => If you want to send multible values at one time
+        ----------------
+      -> Path Parameter => If you want to send on value at one time
+        ----------------
+
+  24) Explain what is Comsumes and What is Produces
+     ++++++++++++++++++++++++++++++++++++++++++++++++
+     -> Consumes
+        --------
+        -> Consume represents in which format the REST API method can accept input data from client
+        -> Ex : In GetMapping( value="/book" , consumes = {"application/json"})
+                this line tells the method consumes only json data
+     -> Produces
+       ---------
+        -> Produce represents in which format REST API method can provide response to clients
+     -> Note : If we dont specify consumes and produces then application by default takes json as consumes and produces 
+     -> through postman in headers we need to specify  Accept  =  application/json
+     -> Note : we dont ask client to send data in any specific format
+        so we always write API method like this @PostMapping(value="/book"  ,  consumes = {"application/xml", "application/json"}
+
+  25) Explain the difference between application.properties file Vs application.yml file
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> In Spring Boot we will use .properties or .yml file to configure application properties
+      Ex: DataSource, SMTP, PORT, Kafka, Redis etc...
+    -> Properties file will represent data in key value format
+    -> YML file will represent data in hierarchical format
+    -> .properties will be used only in java applications
+    -> YML is universal format (java, .Net, Python, ansible, k8s)
+       Note: YML stands for YET ANOTHER MARKUP Language
+    -> Indent spacing is very important in yml file
+    => Approach to develop Spring Based Applications with less configurations.
+    1) POM starters
+    2) Dependency Version management
+    3) Auto Configuration
+    4) Embedded Server
+    5) Actuators
+
+  26) Exaplin what is Actuators and its use
+      +++++++++++++++++++++++++++++++++++++++
+      -> Actuator is one of the powerfull feature of spring boot framework
+      -> Actuators are used to provide production-ready features for our application
+      -> By using Actuator we can Monitor and manage our application 24*7
+      -> Monitor of application means 
+          - What is the health of our application ( health is up or down )
+          - How many classes(beans) loaded by our application
+          - What configuration properties loaded by our application
+          - What is Heap info of our app
+          - How many threads running in our application
+          - How many url mapping available in our application
+          - What is log status of my application
+      -> If we add Actuators in our application then we will get all above details of our application
+      -> To work with Actuators spring boot provided below starter
+           <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+          </dependency>
+      -> We can write below configuration in application.yml file to expose actuator endpoints
+      -------------------------------application.yml----------------------
+       management:
+        endpoints:
+          web:
+            exposure:
+              include: '*'
+           exclude: 'beans'
+
+        endpoint:
+          shutdown:
+            enabled: true
+      ---------------------------------------------------------------------
+        ############  URL : http://localhost:8080/actuator/  ############
+
+        1) health : http://localhost:8080/actuator/health
+          => It will give health status of our application
+             status : UP/DOWN
+             Note: To get all Points then addp property in properties
+          => management.endpoints.web.exposure.include:'*' 
+        2) mappings : http://localhost:8080/actuator/mappings
+         => it will gives all the url-mapping available in our application
+
+        3) beans : http://localhost:8080/actuator/beans
+         => It will give all beans which are loaded by our application
+
+        4) heapdump : http://localhost:8080/actuator/heapdump
+         =>  it will download heap information in one file
+
+        5) threaddump : http://localhost:8080/actuator/threaddump
+         => it will give all thred information 
+
+        6) Shutdown : http://localhost:8080/actuator/shutdown
+         => 
+        7) configProps :http://localhost:8080/actuator/configProps
+         => It will give config properties loaded by our application
+
+        8) metrics  : http://localhost:8080/actuator/metrics
+         => It will gives metrics of our application
+
+        9) loggers : http://localhost:8080/actuator/loggers
+        Note: Total 13 end points are available like this
+
+   27) If I want to get my application details like application is running properly or not how to get
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       -> If any monitoring information details if we want to get of our application the we need to add the Actuator in our application
+       ->
+         management.endpoints.web.exposure.include:'*'      => all endpoints are exclude 
+         management.endpoints.web.exposure.exclude:'beans'   => beans not include 
+
+         Note : All Actuators endpoints are predefine and they are binded to HTTP GET Request 
+         => In Actuator we have special endpoint called /shutdown
+         => This /shutdowm endpoint is binded to HTTP POST request
+         => Using this endpoint we can stop our application
+         => We have to enable this shutdown first 
+            management.endpoint.shutdown.enable=true
+
+   28) Explain what is Postman and What is postman collection
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        -> Postman is an application which is used to test the REST api's 
+        -> What ever the application  REST api's we are tested we can save them into one collection for future testing , 
+           or to share for another testing inthe form of Postman Collection
+        -> If I change my laptop , then I need to create test and create the data again , to avoid that problem we used collection
+        -> How to create the postman collection
+           - New -> Collection -> 3 dots -> rename collection name
+           - 3 dots -> new Request -> 3 dots -> rename the request name
+        -> How to share postman collection
+           - right click on postman collection
+           - share  -> with people | via run in postman | via API
+           - or we can direct download postman collection
+        -> If somebody gives you postman collection 
+           - then import -> Drop file | or url
+       
+    29) What is Swagger 
+       ++++++++++++++++++++
+       -> Swagger is a third party Library (we need to add in our app)
+       -> Swagger UI is used to test REST API with user interface
+       -> Swagger is used to create documentation of our Rest API  so we can provide that documentation to the consumer
+       -> How many consumber use our API , then we need to tell all API information to them 
+          this is our time waste process , so insted we provide SWagger APi to them
+      -> How many url's , what operation , What methods available , what input to provide ,
+         what out to get , what content type to provide every thing in our application we no need to tell directly to consumer
+
+   30) Expalin Exception Handling in REST API
+     +++++++++++++++++++++++++++++++++++++++++
+    -> Exception is an unexpected and unwanted situation occuring in the application 
+    -> When exception occured our program will terminate abnormally 
+    -> To achieve graceful termination of the program we need to handle the 
+    exception 
+    -> In Java we have below keywords to handle the exceptions 
+    1) try : It is used to keep risky code 
+    2) catch : Catch block is used to handle the exception 
+    3) throw : It is used to re-throw the exception 
+    4) throws : It is used to ignore the exception 
+    5) finally : It is used to execute clean up logic (closing files, closing connection, release resources....) 
+    Note: When we get exception in REST API we should convey that exception information to client / client application in json format 
+        Ex:
+        { 
+        msg : "Exception Reason" 
+        code : "SBI0004" 
+        } 
+    Note: In project, for every exception we will use one CODE i.e exception code 
+    -> In Spring web mvc we can handle exceptions in 2 ways 
+    1) Controller Based Exception Handling 
+    - Exception Handlers applicable for only particular controller 
+    2) Global Exception Handling 
+    - Exception Handlers applicable for all the classes in the project 
+    -------------------------------- 
+    @Data 
+    public class ExceptionInfo { 
+    private String msg; 
+    private String code; 
+    } 
+    ------------------------------------------ 
+    @RestController 
+    public class DemoRestController { 
+    private Logger logger = 
+    LoggerFactory.getLogger(DemoRestController.class); 
+    @GetMapping("/") 
+    public String doAction() { 
+    String msg = "Action in progress"; 
+    try { 
+    int i = 10 / 0; 
+    } catch (Exception e) { 
+    logger.error("Exception Occured ::" + e, e); 
+    throw new ArithmeticException(e.getMessage()); 
+    } 
+    return msg; 
+    } 
+    @ExceptionHandler(value=ArithmeticException.class) 
+    public ResponseEntity<ExceptionInfo> handleAE(ArithmeticException ae) { 
+    ExceptionInfo exception = new ExceptionInfo(); 
+    exception.setMsg(ae.getMessage()); 
+    exception.setCode("AIT0004"); 
+    return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR); 
+    } 
+    }

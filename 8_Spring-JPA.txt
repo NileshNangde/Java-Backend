@@ -1,0 +1,677 @@
+=================
+Spring Data JPA
+=================
+ 
+ What is difference between Eager loading and Leazy loading
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Eager loading means static  - memory create at the compile time , and either we use or not to use memory is create 
+   Leazy Loading means runtime memory create , meroy create when required  , so less memory usage
+
+
+  
+  1) What is Data JPA
+   ++++++++++++++++++
+    -> JPA means Java Persistence API
+	-> Spring Data JPA is one module in spring framework
+	-> It is used to develop Persistence Layer (DB Logic)
+	-> Hibernate is default framework of JPA
+	-> To avoid boiler plate code in DAO classes we can use Spring Data JPA.
+
+  2) What is ORM
+    +++++++++++++
+   -> Object Relational Mapping 
+   -> ORM is a one tool/technique to Map Java class properties(java class object) with data base coloums(must be relational databases)
+   -> here java class and database tables are snychronize with each other means any modufucation is 
+      done in java class directly reflect with database tables or vice vera
+   -> Hibernate is one ORM based framework
+
+  3) What is Hibernate 
+    ++++++++++++++++++
+   -> A Hibernate is a Java framework which uses ORM tool to save the Java objects into the relational database system.
+
+  4) What are the advantages of ORM 
+     ++++++++++++++++++++++++++++++
+   -> No need to write SQL queries
+   -> Database can easily change
+   -> Provide multiple Generator to generate value for ID dynamically
+   -> Generate Dynamic tables in database
+
+  5) What are the limitations of ORM
+    ++++++++++++++++++++++++++++++++
+   -> Cannot select huge records at one time because for one entity class one object is create 
+   -> This cause memeory issue and application crash
+   -> solution is JDBC because JDBC create single REsultSet object so huge record can access
+
+  6) What is Differernce between Spring JDBC and Spring data JDBC
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> Spring JDBC uses plane JDBC to develop persistence api	
+   -> Spring Data JDBC uses ORM to develop persistance api
+
+  7) Difference between JPA and Hibernate
+   +++++++++++++++++++++++++++++++++++++++++
+                       JPA                                                                          Hibernate
+                       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+          1) JPA is just a specification.                                 1) Hibernate is an (ORM) tool which is 
+             uses Various ORM tools to implementpersistence logic            used to save the state of Java object into the database
+
+          2) JPA uses HIbernate as default vendor 
+
+          3) It uses Java Persistence Query Language (JPQL) as           2) It uses Hibernate Query Language (HQL) as an object-oriented
+             an object-oriented query language to perform                   query language to perform database operations.  
+             database operations.
+
+   8) Tell me something about OOQL
+     +++++++++++++++++++++++++++++++
+
+   8)Different JDBC Modeule in Spring
+    ++++++++++++++++++++++++++++++++++
+		1) Java JDBC
+		2) Spring JDBC
+		3) Hibernate Framework
+		4) Spring ORM
+		5) Spring Data JPA
+
+   9) what is name for the   Dependency of JPA
+      +++++++++++++++++++++++++++++++++++++++++
+    -> data-jpa-starter
+    
+   10) What are the annotations we use in Entity class
+      ++++++++++++++++++++++++++++++++++++++++++++++++++
+		1) @Entity
+		+++++++++++
+		-> To map java class as entity class 
+		2) @Id
+		+++++++++++
+		-> Identity Property
+		-> use To create Primary key in data base table
+		3) @Table
+		+++++++++++
+		-> To give custom table name
+		4) @Column
+		+++++++++++
+		-> To give custom Coloumn name
+		5) @Query
+		+++++++++
+		-> to create our custom query
+		6) @GeneratedValue
+		+++++++++++++++++++
+		-> Used to generate the value for Primary key Columns
+        -> Primary Key is a constraint in database it is used to maintain unique data in column
+        -> @GeneratedValue(strategy= GenerationType.AUTO)      => it picks database atuomatically
+        -> @GeneratedValue(strategy= GenerationType.IDENTITY)  => supports for mysql (auto_increment)
+        -> @GeneratedValue(strategy= GenerationType.SEQUENCE)  => supports oracle (sequence in db)
+        -> @GeneratedValue(strategy= GenerationType.UUID)      => It supports alpha numeric values for primary key
+        -> @GeneratedValue(strategy= GenerationType.table)     => will maintain seperate table for primary key
+      7) @CreationTimeStamp : To populate record created date
+      8) @UpdateTimeStamp : To populate record updated date
+
+		-> Primary Key constraint is combination of below 2 constraints
+
+					1) UNIQUE
+					2) NOT NULL
+
+    11) What are the Database Configuration Properties in jpa
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         spring.datasource.username=root
+			spring.datasource.password=root
+			spring.datasource.url=jdbc:mysql://localhost:3306/sbms
+			spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+			spring.jpa.hibernate.ddl-auto=update
+			spring.jpa.show-sql=true
+    
+    12) Which jpa propetry we use to show the sql query on log message while execute the application
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-spring.jpa.show-sql=true
+		
+    13) What is the use of this property  spring.jpa.hibernate.ddl-auto=update
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-> update       => update database table if available (best to use)
+		-> create       => always create new database by droping existed table if available
+		-> create-drop  => useful for Test and UAT enviorment teams
+		-> validate     => DB tables must be created by DB team mannualy (in real time we use thiss)
+		-> none        => means DB tables creates mannualy
+
+	14)What is JPA Repository and What are the different types of JPA Repositories 
+	   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-> To simplify Persistence Layer Development Data JPA provided Repository interfaces
+		1) CrudRepository (CRUD Ops methods)
+		2) JpaRepository (CRUD Ops methods + sorting + pagination + QBE )
+		Note: To perform DB operations we need to create an interface by extending properties from JPA repository interface.
+
+	15) What are the different CrudRepository Methods     12 methds - 5 delete, 2 save ,3 find , methods 
+		++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+
+		1) save(E) : To insert & Update ( Insert + Update = Upsert )
+		2) saveAll(Iterable) : To insert & update collection of records
+		3) boolean existsById(ID) : To check presense of record (true/false)
+		4) count ( ) : To get records count in table
+		5) findById(ID) : To retrieve record based on given PK	
+		6) findAllById(Iterable ids): Retrieve records based on given PKs
+		7) findAll () : To retrieve all records from table
+		8) deleteById(ID) : Delete record based on given PK
+		9) deleteAllById (Iterable ids): Delete records based on given PKs
+		10) delete(E) : Delete record based on given Entity obj
+		11) deleteAll(Iterable entities): Delete records based on given Entity objs	
+		12) deleteAll ( ) : Delete all records from table (truncate)
+			
+    16) Expalin findBy Methods and Custon Queries in CRUD repositiory
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		FindBy Methods
+		###############
+		-> findBy Methods are used to perform only select operations
+		-> Using Non Primary Key columns also we can select records
+		-> In findBy Methods method name is very important because based on method name JPA will construct the query for execution.
+		-> Note: findBy methods should represent Entity class variables
+
+			public interface BookRepository extends CrudRepository<Book, Integer> {
+
+				// select * from book where book_price > : price
+				public List<Book> findByBookPriceGreaterThan(Double price);
+				
+				// select * from book where book_price < : price
+				public List<Book> findByBookPriceLessThan(Double price);
+				
+				// select * from book where book_name = : bookName
+				public List<Book> findByBookName(String bookName);
+			}
+
+		Custom Queries
+	    ###############
+		-> If we want to execute our query in JPA Repo then we can go for Custom Queries
+		-> Custom Queries we can write in 2 ways
+		1) HQL Queries
+		2) Native SQL queries
+		Note: To represent Custom Query we use @Query annotation.
+		----------------------------------------------------------------------------
+				public interface BookRepository extends CrudRepository<Book, Integer> {
+
+					@Query(value = "select * from book", nativeQuery = true)
+					public List<Book> getAllBooks();
+					
+					@Query("from Book")
+					public List<Book> getBooks();
+
+				}
+     
+    17) Expalin the difference between HQL and SQL Queries
+		++++++++++++++++++++++++++++++++++++++++++++++++++ 
+		                           HQL                                                             SQL => Native queries
+		#Point 1 :  -> HQL queries are DB independent queries                        -> SQL queries are DB dependent queries
+		#Point 2 :  -> IN HQL query, we will use entity class name & variable        -> IN SQL query, we will use table name & column names 
+		#Point 3 :  -> HQL query can't execute in DB directley (conversion required) -> SQL query can execute in DB directley
+		#Point 4 :  -> Performance wise SQL queries are better                       -> Maintanence wise HQL queries are better
+
+		-> Note: Every HQL query should be converted to SQL query before execution. That conversion will done by Dialect class.( oracle dialect , mysql dilect )
+		-> Every Database will have its own Dialect class.
+		-> Ex:
+		OracleDialect
+		MySqlDialect
+		DB2Dialect
+		PostgresDialect etc...
+
+		Note: Dialect class will be loaded along with DB driver class.
+
+		SQL : Select * from book;
+		HQL : from Book;( here Book is a entity class name)
+
+		SQL : select * from book where book_price=2000;
+		HQL : from Book where bookPrice = 2000;
+
+		SQL : select * from book where book_price >= 2000 and book_name='Spring'
+		HQL : From Book where bookPrice >= 200 and bookName = 'Spring'
+
+		SQL : select book_name from book;
+		HQL : select bookName from Book;
+
+    18) Explain what is JPA Repository and methods availble in JPA Repository
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-> It is a predefined interface available in data jpa
+		-> Using JpaRepository also we can perform CRUD Operations
+		-> We can perform Crud Ops + Sorting + Pagination + QBE
+    
+    19) Expalin what is Pagination in JPA Repository
+       +++++++++++++++++++++++++++++++++++++++++++
+		-> Dividing total records into multple pages is called as Pagination
+		
+	 20) Explain QBE (Query By Example) in JPA Repository
+	   ++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> It is used to prepare Dynamic Query based on data available in Entity class obj
+
+		@SpringBootApplication
+		public class Application {
+
+		public static void main(String[] args) {
+			ConfigurableApplicationContext context = 
+						SpringApplication.run(Application.class, args);
+
+			EmployeeRepository repository = context.getBean(EmployeeRepository.class);
+
+			Employee emp = new Employee();
+			
+			Example<Employee> exmp = Example.of(emp);
+			List<Employee> emps = repository.findAll(exmp);
+			
+			emps.forEach(System.out::println);
+		}
+		}
+
+    21) Explain what is TimeStamping in JPA
+       +++++++++++++++++++++++++++++++++++++
+       -> It is used to insert CREATED_DATE & UPDATED_DATE columns values for the record
+       -> @CreationTimeStamp : To populate record created date
+       -> @UpdateTimeStamp : To populate record updated date
+    
+    22) What is Generators in JPA
+       ++++++++++++++++++++++++++
+	   -> Generators are used to generate the sequential value for the Primary key Columns 
+	   -> Generator are two types 1) sequential 2) custom generator 
+
+	 23) Working with Sequential generator 
+	    +++++++++++++++++++++++++++++++++++++++++
+	   -> In Sequential generator we declare with PK 
+	      @Id
+		   @GeneratedValue(strategy = GenerationType.SEQUENCE ,  generator = "custom_seq")  note : custom_seq param we use to link SequenceGenerator
+	      @SequenceGenerator(name = "custom_seq", //sequenceName = "id"//, initialValue = 1234566789, allocationSize = 1)
+		   private Long empId; 
+	      ->initialValue = is int type
+	   -> here we can declare to generated value from which number and increment by which number by using @SequeceGenerator annotation
+
+		-> For different database we can generate the sequential value for PK 
+		-> @GenreatedValue annotation these are two annotations are used for Generator
+		->Ex:
+		   @Id
+		   @GeneratedValue(strategy = GenerationType.IDENTITY) 
+		   private Long empId; 
+        -> We can specify below strategies for Generator
+			1) table   ===> will maintain seperate table for primary keys
+			2) identity ===> supports mysql (auto_increment)
+			3) sequence	===> supports oracle (sequence in db)
+			4) UUID  => It supports alpha numeric values for primary key
+			5) Auto => It picks generator based on underlying database
+        -> Note: Primary Key constraint is combination of below 2 constraints
+			1) UNIQUE
+			2) NOT NULL
+
+    23) What is Custom Generator in JPA 
+        +++++++++++++++++++++++++++++++
+        -> TO imlement Custom Generator we create one seperate class which implement IdentifierGenerator interface
+        -> In this class we Override => public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {}
+        -> generate() method retrun type is Serializable and 2 parameter session and object
+        -> and throws Hibernate Exception 
+        -> Here Custom generator value is divided into two parts i.e preffix and suffix
+        -> preffix is fixed where as suffix is genreated in sequential order( get from DB) 
+        -> ORDER_DTLS table
+			-----------------
+				OD_1  here OD_ is prefix and suffix is generated sequence
+				OD_2
+				OD_3
+			...
+			OD_100
+		-> public class OrderIdGenerator implements IdentifierGenerator {
+                  @Overide
+						public Serializable generate(){
+							String prefix = "OD_"
+							String suffix = get from db; [1,2,3...]
+
+                  return prefix+suffix;
+						}
+			           }
+
+         Custom Generator : https://youtu.be/IijGVtT9ZPk
+  
+    24) What if we have two primary keys in one table and we how to use Generator
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        -> If there are more than two primary keys in same DB table then this condition is called as Composite primary key
+        -> To work with Composite primary key Genrator will not support , so for that JPA provide seperate annotaion called
+        -> @Embeddable and @EmbeddedId
+        -> @Embeddable  : Class level annotation to represent primary key columns
+        -> @EmbeddedId : Variable level annotation to present Embdedable class
+        -> Real time ex: adhar card no and mobile number through both number customer data to access
+        -> Note: The class which is representing Composite Keys should implement Serializable interface.
+
+			@Data
+			@Embeddable
+			public class AccountPK implements Serializable{
+
+				private Long accNum;
+				private String accType;
+			    }
+           -------------------------------------------------------------------------
+			@Data
+			@Entity
+			@Table(name="account_tbl")
+			public class Account {
+
+				private String holderName;
+
+				private String branch;
+				
+				@EmbeddedId
+				private AccountPK accountPk;
+
+			}
+
+    25) What is Assotiations Mapping and what are the different types of Asstiations Mapping in JPA     
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> Assotiations means relationship between two database tables
+     -> Assotiations mappings are two types 
+        1) Unidirectional Associations
+        2) Bidirectional Associations
+         
+    26) Explain what is Unidirectional Association Mapping
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+     -> Unidirectonal assocation mapping means One table primary key act as foreign key for the another table to make the relationship between two tables.
+     -> In this unidirectonal assocation mapping we can navigate through only in one direction – from the child table to the parent table.
+     -> Generally faster due to simpler table structure and fewer constraints.
+     -> Ensured by the foreign key constraint in the child table referencing the primary key in the parent table.
+     -> To define a unidirectional association in Java, we can use annotations such as 
+           1) @ManyToOne
+           2) @OneToMany,
+           3) @OneToOne 
+           4) @ManyToMany.
+     -> By using these annotations, we can create a clear and well-defined relationship
+        between two entities in our code.
+
+
+    27) Explain what is Bidirectional Associations mapping
+        +++++++++++++++++++++++++++++++++++++++++++++++++++
+        -> In BiDirectional Assocations both table primary key act as foreign key to each another table to make the relationship between two tables
+        -> Navigable in both directions – from either table to the other.
+        -> Generally slower due to additional constraints and table structure complexity.
+        -> In order to define bidirectional associations, we use the [ mappedBy attribute ] in the
+            @OneToMany and @ManyToMany annotations. 
+        -> However, it’s important to note that only relying on unidirectional associations may not be sufficient, 
+           as bidirectional associations provide additional benefits
+
+	28) Explain One-To-Many mapping in Unidirectional Assciations
+	    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	   -> In a one-to-many relationship, one parent entity class have one or many instances of another entity instances.
+	   -> A common example is the relationship between a Department and its Employees.
+	   -> Each Department has many Employees, but each Employee belongs to one Department only.
+	   -> To perform One-To-Many relation we use 2 annotation 1) @OneTOMany with @JoinColumn() and in this joincoloum annotation we create instance
+	      of the same entity class primary key
+		   Ex: 
+		         @Entity
+					public class Department {
+					 
+					    @Id
+					    private Long id;
+					 
+					    @OneToMany
+					    @JoinColumn(name = "department_id")
+					    private List<Employee> employees;
+					}
+
+					@Entity
+					public class Employee {
+					 
+					    @Id
+					    private Long id;
+					}
+	    -> Here, the Department entity has a reference to a list of Employee entities. 
+	    -> The @OneToMany annotation specifies that this is a one-to-many association. 
+	    -> The @JoinColumn annotation specifies the foreign key column in the Employee table referencing the Department table.
+
+	29) Explain Many-To-One relationship in Unidirectional Associatations
+	    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-> In a many-to-one relationship, many instances of an entity are associated with one instance of another entity.
+		-> For example, let’s consider Student and School. Each Student can be enrolled in one School only,
+		   but each School can have multiple Students.
+				-> Ex: 
+
+				@Entity
+				public class Student {
+
+				    @Id
+				    @GeneratedValue(strategy = GenerationType.IDENTITY)
+				    private Long id;
+
+				    private String name;
+
+				    @ManyToOne
+				    @JoinColumn(name = "school_id")
+				    private School school;
+				}
+
+				@Entity
+				public class School {
+
+				    @Id
+				    @GeneratedValue(strategy = GenerationType.IDENTITY)
+				    private Long id;
+
+				    private String name;
+				}
+		-> In this case, we have a many-to-one unidirectional association between Student and School entities. 
+		-> The @ManyToOne annotation specifies that each student can be enrolled in only one school, 
+		   and the @JoinColumn annotation specifies the foreign key column name to join the Student and School entities.
+
+	30) Expalin One-To-One relationship in Unidirectional Associations
+		+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++       
+      -> In a one-to-one relationship, an instance of an entity is associated with only one instance of another entity.
+      -> A common example is the relationship between an citizen and a Aadhar card. 
+      -> Each Citizen has a Adhar card, and each Aadhar card belongs to one Citizen.
+      -> Ex: 
+
+              @Entity
+				  public class Employee {
+				 
+				    @Id
+				    private Long id;
+				 
+				    @OneToOne
+				    @JoinColumn(name = "parking_spot_id")
+				    private ParkingSpot parkingSpot;
+				}
+
+				@Entity
+				public class ParkingSpot {
+				 
+				    @Id
+				    private Long id;
+				}
+	   -> Here, the Employee entity has a reference to the ParkingSpot entity. 
+	   -> The @OneToOne annotation specifies that this is a one-to-one association. 
+	   -> The @JoinColumn annotation specifies the foreign key column in the Employee table that references the ParkingSpot table
+
+
+
+	31) Explain Many-To-Many realtionship in Unidirectional associations
+	  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       -> In a many-to-many relationship, many instances of an entity are associated with many instances of another entity.
+       -> Suppose we have two entities – Book and Author. Each Book can have multiple Authors, and each Author can write multiple Books. 
+       -> In JPA, this relationship is represented using the @ManyToMany annotation.
+       -> Ex:
+               @Entity
+				   public class Book {
+
+				    @Id
+				    @GeneratedValue(strategy = GenerationType.IDENTITY)
+				    private Long id;
+s
+				    private String title;
+
+				    @ManyToMany
+				    @JoinTable(name = "book_author",
+				            joinColumns = @JoinColumn(name = "book_id"),
+				            inverseJoinColumns = @JoinColumn(name = "author_id"))
+				    private Set<Author> authors;
+
+				}
+
+				@Entity
+				public class Author {
+
+				    @Id
+				    @GeneratedValue(strategy = GenerationType.IDENTITY)
+				    private Long id;
+
+				    private String name;
+				}
+       -> Here, we can see a many-to-many unidirectional association between Book and Author entities.
+       -> The @ManyToMany annotation specifies that each Book can have multiple Authors, and each Author can write multiple Books.
+       -> The @JoinTable annotation specifies the name of the join table and the foreign key columns to join the Book and Author entities.
+
+    32) Expalin One-To-Many Bidirectional Association
+        +++++++++++++++++++++++++++++++++++++++++++++ 
+		-> In a one-to-many bidirectional association, an entity has a reference to another entity.
+		-> Additionally, the other entity has a collection of references to the first entity.
+		-> For instance, a Department entity has a collection of Employee entities. 
+		-> Meanwhile, an Employee entity has a reference to the Department entity it belongs.
+		-> Ex:
+
+				@Entity
+				public class Department {
+				 
+				    @OneToMany(mappedBy = "department")
+				    private List<Employee> employees;
+				}
+				 
+				@Entity
+				public class Employee {
+				 
+				    @ManyToOne
+				    @JoinColumn(name = "department_id")
+				    private Department department;
+				 
+				}
+
+		=> In the Department entity, we use the @OneToMany annotation to specify the relationship
+		   between the Department entity and the Employee entity. 
+		=> The mappedBy attribute specifies the name of the attribute in the Employee entity that owns the relationship.
+		=> In this case, the Department entity doesn’t own the relationship, so we specify mappedBy = “department”.
+		=> In the Employee entity, we use the @ManyToOne annotation to specify the relationship between 
+		   the Employee entity and the Department entity. 
+		=> The @JoinColumn annotation specifies the name of the foreign key column in the Employee table referencing the Department table
+
+	33) Explain Many-To-Many Bidirectional Association
+		+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		-> When dealing with a many-to-many bidirectional association, it’s important to understand 
+		   that each entity involved will have a collection of references to the other entity.
+		-> To illustrate this concept, let’s consider the example of a Student entity that has a collection 
+		   of Course entities and a Course entity that in turn has a collection of Student entities.
+		-> By establishing such a bidirectional association, we enable both entities to be aware of each other 
+		   and make it easier to navigate and manage their relationship.
+		-> Ex: 
+
+					@Entity
+					public class Student {
+					 
+					    @ManyToMany(mappedBy = "students")
+					    private List<Course> courses;
+					 
+					}
+					 
+					@Entity
+					public class Course {
+					 
+					    @ManyToMany
+					    @JoinTable(name = "course_student",
+					        joinColumns = @JoinColumn(name = "course_id"),
+					        inverseJoinColumns = @JoinColumn(name = "student_id"))
+					    private List<Student> students;
+					 
+					}
+					
+		=> In the Student entity, we use the @ManyToMany annotation to specify the relationship between the
+		   Student entity and the Course entity. 
+		=> The mappedBy attribute specifies the attribute’s name in the Course entity that owns the relationship. 
+		=> In this case, the Course entity owns the relationship, so we specify mappedBy = “students”.
+		=> In the Course entity, we use the @ManyToMany annotation to specify the relationship between the
+		   Course entity and the Student entity. 
+		=> The @JoinTable annotation specifies the name of the join table that stores the relationship.
+
+
+
+
+	34) Explain the difference between Unidirectional vs. Bidirectional Association
+		+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	35) Explain what is profiles in Spring Boot
+	   +++++++++++++++++++++++++++++++++++++++++
+		-> When we develop an application then that application we are going to test on multiple (VM) enviorment 
+		   before deploying to production (Production is only the Live enviorment)
+        -> Environment - machine  where we deploy and run our application (having -> Linux VM, DB Server, Log Server etc...)
+		->  schema are same and DB are different for each Enviorment
+        -> We have different Enviorment like Dev Env , SIT Env , UAT Env , PIOLT , PROD 
+        -> Every Environment will have its own Database and every database will have seperate configuration properties (uname, pwd and URL)
+        -> If we want to deploy our code into multiple envrionments then we have to change configuration properties 
+           in application.properties file for every deployment. (It is not recommended).
+        -> There are some several common properties like
+			1) DB Props
+			2) SMTP PRops
+			3) Kafka Props
+			4) Redis Props
+			5) REST API Endpoint URLs
+		-> If we dont use Profiles concept in spring boot then manually we have to do the changes  , then is to much time taken and problem facing challenge
+		-> To avoid this problem we will use Profiles in Spring Boot.
+		-> Profiles are used to configure Environment Specific properties to simplify enviorment specific configuration  
+		-> this responsiblity is developer
+		-> Ex:  
+			application.properties     -> this is base properties 
+			-----------------------
+			application-dev.properties
+			application-sit.properties or application-qi.properties
+			application-uat.properties
+			application-pilot.properties
+			application-prod.properties
+        -> In application.properties file we need to activate the  profile by using 
+			# Activating dev profile
+			----------------------------
+			spring.profiles.active=dev
+			----------------------------
+		-> Note : this only line to change 
+           Note: Above represents application should load properties from Dev properties file.
+
+			   2nd Approch with .YML file
+			   ++++++++++++++++++++++++++++
+
+			    spring:
+			      profiles:
+			        active:dev    // this load dev enviorment property
+
+			    ---    // this 3 hypen are the seperator for the profile
+			    spring:
+			      profile:dev
+			      datasource:
+			        username:IES_DEV
+			        password:IES_DEV
+			        url:jdbc:oracle:thin:@localhost:1521/XE
+			        driver-class-name: oracle.jdbc.driver.OracleDriver
+
+			    ---
+			    
+			    spring:
+			      profile:qa
+			      datasource:
+			        username:IES_DEV
+			        password:IES_DEV
+			        url:jdbc:oracle:thin:@localhost:1521/XE
+			        driver-class-name: oracle.jdbc.driver.OracleDriver
+
+			    ---
+
+			    spring:
+			      profile:sit
+			      datasource:
+			        username:IES_DEV
+			        password:IES_DEV
+			        url:jdbc:oracle:thin:@localhost:1521/XE
+			        driver-class-name: oracle.jdbc.driver.OracleDriver
+
+			    ---
+
+			    spring:
+			      profile:prod
+			      datasource:
+			        username:IES_DEV
+			        password:IES_DEV
+			        url:jdbc:oracle:thin:@localhost:1521/XE
+			        driver-class-name: oracle.jdbc.driver.OracleDriver
+
+			    ---
+
+

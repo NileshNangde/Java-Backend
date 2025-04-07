@@ -1,0 +1,57 @@
++++++++++++++++++++++++++
+ Logs monitoring in K8S
+ +++++++++++++++++++++++++++
+ -> Real time Log monitoring is done by EKF and Splunk
+ -> Splunk has licence to access so we cannot setup in our System now so we are using EKF
+
+ If application is running on K8S then how to get the log messages of our application
+ -------------------------------------------------------------------------------------
+ note: as a developer we dont have access to on K8S cluster we caanot use this cmd directly  in real time 
+       develops people can use this cmd directlyto get log messages
+       developer people uses EFK tool to get log messages from K8S ( elasticsearch Kibana filesearch) 
+
+ kubectl get pods -o wide  => to get node ( beacuse every application is deploy as pod application)
+
+ kubectl logs <node_name>  => to get logs msg
+
+ But why Log messages required 
+ ------------------------------
+  -> If application have any problem then that problem we trouble shooting using log messages
+ 
+ 
+ EFK Stack setup
+ +++++++++++
+ -> EFK Stack setup will do by Devops people then will provide us the Kibana Url to access the logs messages
+ -> EFK stack is the Combination of open source 3 products
+ -> E -> Elastic Search
+    F -> File Bean / Fluent D
+    K -> Kibana
+ -> THis EKF stack will provide centralized logging in order to identify problems with servers or applications
+ -> It allows you to search all the logs in a single place
+
+ => Fluent D is responsible to collect logs from PODS and store into Elastic Seacrh
+ => Elastic search is like log database , in which logs will be stored and it will index logs for faster retrival 
+ => Kibana is a web application which provide user interface to fetech logs from Elastic search
+
+Note: 
+ -> With the help of K8S we are not deploy the application on Production only , we deploy the application on every enviorment 
+ -> like Developer , testing , production etc
+ -> Each enviorment has any problem then we can found it by log messages
+ -> Each Enviorment has its seperate Kibana URL
+ -> Testing env have any problem then solve it , check there log messages and solve it .
+
+
+=> How to delete all the pods , services, deployment from CLuster 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ using cmd : kubectl delete all --all
+
+ delete all namespace(package) then all tools you install they are delete
+      cmd : kubectl delete ns efklog
+          this cmd delete all the names in the namespcae 
+
+ cmd to delete cluster: eksctl delete cluster --name <cluster_name> --region ap-south 1
+
+ WHat is difference between microservices Load balancer and K8S load balancer
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Microservices Laod Balancer : client side load balancer
+ K8S Load balancer           : service side Load balancer

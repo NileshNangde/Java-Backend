@@ -1,0 +1,760 @@
+
+
+ SQL ( Structure Querry Language)
+===================================
+
+1) What is DataBase , its Types , Models and Advantages of Database
+-------------------------------------------------------------------
+   What is Database
+   -----------------
+     -> A database is an organized collection of data that is stored and managed electronically.
+     -> It allows users to efficiently store, retrieve, and manipulate data.
+     -> Databases are commonly used in applications such as websites, banking systems, e-commerce platforms, and enterprise software.
+
+   Types of Databases:
+   --------------------
+	  -> 1) OLTP (Online Transaction Processing): Used to store day-to-day data for running their business. Ex : Oracle and MySQL. 
+	  -> 2) OLAP (Online Analytical Processing):  Used to store historical data for a particular business. Ex: data warehouse
+	Types of Databases:
+   --------------------
+	Relational Databases (RDBMS) – Uses tables with rows and columns (e.g., MySQL, PostgreSQL, Oracle, SQL Server).
+	NoSQL Databases – Stores data in different formats like key-value pairs, documents, or graphs (e.g., MongoDB, Cassandra, Redis).
+	Cloud Databases – Hosted on cloud platforms (e.g., AWS RDS, Google Cloud Firestore).
+	Graph Databases – Optimized for complex relationships (e.g., Neo4j).
+	In-Memory Databases – Stores data in RAM for high-speed access (e.g., Redis, Memcached).
+   Models of Database Management Systems:
+   --------------------------------------
+			1) Hierarchical Database Management System (HDBMS)
+			2) Network Database Management System (NDBMS)
+			3) Relational Database Management System (RDBMS): This system stores data in a table structure, i.e., in rows and columns format.
+			4) Object-Relational DBMS (ORDBMS)
+			5) Object-Oriented Relational DBMS (OORDBMS)
+
+   Advantages of DBMS:
+   -------------------
+			-> Avoids Data Inconsistency: Ensures data remains consistent across the database.
+			-> Easy Data Access: Simplifies the process of accessing data.
+			-> Easy Data Manipulation: Facilitates easy modification and management of data.
+			-> Enhanced Security: Provides authentication and authorization to ensure data security.
+			-> Supports Data Sharing: Allows multiple users to share data efficiently.
+			-> Reduces Data Redundancy:  Redundancy means duplicate data.
+
+2) What is SQL , What are the different commands of SQL
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> SQL  means Structure querry language , develop by IBM
+     -> And with the help of this sql we can communicate with RDBMS database 
+     -> And this SQl allows us to user to perform CRUD operation into the database with security manner 
+
+     Commands of SQL are classified into sql types 
+     ----------------------------------------------
+       DDL (Data Definition Language): CREATE, ALTER, DROP, TRUNCATE.
+		 DML (Data Manipulation Language): SELECT, INSERT, UPDATE, DELETE.
+		 DCL (Data Control Language): GRANT, REVOKE. 
+		 TCL (Transaction Control Language): COMMIT, ROLLBACK, SAVEPOINT.
+		 Note : select comes under data retrival language
+
+	  What is difference between TRUNCATE and DELETE command
+     ------------------------------------------------------
+      -> Truncate: truncate command is used to delete all rows from the table not coloum and this cmd is from DDL
+      -> Delete : delete command is used to delete the specific row form the table using where clause condition  in DML delete cmd is from DML
+   
+	
+3) What are the different datatypes in SQL  - 6 datatypes
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    1) Numeric Data Types
+			i) INT: Used for storing integer values.
+			ii) NUMBER(P, S): Used for storing numeric values with precision (P) and scale (S).
+	 2) Character/String Data Types  :  These are used for storing data in string format.
+			Two Types:
+			Character Only: Stores only character data.
+			Alphanumeric: Stores both characters and numbers.
+			Character Data Types:
+			Unicode: Supports all languages.
+			Non-Unicode: Supports only the English language.
+			CHAR: Fixed-length character data. memory wastage
+			VARCHAR2(SIZE): Variable-length character data, supporting up to 4000 characters.
+	 3) Long Data Type
+			Used to store both non-Unicode and Unicode characters.
+			Maximum size: 2GB.
+	 4) Date Data Types
+			Used to store date and timestamp information in the database.
+	 5) Raw & Long Raw Data Types
+			Used for storing image, audio, or video files in binary format.
+			Maximum size: 2GB.
+	 6) LOB Data Types (Large Object Data Types)
+			i) BLOB (Binary Large Object): Used for storing image, audio, or video files. Maximum size: 4GB.
+			ii) CLOB (Character Large Object): Used for storing non-Unicode characters. Maximum size: 4GB.
+			iii) NCLOB (National Character Large Object): Used for storing Unicode characters. Maximum size: 4GB.
+
+4) Explain what are the different operator available in SQL
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+		1> assignment operator			=>		=
+		----------------------------------------
+		    ex:  select * from emp where empno = 7788;
+					update emp set sal=78000 where ename = 'smith';
+					delete from emp where deptno = 10;
+
+		2> arithmetic operators			=>		+, - ,*,/  note Arithmatic operator with null value always null ex: 100+null = null
+		------------------------------------------------
+		3> relational operators			=>		<,>,<=,>=, != (or) < >
+		---------------------------------------------------------
+		4> logical operators				=>		AND,OR,NOT
+		--------------------------------------------------
+		6> special operators				=>	 IN		     NOT IN
+													 BETWEEN		  NOT BETWEEN
+													 IS NULL		  IS NOT NULL   (nul not equal to zero or space)
+													 LIKE			  NOT LIKE
+         IN       syntax: where <colum name> in(value1,value2,value3,....);
+         Between  syntax: where <column name> between <low value> and <high value>;
+         IS NULL        : where <column name> is null;	
+         LIKE           : wildcard operators of like are  % and _ (space)
+                          % - to represent the remaining group of char's after selected character in the expression.
+                          _ - counting a single character in the expression.
+      ---------------------------------------------------------------------------
+     	5> set operators		: is used to combined the results of two select statements as a single set of values.
+		  =>		union       : combined two tables values without duplicates.
+		         union all   : combined two tables values with duplicates.
+		         intersect   : return a common values.
+		         minus       : return uncommon values from the left side select query.
+
+5) Explain what are the predefine functions available in SQL
+  ----------------------------------------------------------
+	    1) String functions        : LENGTH(), LOWER() ,UPPER() ,CONCAT() ,TRIM(),LTRIM(),RTRIM()
+	    2) Multiple Row Functions  : SUM(),AVG(),MIN(),MAX(),COUNT().
+
+6) Expalin what is mean by Clause and Types of clause in SQL
+  ------------------------------------------------------------
+   -> Expalin what is mean by Clause
+   ------------------------------------
+      -> Clause is used to refine the querry , refining the querry like modinfing the querry behavior, filtering data, grouping results, and getting limited output 
+      -> This clause are used with INSERT,UPDATE,DELETE,SELECT sql commands to refine the querry 
+   -> types of Clause :
+   ---------------------
+   Clause	Description
+   ------------------------
+	WHERE	       Filters records based on a condition.  "Where" Clause Can Be Used In "Select " ,"Update" And "Delete" Commands Only
+	HAVING	    Filters groups after GROUP BY.
+	ORDER BY	    Sorts results in ascending or descending order.  Used In "Select" Command Only.
+	GROUP BY	    Groups records with the same values.
+	LIMIT/TOP 	 Limits the number of returned records.
+	DISTINCT	    Returns unique values.
+	JOIN	       Combines data from multiple tables.
+	IN	          Checks if a value exists in a list.
+	OFFSET       skip the data
+
+
+    What is the order of execution of Clauses
+   ------------------------------------------
+	   > From
+		> Where
+		> Group By
+		> Having
+		> Select
+		> Order By
+
+7) What is Difference between Where and Having Clause
+  ----------------------------------------------------
+   -> Both WHERE and HAVING clauses is used to filter data
+   -> WHERE Clause : 
+         - Where clause is used before grouping the data , and it is used to filter individual row 
+         - And it is used with SELECT , UPDATE and DELETE commands
+         - We cannot use aggregate functions like SUM, COUNT, etc., directly
+			- Example : SELECT * FROM Employees WHERE salary > 50000; -- Filters rows where the salary is greater than 50,000
+
+	-> HAVING Clause : 
+	      - This HAVING clause is used after grouping the data and it is used to filter grouping data 
+	      - aggregate functions like SUM, COUNT we can use
+	      - only works with select cmd
+	      - Example : SELECT department, SUM(salary) AS total_salary FROM Employees GROUP BY department HAVING SUM(salary) > 200000; 
+
+	-> Combining WHERE and HAVING
+	   - SELECT department, COUNT(*) AS employee_count FROM Employees WHERE salary > 50000 GROUP BY department HAVING COUNT(*) > 5;
+	    
+
+8) What is the difference between “Primary Key” , “Unique Key" , Foreign Key , Composite key , Composite Primary key
+---------------------------------------------------------------------------------------------------------------------
+    Key Type	                 Uniqueness                  	Null Allowed               	Purpose                   	                 Number per Table
+    -------------------------------------------------------------------------------------------------------------------------------------------------
+ 1) Primary Key	            Must be unique	                  Not allowed	                 used for Uniquely identifies each row in the table      1
+ -------------------------------------------------------------------------------------------------------------------------------------------------
+ 2) Unique Key”			      Must be unique	                  Single NULL allowed	        Ensures uniqueness in a column	                  Multiple
+ -------------------------------------------------------------------------------------------------------------------------------------------------
+ 3) Foreign Key 			      Refers to Primary/Unique Key   	NULL allowed	              Establishes a relationship between two tables	   Multiple
+ -------------------------------------------------------------------------------------------------------------------------------------------------
+ 4) Composite Key	Unique      combination of columns	          Depends on context	        Combines multiple columns to ensure uniqueness	Can exist as Primary/Unique
+ -------------------------------------------------------------------------------------------------------------------------------------------------
+ 5) Composite Primary Key	   Unique combination of 	           Not allowed	              Uniquely identifies each row in a table	           1 (acts as Primary Key)
+                              columns used as Primary Key
+ -------------------------------------------------------------------------------------------------------------------------------------------------
+
+9) What is the difference between primary key and unique constraints?
+------------------------------------------------------------------
+   -> Primary key is an Unique , not null and used as unique identifiers to identify each row in the table
+   -> Unique Constraints means all values are unique , they can be single null , ex: unique email , phno etc
+
+11) What is a Database Lock ? What are the type of locks ? 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+12) What is normalization and De-normalization in sql ? What are the different type of normalization? 
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> Normalization means dividing large tables into smaller related tables and defining relationships between them 
+      to minimize data Redundency and improve data integrity.
+   -> De-Normilization is the combination of normalized tables into larger tables for performance reasons. 
+      It is used when complex queries and joins slow down data retrieval, but it has drawbacks of redundancy.
+  
+13) What is the purpose of the DEFAULT constraint?
+ +++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> When no value is provided during an INSERT operation then default value is assign into the table.
+ 
+14) What are NULL values in SQL?
+++++++++++++++++++++++++++++++++
+  -> NULL represents a missing value.
+  -> It is not zero or an empty string. NULL values indicate that the data is not available .
+
+ 13) What is a join and explain different types of joins  | Mostly inner join and left joins we work
+  ---------------------------------------------------
+  -> Joins are used to retrive the data between the multiple tables but each table have realtion with another table 
+  -> ex: country id , state id   city id , village
+  -> 
+  ->  Join Type	            Description
+     ---------------------------------------
+		INNER JOIN			Returns only matching rows from both tables. ex: employee id in Employee table , employee id in Deparmant id
+		LEFT JOIN			Returns all rows from the left table and matching rows from the right table.
+		RIGHT JOIN			Returns all rows from the right table and matching rows from the left table.
+		FULL JOIN (not in mysql)  Returns all rows from both tables, with NULL for non-matching rows.
+		CROSS JOIN			Returns all possible combinations (Cartesian product) of rows from both tables.
+		SELF JOIN			Joins a table to itself, useful for hierarchical relationships or comparing rows within a table.
+
+16) How to maintain data integrity in SQL databases?
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> Data integrity means accuracy, consistency, and reliability of the data stored in the database.
+  -> In SQL databases we can maintain data integrity through Constriants ,Transactions ,Trigger , Normalization .
+  -> Constraints means  :  not null , unique , primary key , foreign key
+  -> Transactions means : 
+  -> Triggers means     :
+  -> Normilization means: organized data into small multiple tables and make relationship between them
+
+17) What is the difference between UNION and UNION ALL?
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> UNION: If I want to combine 2 table into one table  without any dublicate coloum then UNION 
+     Ex : SELECT Name FROM Customers   
+          UNION 
+          SELECT Name FROM Employees;
+  -> UNION ALL: Includes all rows from each query, including duplicates.
+  -> Performance-wise, UNION ALL is faster because it doesn’t require an additional step to remove duplicates.
+
+18) What is a stored procedure? how you use stored procedure in java   // Begin and end only used in MYSQL
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> When we want to execute 1 querry multiple times then we create that querry as store procedure 
+  -> With the help of stored procedure we can store the querry into data base and use as redquired
+  -> IN and OUT are the parameters we use in stored procedure 
+  -> IN when we want to insert and OUT when we want to get result
+  -> Ex 1 :  SELECT * FROM employees WHERE id = fill_in_Blank
+  -> Store Procedure : CREATE PROCEDURE GetEmployee(IN emp_id INT)
+     BEGIN 
+     SELECT * FROM employees WHERE id = emp_id;
+     END
+  -> How to call : CALL GetEmployee(1);
+
+  -> Ex 2 :  INSERT INTO employees (id, name, department, salary) VALUES (emp_id, emp_name, emp_dept, emp_salary);
+  -> CREATE PROCEDURE InsertEmployee(IN emp_id INT, IN emp_name VARCHAR(100), IN emp_dept VARCHAR(50), IN emp_salary DECIMAL(10,2)) 
+     BEGIN 
+     INSERT INTO employees (id, name, department, salary) VALUES (emp_id, emp_name, emp_dept, emp_salary);
+     END
+
+
+
+19) What is the purpose of the SQL ORDER BY clause?
++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> The ORDER BY clause sorts the result set of a query in either ascending (default) or descending order, based on one or more columns. 
+     This helps present the data in a more meaningful or readable sequence.
+
+20) What is the purpose of the SQL GROUP BY clause?
++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> It is used to group the rows that have the same values
+  -> Ex : Electronics , Electronics , Furniture , Furniture
+  -> SO Electronics and Furniture
+
+20) What is the purpose of the SQL HAVING clause?
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+20) What are the differences between SQL and NoSQL databases?
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> SQL Databases:
+		Use structured tables with rows and columns.
+		Rely on a fixed schema.
+		Offer ACID properties.
+  -> NoSQL Databases:
+		Use flexible, schema-less structures (e.g., key-value pairs, document stores).
+		Are designed for horizontal scaling.
+		Often focus on performance and scalability over strict consistency.
+
+21)  What is a composite primary key?
++++++++++++++++++++++++++++++++++++++
+  -> A composite primary key is a primary key made up of two or more columns. 
+  -> Together, these columns must form a unique combination for each row in the table. 
+  -> It’s used when a single column isn’t sufficient to uniquely identify a record.
+
+
+ 14) Explain SubQuery in SQL
+ ------------------------------
+  -> Querry inside outer Querry is called SubQuerry and we use this SubQuerry when result of one querry required for another querry
+  -> This SubQuerry are two types Correlated subquerry and Non Corelated subQuerry
+  -> Corellated SubQuerry means : The SubQuerry in outer querry executed once for each row 
+  -> NonCorelatted SubQuerry means : The SubQuerry in outer querry is executed only once before outer querry : Ex : form subquerry I take only department like Sales
+     and from Sales deparmant I take Ename , Salary
+  -> Multi Row SubQuerry -> When SubQuerry returns multiple rows 
+  -> Operators like IN , ANY ,ALL we use With Multi Row SubQuerry 
+  ->     IN	  : Checks if a value exists in the subquery result.
+			ANY  : Compares a value with each result row individually.
+			ALL  : Compares a value with all result rows.
+  -> MCSQ  : (Multi COloum SubQuerry )Returns multiple Coloum insted of single Value
+
+ 15) Ranking Functions 
+  +++++++++++++++++++++
+    -> Used to give ranking for the rows in table
+    -> These functions are always used with OVER() clause.
+	 -> The ranking functions always assign rank on basis of ORDER BY clause.
+	 -> The rank is assigned to rows in a sequential manner.
+	 -> The assignment of rank to rows always start with 1 for every new partition
+    ->     1) ROW_NUMBER() -> This method is used to give the sequential numbering to the rows either two rows have same value it still gives unique numbers.
+           2) RANK()       -> THis method is used to give the sequential numbering but in  non-consecutive manner , if 2 values are dublicate then ex 6 6 8 
+           3) DENSE_RANK() -> THis method is used to give the sequential numbering  , if 2 numbers are same then it not skip the numbering
+                               and the next number follows sequentially Ex: 1 ,2 ,2 , 3
+
+
+
+ 15) Explain Sequence in SQL
+ ----------------------------
+
+ 16) Explain Indixces in SQL
+ ---------------------------
+
+ 17) Explain CURSOR in SQL
+ --------------------------
+
+ 18) What is TRIGGERS in SQL 
+ ---------------------------
+
+ 19) What is the difference between “Stored Procedure” and “Function”? 
+ ---------------------------------------------------------------------
+  -> Primary purpose of stored prodedure is to execute the querry , it is also return the value but it is optional | it has both input and output param
+  -> Primary purpose of Function is to retrive the data  |  it has only input  parameter
+
+Operators bases Q
+------------------
+1)Ex:
+waq to display employees salaries after adding 1000/-?
+SQL> SELECT SAL as OLD_SALARY,SAL+1000 as NEW_SALARY FROM EMP;
+
+2) Ex: 
+waq to display empno,ename,sal and annual salary of employees
+from emp table?
+SQL> SELECT EMPNO,ENAME,SAL BASIC_SALARY,SAL*12 ANNUAL_SALARY FROM EMP;
+
+3) Ex:
+waq to display empno,ename,deptno,sal and annual salary of employees
+from emp table who are working under deptno is 10?
+SQL> SELECT EMPNO,ENAME,DEPTNO,SAL BASIC_SALARY,SAL*12 ANNUAL_SALARY
+     FROM EMP WHERE DEPTNO=10;
+
+4) Ex:
+waq to display employees salaries after increment of 10%?
+SQL> SELECT SAL BEFORE_INCREMENT,SAL+SAL*10/100 AFTER_INCREMENT
+  2  FROM EMP;
+
+5) Ex:
+waq to update employee salaries with the increment of 5% in emp
+table who are working as a "manager"?
+SQL> UPDATE EMP SET SAL=SAL+SAL*0.05 WHERE JOB='MANAGER';
+
+6) Ex:
+waq to display employees who are joined before 1981?
+SQL> SELECT * FROM EMP WHERE HIREDATE < '01-JAN-81';
+
+7) Ex:
+waq to display employees who are joined AFTER 1981?
+SQL> SELECT * FROM EMP WHERE HIREDATE > '31-DEC-81';
+
+8) waq to display employees whose name is "smith" and working as a "clerk" ?
+SQL> SELECT * FROM EMP WHERE ENAME='SMITH' AND JOB='CLERK';
+
+9) Ex:
+waq to display employees who are joined in the year of 1981?
+SQL> SELECT * FROM EMP WHERE (HIREDATE>='01-JAN-81') AND (HIREDATE<='31-DEC-81');
+
+10) Ex:
+waq to display employees who are working as a "analyst"
+or whose salary is more than 1500?
+SQL> SELECT * FROM EMP WHERE JOB='ANALYST' OR SAL>1500;
+
+11) Ex:
+waq to display employees whose empno is 7369,7788,7900?
+SQL> SELECT * FROM EMP WHERE EMPNO=7369 OR EMPNO=7788 OR EMPNO=7900;
+
+12) Ex:
+waq to display employees who are not working as a "clerk" and "salesman"?
+SQL> SELECT * FROM EMP WHERE NOT JOB='CLERK' AND NOT JOB='SALESMAN';
+
+Ex:
+waq to list out the employees whose empno is 7369,7788,7900?
+SQL> SELECT * FROM EMP WHERE EMPNO IN(7369,7788,7900); 
+
+Ex:
+waq to list out the employees whose empno is not 7369,7788,7900?
+SQL> SELECT * FROM EMP WHERE EMPNO NOT IN(7369,7788,7900); 
+
+Ex:
+waq to display employees whose salary is between 1500 to 3000?
+SQL> SELECT * FROM EMP WHERE SAL BETWEEN 1500 AND 3000;
+	
+Ex:
+waq to display employees who are joined in the year of 1981?
+SQL> SELECT * FROM EMP WHERE HIREDATE BETWEEN '01-JAN-81' AND '31-DEC-81';
+
+Ex:
+waq to display employees who are notjoined in the year of 1981?
+SQL> SELECT * FROM EMP WHERE HIREDATE NOT BETWEEN '01-JAN-81' AND '31-DEC-81';
+
+Ex:
+waq to display employees whose commission is null?
+SQL> SELECT * FROM EMP WHERE COMM IS NULL;
+
+Ex:
+waq to display employees whose commission is not null?
+SQL> SELECT * FROM EMP WHERE COMM IS NOT NULL;
+
+Ex:
+waq to display empno,ename,sal,comm and sal+comm from emp table whose name is "allen"?
+SQL> SELECT EMPNO,ENAME,SAL,COMM,SAL+COMM FROM EMP WHERE ENAME='ALLEN';
+
+Ex:
+waq to display empno,ename,sal,comm and sal+comm from emp table whose name is "SMITH"?
+SQL> SELECT EMPNO,ENAME,SAL,COMM,SAL+COMM FROM EMP WHERE ENAME='SMITH';
+
+Ex:
+waq to display employees whose name starts with "S" char?
+SELECT * FROM EMP WHERE ENAME LIKE 'S%';
+
+EX:
+to display employees whose name ends with 'K'?
+SELECT * FROM EMP WHERE ENAME LIKE '%K';
+
+Ex:
+to display employees whose name is having 'I'?
+SQL> SELECT * FROM EMP WHERE ENAME LIKE '%I%';
+
+Ex:
+to display employees whose name is having 4 char's?
+SELECT * FROM EMP WHERE ENAME LIKE '____';
+
+Ex:
+to display employees whose name is having the second character is "O"?
+SQL> SELECT * FROM EMP WHERE ENAME LIKE '_O%';
+
+Ex:
+to display employees whose name starts with "M" and ends with "N" characters?
+SQL> SELECT * FROM EMP WHERE ENAME LIKE 'M%N';
+
+Ex:
+to display employees who are joined in 1981?
+SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%81';
+
+Ex:
+to display employees who are joined in the month of "december"?
+SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%DEC%';
+
+Ex:
+to display employees who are joined in the month of "JUNE","DEC"?
+SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%JUN%' 2  OR HIREDATE LIKE '%DEC%';
+
+EX:
+waq to display customers whose name is having "@" symbol?
+SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%@%';
+
+EX:
+waq to display customers whose name is having "#" symbol?
+SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%#%';
+
+EX:
+waq to display customers whose name is having "_" symbol?
+SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%_%';
+
+EX:
+SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%\_%'ESCAPE'\';
+SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%\%%'ESCAPE'\';
+
+EX:
+waq to display employees whose name not starts with "S" char?
+SQL> SELECT * FROM EMP WHERE ENAME NOT LIKE 'S%';
+
+Clause Based Q
+-----------------
+Ex1:
+Waq to Display Employee Salaries In Ascending Order?
+ Select * From EMP Order by Sal;
+(Or) 
+Select Sal from EMP Order by Sal;
+
+Ex2:
+Waq to Arrange Employee Names In Descending Order?
+Select Ename from EMP Order by Ename Desc;
+
+Ex3:
+Waq to Display Employee Who Are Working In The Deptno Is 20 and Arrange Those Employee Salaries In Descending Order?
+Select * From EMP Where Deptno=20 Order By Sal Desc;
+
+Ex4:
+Waq to Arrange Employee Deptno's In Ascending Order And Those Employee Salaries in Descending Order From Each Deptno Wise?
+Select * From EMP Order By Deptno, Sal Desc;
+
+Ex:
+Sql> Select * From EMP Order By Comm Nulls First;
+Sql> Select * From Emp Order By Comm Desc Nulls Last;
+
+Ex1:
+Waq to Find Out No. Of Employee Working In Each Job?
+Select Job,Count(*) Num_Of_Employee From Emp Group By Job;
+
+Ex2:
+Waq To Calculate Department Number Wise Total Salary ?
+Select Deptno,Sum(Sal) Total_Salary From Emp Group By Deptno ;
+
+Waq To Calculate Department Number Wise Total Salary with  accending deptno order?
+Select Deptno,Sum(Sal) Total_Salary From Emp Group By Deptno order by depno ;
+
+Ex3:
+Waq To Display No.Of Employee Working In Each Job Along With Deptno Wise ?
+Select Job,Deptno,Count(*) Num_Of_Employee From Emp Group By Job,Deptno;
+
+Ex4:
+Waq To Calculate Deptno Wise Totalsalary Where Deptno's Are 10,20 ?
+Select Deptno,Sum(Sal) Total_Salary From Emp Where Deptno In(10,20) Group By Deptno;
+
+Ex5:
+Waq To Calculate Deptno Wise Avg,Min,Max Salaries ?
+Select Deptno,Avg(Sal) Avgsal,Min(Sal) Minsal,Max(Sal) Maxsal From Emp Group By Deptno Order By Deptno; 
+
+Ex1:
+Waq To Find Out No.Of Employee Of Each Job In Which Job No.Of Employee Are More Than 3 ?
+Select Job,Count(*) From Emp Group By Job Having Count(*)>3;
+
+Ex2:
+Waq To Display Sum Of Salary Of Deptno's From Emp Table.If Sum Of Salary Of Deptno Is Less Than 9000 ?
+Select Deptno,Sum(Sal) From Emp Group By Deptno Having Sum (Sal)<9000
+
+EX2:
+WHOSE EMPLOYEE JOB IS SAME AS THE JOB OF 'SMITH’?
+SELECT * FROM EMP WHERE JOB= (SELECT JOB FROM EMP WHERE ENAME='SMITH');
+
+EX3:
+WHOSE SALARY IS MORE THAN MAX.SALARY OF THE JOB IS "SALESMAN"?
+SELECT * FROM EMP WHERE SAL> (SELECT MAX(SAL) FROM EMP WHERE JOB='SALESMAN');
+
+EX4:
+WHOSE EMPLOYEE JOB IS SAME AS THE JOB OF "BLAKE" AND WHO ARE EARNINGSALARY MORE THAN "BLAKE" SALARY?
+SELECT * FROM EMP WHERE JOB= (SELECT JOB FROM EMP WHERE ENAME='BLAKE')AND SAL> (SELECT SAL FROM EMP WHERE ENAME='BLAKE');
+
+EX5:
+DISPLAY SENIOR EMPLOYEE?
+SELECT * FROM EMP WHERE HIREDATE=(SELECT MIN(HIREDATE) FROM EMP);
+
+EX6:
+TO FIND SECOND HIGH. SALARY FROM EMP TABLE ?
+SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP);
+
+EX7:
+WASQ DISPLAY EMPLOYEE DETAILS WHO ARE GETTING SECOND HIGH. SALARY IN EMP TABLE?
+SELECT * FROM EMP WHERE SAL= (SELECT MAX(SAL) FROM EMP WHERE SAL< (SELECT MAX(SAL) FROM EMP));
+
+EX8:
+DISPLAY EMPLOYEE DETAILS WHO ARE GETTING 3RD HIGH. SALARY IN EMP TABLE?
+SELECT * FROM EMP WHERE SAL=(SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP)));
+or 
+select * from emp where sal = (select sal from emp order by sal desc limit 1 offset 2 );
+------------------------------------------------------------------------------------------
+
+EX9:
+TO DISPLAY NO. OF EMPLOYEE OF DEPARTMENT NUMBERS.IN WHICH DEPTNO NO. OF EMPLOYEE IS LESS THAN THE NO. OF EMPLOYEE OF DEPTNO IS 20?
+SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)<(SELECT COUNT(*) FROM EMP WHERE DEPTNO=20);
+
+EX10:
+SUM OF SALARY OF JOBS.IF SUM OF SALARY OF JOBS ARE MORE THAN SUM OF SALARY OF THE JOB IS 'CLERK’?
+SELECT JOB,SUM(SAL) FROM EMP GROUP BY JOB HAVING SUM(SAL)>(SELECT SUM(SAL) FROM EMP WHERE JOB='CLERK');
+
+EX11:
+TO UPDATE EMPLOYEE SALARY WITH MAX.SALARY OF EMP TABLE WHOSE EMPNO IS 7900?
+UPDATE EMP SET SAL=(SELECT MAX(SAL) FROM EMP) WHERE EMPNO=7900;
+
+EX12:
+WASQ TO DELETE EMPLOYEE DETAILS FROM EMP TABLE WHOSE JOB IS SAME AS THE JOB OF 'SCOTT’?
+DELETE FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE ENAME='SCOTT');
+
+Sub Querry
+++++++++++
+
+1) Find the Second Highest Salary
+  select sal from emp where sal = (select sal from emp order by sal desc limit 1 offset 1);
+
+2)  Find Employees Who Earn More Than the Company’s Average Salary
+  SELECT name, salary FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);
+
+3) Find Departments with More Than 5 Employees
+  SELECT department_id  FROM employees GROUP BY department_id HAVING COUNT(*) > 5;
+
+4) Find Employees Who Work in 'New York' or 'San Francisco'
+  SELECT name, department_id FROM employees WHERE department_id IN (SELECT department_id FROM departments WHERE location IN ('New York', 'San Francisco'));
+
+5) Find Employees Earning More Than at Least One Manager
+  SELECT * FROM empl WHERE salary > ANY (SELECT sal FROM emp WHERE job = 'Manager');
+
+6) Find Employees Earning More Than All Manager
+  SELECT * FROM emp WHERE sal > ALL (SELECT sal FROM emp WHERE job = 'manager');
+
+7) Find Employees Whose Job Title and Department Match Job History
+  SELECT name, salary FROM employees WHERE (department_id, job_id) IN (SELECT department_id, job_id FROM job_history);
+
+8) Rank Employees by Salary
+ SELECT ename, sal, RANK() OVER (ORDER BY sal DESC) AS salary_rank FROM emp;
+
+9) Assign Unique Row Numbers for Pagination
+  SELECT name, salary, ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num FROM employees;
+
+10) Get Top 3 Salaries Per Department
+  SELECT name, department_id, salary, DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rank FROM employees;
+  for to 2 only
+  SELECT ename, deptno, sal, ranking FROM (SELECT ename, deptno, sal, DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS ranking FROM emp) ranked_employees
+   WHERE ranking <= 2;
+
+Joins Based Q
+-------------
+
+1) Get all students with their enrolled courses.
+   SELECT S.SNAME ,C.CID from Student AS S INNER JOIN Course as C ON S.CID = C.CID;
+
+2) List all employees and their respective department names.
+   SELECT E.NAME, D.DEPT_NAME FROM EMPLOYEE AS E INNER JOIN DEPARTMENT AS D ON E.DEPT_ID = D.DEPT_ID;
+
+3) Retrieve orders with customer details.
+   Select O.ONAME ,C.CNAME FROMS ORDERS as O inner Join Cusotmer as C ON O.Costumer_Id=C.Costumer_Id; 
+
+4) Find books and their authors from BOOKS and AUTHORS tables
+
+   SELECT B.TITLE, A.AUTHOR_NAME FROM BOOKS AS B INNER JOIN AUTHORS AS A ON B.AUTHOR_ID = A.AUTHOR_ID;
+
+5) List employees with their managers.
+   SELECT E.EMPLOYEE_NAME, M.EMPLOYEE_NAME AS MANAGER FROM EMPLOYEE E INNER JOIN EMPLOYEE M ON E.MANAGER_ID = M.EMPLOYEE_ID;
+
+6) List all students and their enrolled courses (include students without courses).
+   SELECT S.STUDENT_NAME, C.COURSE_NAME FROM STUDENT S LEFT JOIN COURSE C ON S.CID = C.CID;
+
+7) Show all employees with department details (even those without a department).
+   SELECT E.EMP_NAME, D.DEPT_NAME FROM EMPLOYEE E LEFT JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID;
+
+8) List all orders with customer details (even if some orders have no customers).
+   SELECT O.ORDER_ID, C.CUSTOMER_NAME FROM ORDERS O LEFT JOIN CUSTOMER C ON O.CUSTOMER_ID = C.CUSTOMER_ID;
+
+9) Get all departments with employees (even if some departments have no employees).
+   SELECT D.DEPT_NAME, E.EMP_NAME FROM EMPLOYEE E RIGHT JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID;
+
+10) Retrieve all courses and enrolled students (including courses with no students)
+   SELECT C.COURSE_NAME, S.STUDENT_NAME FROM STUDENT S RIGHT JOIN COURSE C ON S.CID = C.CID;
+
+11) List all employees and departments (even if no match exists).
+   SELECT E.EMP_NAME, D.DEPT_NAME FROM EMPLOYEE E FULL JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID;
+
+12) Get all students and courses, including unmatched records from both tables.
+   SELECT S.STUDENT_NAME, C.COURSE_NAME FROM STUDENT S FULL JOIN COURSE C ON S.CID = C.CID;
+
+13) Create a combination of all products and all suppliers.
+SELECT P.PRODUCT_NAME, S.SUPPLIER_NAME FROM PRODUCTS P CROSS JOIN SUPPLIERS S;
+
+14) Generate all possible team pairings from a TEAMS table.
+SELECT T1.TEAM_NAME AS TEAM_A, T2.TEAM_NAME AS TEAM_B FROM TEAMS T1 CROSS JOIN TEAMS T2 WHERE T1.TEAM_NAME <> T2.TEAM_NAME;
+
+15) Find employees and their direct managers.
+SELECT E.EMP_NAME AS EMPLOYEE, M.EMP_NAME AS MANAGER FROM EMPLOYEE E LEFT JOIN EMPLOYEE M ON E.MANAGER_ID = M.EMP_ID;
+
+16) Find employees working in the same department.
+SELECT E1.EMP_NAME AS EMP1, E2.EMP_NAME AS EMP2, E1.DEPT_ID FROM EMPLOYEE E1 JOIN EMPLOYEE E2 ON E1.DEPT_ID = E2.DEPT_ID AND E1.EMP_ID <> E2.EMP_ID;
+
+17) Find the number of employees in each department.
+SELECT D.DEPT_NAME, COUNT(E.EMP_ID) AS EMP_COUNT FROM DEPARTMENT D LEFT JOIN EMPLOYEE E ON D.DEPT_ID = E.DEPT_ID GROUP BY D.DEPT_NAME;
+
+18) Get the total order amount per customer.
+SELECT C.CUSTOMER_NAME, SUM(O.AMOUNT) AS TOTAL_AMOUNT FROM CUSTOMER C LEFT JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_ID GROUP BY C.CUSTOMER_NAME;
+
+19) Find students enrolled in ‘Mathematics’ course.
+SELECT S.STUDENT_NAME FROM STUDENT S INNER JOIN COURSE C ON S.CID = C.CID WHERE C.COURSE_NAME = 'Mathematics';
+
+20) List employees who don’t have a department assigned.
+SELECT E.EMP_NAME FROM EMPLOYEE E LEFT JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID WHERE D.DEPT_ID IS NULL;
+
+21)Get Employee details along with their Department and Manager Name
+  SELECT E.EMP_NAME, D.DEPT_NAME, M.EMP_NAME AS MANAGER_NAME FROM EMPLOYEE EJOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID LEFT JOIN EMPLOYEE M ON E.MANAGER_ID = M.EMP_ID;
+
+22) Retrieve Orders with Customer and Product Details
+  SELECT O.ORDER_ID, C.CUSTOMER_NAME, P.PRODUCT_NAME, O.ORDER_DATE FROM ORDERS O JOIN CUSTOMER C ON O.CUSTOMER_ID = C.CUSTOMER_ID 
+  JOIN PRODUCT P ON O.PRODUCT_ID = P.PRODUCT_ID;
+
+23) Get Total Number of Employees per Department
+  SELECT D.DEPT_NAME, COUNT(E.EMP_ID) AS EMP_COUNT FROM DEPARTMENT D LEFT JOIN EMPLOYEE E ON D.DEPT_ID = E.DEPT_ID GROUP BY D.DEPT_NAME;
+
+24) Calculate Total Revenue per Customer
+    SELECT C.CUSTOMER_NAME, SUM(O.AMOUNT) AS TOTAL_REVENUE FROM CUSTOMER C LEFT JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_ID GROUP BY C.CUSTOMER_NAME;
+
+25) Get Average Order Amount per Product
+   SELECT P.PRODUCT_NAME, AVG(O.AMOUNT) AS AVG_ORDER_AMOUNT FROM PRODUCT P JOIN ORDERS O ON P.PRODUCT_ID = O.PRODUCT_ID GROUP BY P.PRODUCT_NAME;
+
+26) Find Customers Who Have Placed an Order
+  SELECT DISTINCT C.CUSTOMER_NAMEFROM CUSTOMER C INNER JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_ID;
+
+27) Get Students Enrolled in "Mathematics" Course
+   SELECT S.STUDENT_NAME FROM STUDENT S INNER JOIN COURSE C ON S.CID = C.CID WHERE C.COURSE_NAME = 'Mathematics';
+ 
+28) List Employees Without a Department Assigned
+   SELECT E.EMP_NAME FROM EMPLOYEE E LEFT JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID WHERE D.DEPT_ID IS NULL;
+
+30) Get Customers Who Have Placed More Than 5 Orders
+SELECT C.CUSTOMER_NAME FROM CUSTOMER C WHERE C.CUSTOMER_ID IN ( SELECT O.CUSTOMER_ID FROM ORDERS O GROUP BY O.CUSTOMER_ID HAVING COUNT(O.ORDER_ID) > 5 );
+
+31) Employees Who Earn Above Department's Average Salary
+   SELECT E.EMP_NAME, E.SALARY, D.DEPT_NAME FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID WHERE E.SALARY > ( SELECT AVG(E2.SALARY) FROM EMPLOYEE E2
+    WHERE E2.DEPT_ID = E.DEPT_ID );
+
+32) Get Employees and Their Managers
+  SELECT E.EMP_NAME AS EMPLOYEE, M.EMP_NAME AS MANAGER FROM EMPLOYEE E LEFT JOIN EMPLOYEE M ON E.MANAGER_ID = M.EMP_ID;
+
+33) Find Employees Working in the Same Department
+   SELECT E1.EMP_NAME AS EMPLOYEE_1, E2.EMP_NAME AS EMPLOYEE_2, E1.DEPT_ID FROM EMPLOYEE E1 JOIN EMPLOYEE E2 ON E1.DEPT_ID = E2.DEPT_ID AND E1.EMP_ID <> E2.EMP_ID;
+
+34) Get Employee Hierarchy
+    WITH RECURSIVE EMP_HIERARCHY AS (SELECT EMP_ID, EMP_NAME, MANAGER_ID, 1 AS LEVELFROM EMPLOYEE WHERE MANAGER_ID IS NULL -- Top-level Managers UNION ALL
+    SELECT E.EMP_ID, E.EMP_NAME, E.MANAGER_ID, EH.LEVEL + 1 FROM EMPLOYEE E JOIN EMP_HIERARCHY EH ON E.MANAGER_ID = EH.EMP_ID )
+SELECT * FROM EMP_HIERARCHY;
+
+35) Find the Most Expensive Order for Each Customer
+SELECT O.ORDER_ID, C.CUSTOMER_NAME, O.AMOUNT FROM ORDERS O JOIN CUSTOMER C ON O.CUSTOMER_ID = C.CUSTOMER_ID WHERE O.AMOUNT = ( SELECT MAX(O2.AMOUNT) 
+FROM ORDERS O2 WHERE O2.CUSTOMER_ID = O.CUSTOMER_ID);
+
+36) Find Employees Who Share the Same Salary
+SELECT E1.EMP_NAME, E1.SALARY, E2.EMP_NAME AS OTHER_EMPLOYEEFROM EMPLOYEE E1 JOIN EMPLOYEE E2 ON E1.SALARY = E2.SALARY AND E1.EMP_ID <> E2.EMP_ID;
+
+37) Get All Customers Who Have Placed an Order OR Have Pending Orders
+   SELECT C.CUSTOMER_NAME FROM CUSTOMER C JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_IDWHERE O.STATUS = 'Completed'UNION SELECT C.CUSTOMER_NAME FROM CUSTOMER C
+  JOIN ORDERS O ON C.CUSTOMER_ID = O.CUSTOMER_ID WHERE O.STATUS = 'Pending';
+
+38)Find Employees Who Work in the Same Department AND Earn the Same Salary
+ SELECT EMP_NAME, DEPT_ID, SALARY FROM EMPLOYEE INTERSECT SELECT EMP_NAME, DEPT_ID, SALARY FROM EMPLOYEE;
+
+39)Get all students with their enrolled courses.
+   SELECT * from Student AS S INNER JOIN Course as C ON S.CID = C.CID;
+
+
+
+
+
+
+   

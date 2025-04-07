@@ -1,0 +1,271 @@
+
+
+Spring Boot      spring boot 2.1.0 -  2017  
+                 Spring 5.1.2 is compatible version for spring boot 2.0.1 
+                 Spring data JPA added in this Spring Boot Version
+------------
+
+1) Explain the Architecture of Spring boot
+  ----------------------------------------
+  -> SPring boot application we develop into different layers 
+  ->
+
+                            COntains Business Logic                        Contains Persistance Logic 
+                          DTO class       |                                            |
+FrontEnd <= Controller Layer   |    Service Layer        Respository Layer        DAO Layer   => DB
+              |
+       Json Format Data
+
+
+
+
+1) What is Spring Boot framework and what are the  main features of spring boot FW
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ -> Spring boot is another way to develop spring based applications with auto configuration , POM starter , Embeded server and Actuators and due to this  rapid development
+    of the application can be possible .
+ -> Auto configuration means  
+     - Starting IOC container automatically
+    - Creating Connection Pool
+    - Creation SMTP Connections
+    - Web Application Deployment to server
+    - Depedency Injections etc....
+    - Annotattions supports
+ -> POM stater means nothing but dependencies that we use to develop our application
+    - web-starter
+    - jdbc-starter
+    - security-starter
+    - mail-starter
+ -> Embeded Servers  - provide web server to run our web applications
+    - Tomcat (default)
+    - Jetty
+    - Netty
+ > Actuators are used to monitor and manage our application. Actuators providing production-ready features for our application.
+    a) How many classes loaded
+    b) how many objects created
+    c) how many threads are running
+    d) URL Mappings Available
+    e) Health of the project etc...
+-> Rapid Development means fast development. We can focus only on business logic because Boot will take care of configurations.
+
+
+
+ 2) Difference between Spring and Spring Boot FW
+   +++++++++++++++++++++++++++++++++++++++++++++++
+   80 % spring and spring boot FW are same only difference are 
+
+   point 1 : Spring support Monolitic Architecture                    SB support microserives architecture
+
+   point 2 : In spring FW we have to configure the                   in SB FW there is auto configuration concept 
+             dependicies manually                                     through which depencies are automatically configured based in requiredment
+
+   point 3 : In spring we have to manually deploy the project         SB supports internally embeded server like tomcat , jetty etc
+             on server , for that all setup we have to do manually 
+
+   point 4 : spring have lot of compatibility issues                   no compatability issues
+            compatabality issues means for this version this 
+            jar files requried
+
+   point 5 : due to lot of configuration issues  developer head ache is there so they develop SB
+   point 6        xml                                                        annotation support
+
+
+ 3) Explain the project structure of spring boot application
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> WHen ever we create the Spring boot application the first there is one root folder is create 
+    -> that root folder is our project Name - 09-Spring-Boot-App  -------------- Project Name (root folder)
+    -> In this root folder there are 6 sub folders 
+    -> 3 related to src folder and next 3 related to 1 is maven dependencies folder ,2 is target folder , 3rd is pom.xml
+    -> src/main/java       which contains - Application.java   (This is start class) (Application starts from here ,just right click and start)
+                           We will write our source code under src/main/java folder
+    -> src/main/resources  which contains - application.properties or application.yml  (All configuration related properties add here )
+                           We will create our configuration files under src/main/resources folder
+    -> src/test/java       which contains - ApplicationTests.java
+                           We will create Junit class under src/test/java folder
+    -> Maven Dependencies   (It contains jars which got downloaded for project)
+    -> target             (it contains .class files)
+    -> pom.xml            (All Maven dependicies configuration file)
+                          Project dependencies we will configure in pom.xml file
+
+
+ 4) Expalin what is start class in Spring Boot? and explain internals of run() method
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Start class means every spring boot applciation is executed form this start class 
+    -> When we create any spring boot application the one defaut Application.java file is created this is start class 
+    -> And in this start class two main functionalities are available 1 is class is annotated with @SpringBootApplication
+       and 2nd is run() method
+      @SpringBootApplication
+      public class Application {
+          public static void main(String[] args) {
+              SpringApplication.run(Application.class, args);
+          }
+      }
+    -> @SpringBootApplication is equals to 3 annotation i.e @ Configuration , @EnableAutoConfiguration , @ComponentScan
+    -> And run (..) method which contains bootstrapping logic. 
+    -> Bootstrapping logic means the logic required to execute the Spring boot application and it contains 
+            - start and stop watch
+            - start listners
+            - prepareEnv
+            - print Banner
+            - create IOC container
+            - refresh Container
+            - stop that stop watch
+            - print time taken to start application
+            - call runners
+            - return IOC reference
+
+ 5) Explain How IOC container will start in Spring Boot ?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> In spring boot application the run() method will be execute the IOC container based on the dependency we added to create the application
+    -> For spring boot-starter, run( ) method using "AnnotationConfigApplicationContext" class to start IOC container
+    -> For spring boot-starter-web, run ( ) method using "AnnotationConfigServletWebServerApplicationContext" to start IOC
+    -> For starter-webflux, run ( ) method using "AnnotationConfigReactiveWebServerApplicationContext" to start IOC
+    -> spring boot-starter is used to create standalone applications
+    -> spring boot-starter-web dependency is used to develop web applications
+    -> spring boot-starter-webflux is dependency is used to develop applications with Reactive Programming
+
+ 6) Explain what is  Runners in Spring Boot
+    ++++++++++++++++++++++++++++++++++++++++
+    -> When we deploy the application on server and only once we want to execute any logic if this requirement is there then we use runner concept
+    -> Runners are getting called at the end of run ( ) method
+    -> To implement Runner in SB application They given 2 inteface
+         1) ApplicationRunner inteface 
+         2) CommandLineRunner inteface
+    -> Both runners are functional interface. They have only one abstract method i.e run (..) method
+    -> Use cases
+      ---------------
+      1) send email to management once application started
+      2) read data from db tables and store into cache memory
+
+      @Component
+      public class CacheManager implements ApplicationRunner {
+
+          @Override
+          public void run(ApplicationArguments args) throws Exception {
+              System.out.println("Logic executing to load data into cache....");
+          }
+      }
+
+      @Component
+      public class SendAppStartMail implements CommandLineRunner {
+
+          @Override
+          public void run(String... args) throws Exception {
+              System.out.println("logic executing to send email....");
+          }
+      }
+
+ 
+ 7) Explain @SpringBootApplication annotation
+   ++++++++++++++++++++++++++++++++++++++++++
+    -> This annotation is used with start class of the spring boot application
+    -> This annotation is equals to 3 annotations 
+       1) @Configuration
+       2) @EnableAutoConfiguration
+       3) @ComponentScan
+    -> Without this annotation we cannot start our application
+
+ 8) What is Banner in Spring Boot
+    ++++++++++++++++++++++++++++++
+    -> While execution of the spring boot application in console we see the spring logo that is called as Banner in Spring boot
+    -> We can customize that banner also  by creating "banner.txt" file under src/main/resources
+    -> We can keep our company name or project name as Banner text in Ascii format
+    -> Note: Generate Ascii text from here : https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Ashok%20IT
+    -> Spring Boot banner having below 3 modes
+    1) console  ---- > it is default mode
+    2) log
+    3) off
+    -> Note: If we set banner mode as off then banner will not printed
+       spring.main.banner-mode = off
+
+9) How you troubleshooting in your application
+   ---------------------------------------------
+   -> by running the application in Debugging mode
+
+
+
+1) @RequestBody Explain
+-------------------------
+   -> This @RequestBody annotation in Spring Boot is used to map HTTP request body data to a Java object in a REST API.
+   -> client sends a request with JSON or XML data in the body, Spring automatically converts it into a Java object.
+   -> It uses Jackson (for JSON) or JAXB (for XML) to perform this conversion.
+   -> if a required field is missing, the object will have null values.
+   -> We can validate input using:
+        Manual checks (if conditions)
+        @Valid and @NotNull (Bean Validation)
+   -> Can be made optional using required = false.
+
+2) Why in Rest API we use ResponseEntity as return type for the Controller class
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> In a Spring Boot REST API development we use ResponseEntity<T> as the return type for controller methods.
+   -> T is Reponse data
+   -> It allows to send the  HTTP responses along with 
+       1) custom status codes  : 200 , 404 
+       2) headers              :
+       3) response bodies.     :
+   -> If we dont use this ResponseEntity as return type for the controller methods then
+      1) always returns 200 OK unless an exception is thrown.
+      2) Need to manually throw exceptions
+      3) Only returns the body data.
+
+3) @PathVariable annotation (Only for Get MEthod)
++++++++++++++++++++++++++++++++
+  -> This annotation is used to extract values from the URL path and bind them to method parameters of controller class.
+                              @GetMapping("/{id}")
+  -> Single PathVaribale     public String getUserById(@PathVariable int id)    => request GET /users/10
+  -> Multiple PathVariables  @GetMapping("/{dept}/{id}")
+                             public String getEmployee(@PathVariable String dept, @PathVariable int id)   => Request GET /employees/HR/101
+  -> @PathVariable with a Custom Variable Name
+                            @GetMapping("/{orderId}")
+                            public String getOrder(@PathVariable("orderId") int id)
+  -> @PathVariable   required = false  [ when path variable is optional ( means if provided or not provided then in this case)]
+                            @GetMapping({"/{id}", "/"})
+                            public String getProduct(@PathVariable(value = "id", required = false) Integer id){
+                            return (id != null) ? "Product ID: " + id : "No Product ID provided";
+                            }
+                            GET /products/5 → Product ID: 5
+                            GET /products/ → No Product ID provided
+
+ 4) Difference between URL and Querry parameter
+ +++++++++++++++++++++++++++++++++++++++++++++++
+     URL              : /users/Nilesh
+     Query Parameters : /users?name=Nilesh
+                        /employees/details?name=John&age=30
+
+ 5) @RequestParam Annotation(Only for Get method)
+ +++++++++++++++++++++++++++++
+   -> @RequestParam annotation is used to extract the data from the Query parameter of the URL and bind with method parameter of the controller class
+   -> It is only used with Get Method
+   -> Ex: @GetMapping("/get")            Request      GET /users/get?name=Nilesh
+          public String getUser(@RequestParam String name) 
+  -> Handling Multiple Query Parameters   
+          @GetMapping("/details")        Request    GET /employees/details?name=John&age=30
+          public String getEmployee(@RequestParam String name, @RequestParam int age)
+  -> Making Query Parameters Optional
+          @GetMapping("/greet")
+          public String greet(@RequestParam(value = "name", required = false, defaultValue = "Guest") String name) 
+          Request    GET /greet?name=Nilesh    Response  Hello, Nilesh!
+                     GET /greet                Response  Hello, Guest!
+ -> Handling Lists or Arrays
+         @GetMapping("/products")
+         public String getProducts(@RequestParam List<String> categories)
+         Request: GET /products?categories=Electronics&categories=Books
+         Response: Selected Categories: [Electronics, Books]
+
+ 6) What is difference between Optional and orElseThrow()
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> EmployeeProEntity emp = empRepo.findById(id).orElseThrow();  => Use when the entity may or may not exist and you want to handle both cases gracefully.
+   -> Optional<EmployeeProEntity> emp = empRepo.findById(id);      => Use when the entity must be exist, and an exception should be thrown if it's missing.
+
+   -> Both statement are use to handle the case if Id is not available in database
+   -> Optional<EmployeeProEntity>, means result may or may not contain a value. It is useful when you want to check if the entity exists before using it
+   -> orElseThrow() immediately throws an exception if the entity is not found. It is useful when the entity must exist for further processing
+   -> If no entity is found, it will throw NoSuchElementException (default) or a custom exception if provided.
+
+ 7) How to make unique constraints for entity class properties
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> at coloum level : @Coloum(unique = true , nullable = false)
+   -> at table level  : @UniqueConstraint() ( when needed multiple column)
+                        @Table(name = "employees", uniqueConstraints = @UniqueConstraint(columnNames = {"email", "phoneNumber"}))
+                         public class Employee {
+                         @Column(nullable = false)
+                         private String email;

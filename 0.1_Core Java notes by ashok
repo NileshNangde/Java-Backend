@@ -1,0 +1,1028 @@
+
+ 
+      CORE JAVA INTERVIEW QUESTIONS
+      ++++++++++++++++++++++++++++++++++
+
+
+
+
+1.	Who Developed Java Programming Language?
+    ----------------------------------------
+   => James Gosling
+
+2) Why is java so popular?
+   ------------------------
+   => Java is popular because of its OOPs principle , Security , Platform independent , Distrubuted technology,
+      High Performance , and its  new features  and updation on every 6 months
+
+3) What is platform independent?
+   -----------------------------
+   => If an application runs everywhere without dependent on OS, then it is platform independent.
+
+4) What is bytecode?
+   ------------------
+   => It is one type of highly optimized code which is understandable to the JVM
+
+5) Compare JDK vs JRE vs JVM
+   -------------------------
+   => To develop, compile and run Java Programs we require JDK ,  To only run Java Programs => JRE is enough.
+      JVM's main responsibility is converting Byte code instructions to machine understandable format.
+
+6) What is a Token? how many types?
+   -------------------------------
+   => A smallest individual unit in a program is known as Token. Tokens are of 5 types.
+        ⦁	Keywords
+        ⦁	Identifiers
+        ⦁	Literals
+        ⦁	Operators
+        ⦁	Separators
+
+7) Define Datatype and its types?
+   ------------------------------
+   => Datatype defines which type of data we can store into the variable 
+      In java we have two types of datatypes Primitive and non Primitive
+      Primitive-> byte , short , int , long , double ,boolean , char , boolean 
+      non Primitive -> class , interface , enum etc
+
+8) What are different types of Operators in Java?
+   ----------------------------------------------
+        
+        ⦁	Arithmetic Operators
+        ⦁	Relational Operators
+        ⦁	Logical Operators
+        ⦁	Conditional Operators
+        ⦁	Increment & Decrement Operators
+        ⦁	Assignment Operators
+            Unary, Binary, Ternary Operators
+        ⦁	Bitwise Operators
+        ⦁	Boolean Operators
+        ⦁	Special Operators
+            ⦁	Dot Operator
+            ⦁	New Operator
+            ⦁	Instanceof Operator
+            ⦁	Cast Operator
+
+9) What is casting?
+   ---------------
+   => Converting from one datatype to another datatype is called Casting
+
+10) What is implicit casting?
+   --------------------------
+   => Converting from smaller datatype to larger datatype is called implicit typecasting. It will be done by java directly.
+
+11) What is explicit casting?
+   --------------------------
+   => Converting from larger datatype to smaller datatype is called explicit typecasting. It should be done explicitly by using cast operator
+
+12) What is an Array? Explain Different types of Arrays?
+   -----------------------------------------------------
+   => An Array is an ordered collection of fixed number of homogeneous or similar datatype elements.
+        ⦁	One Dimensional
+        ⦁	MultiDimensional (2D 3D)
+        ⦁	Jagged Arrays/Ragged Arrays / Irregular MultiDimensional Arrays
+        ⦁	Anonymous Arrays
+
+
+
+13) Explain Arrays class methods?
+   ------------------------------
+    ⦁	binarySearch()
+    ⦁	sort()
+    ⦁	fill()
+    ⦁	copyOf()
+    ⦁	copyOfRange()
+    ⦁	hashCode()
+    ⦁	toString()
+    ⦁	equals()
+    ⦁	deepEquals()
+
+14) Difference between length and length()?
+    ----------------------------------------
+   => length is the variable which is used to find the length of an array
+      length() is used to find the length of the string
+
+
+15) What is Jagged Array?
+   -----------------------
+   => IrregularMultiDimensional Arrays.
+      where the rows and columns are not in equal size
+
+16) What is state of an object?
+   ----------------------------
+   => instance variables
+
+17) What is behaviour of an object?
+   -------------------------------
+   => instance methods
+
+18)	What are different types of Variables in Java?     7 types
+   -----------------------------------------------------------
+        ⦁	Local variables
+        ⦁	Instance Variables
+        ⦁	Static Variables
+        ⦁	Final Variables
+        ⦁	Transient Variables : it is going to prevent the sensitive information in the serilization
+        ⦁	Volatile Variables
+        ⦁	public static final variables : final- means  values are fixed after initialization and cannot be modified 
+            static means:when we need a value to be shared across multiple instances
+            real time seneraios : 1) api url :public static final String API_BASE_URL = "http"--
+                                  2) Constant Classes:  public static final int ERROR_NOT_FOUND = 404;
+                                  3) Mathematical Constants:public static final double PI = 3.14159;
+                      
+19) What are different type of Methods in java? 23 different types of methods
+   ----------------------------------------------------------------------------
+    1) Based on Access Modifiers: 4 types
+        public , private , protected , default
+    2) Based on Static and non static keyword 2 types
+    3) Based on Return Type 2 types -> void and non void
+    4) Based on Parameters 3 types -> without , with and var-args as parameter
+    5) Based on Overloading and Overriding 2 types 
+    6) Based on Abstract and Concrete Definitions 2 types -> with abstract and non ab
+    7) Based on Synchronous and Asynchronous Execution 2 types
+    8) Based on Class Type 2 type -> final and native methods
+    9) Based on Lambda Expressions (Functional Interfaces) 1 type
+    10) Based on Special Use Cases 3 types
+               1) constructor method
+               2) main method
+               3) Utility Method -> to perform utility tasks, such as common operations on data.
+
+20) What is method overloading?
+    ----------------------------
+   => Defining more than one method with same name same return type or different type but compulsory difference in arguments is known as Method Overloading.
+      Overloading can be achieved in a single class or same class.
+
+21) What is method overriding?
+    ---------------------------
+   => Defining more than one method with same name same return type and same arguments but one in super class and another
+     one in sub class is known as Method Overriding.
+	 this can be achieved in super and sub classes.
+        ex: class Parent {
+                            public void  m1(){ sopln(){ " parent "}}
+                         }
+            class Child extends Parent{
+                          public void m2(){solpn(){" child "}} 
+                         }
+             ->  Parent p = new Parent()   ->  parent
+            ->   Child c = new Child() -> child 
+            ->   Parent p = new Child() -> child
+
+22) What is method hiding?
+   ------------------------
+ -> If both parent and child class method are static method with same name , same return   
+    type and same parameters then this is called method hiding
+ -> here in this method hiding - method object we create and store in those refrence object 
+    based on that refrence the method will called
+    ex: class Parent {
+                        public static m1(){ sopln(){ " parent "}}
+                     }
+        class Child  {
+                      public static m2(){solpn(){" child "}} 
+                     }
+         -> ex: Parent p = new Parent()   -> parent object store in parent refrence -> parent method 
+         -> ex: Child c = new Child() -> child method called
+         -> Parent p = new Child() -> child object , but parent refrence -> parent method called
+
+23) What is difference between Method overriding and Method Hiding
+    -----------------------------------------------------------------
+   -> If both method are non static method and  method name,method return type , method parameter are same then it is called method overriding
+   -> If both method are static and method name , method return type ,method parametr are same then it is called method hiding
+
+24) Can u achieve method overriding on static methods?
+   ----------------------------------------------------
+  -> No , then here method hiding concept is there
+
+25) What is Casting , What are different types of Casting in java ?
+   ----------------------------------------------------------------
+  -> A process of converting one data type to another is known as Typecasting
+     and Upcasting and Downcasting is the type of object typecasting.
+  -> Upcasting also called Widening conversion
+  -> Downcasting also called Narrowing conversion
+
+26) What is Upcasting and why we need Upcasting ?
+   ------------------------------------------------
+  -> When we assign sub class object or sub class object refrence into the super class object refrence then it is UpCasting 
+  ->   Parent obj1 =  new Child(); 
+       or
+       Child child = new Child(); // object assigning
+       Parent obj1 = child        // refrence assingning
+  -> When super class reference variable refers to the sub class object then it is known as upcasting.
+     In this upcasting you can access only super class methods, and if any super class methods overridden 
+     in the sub class and implemented  then sub class overridden methods can also be accessed. but we cannot access sub class own methods.
+  -> we rarely use Upcasting. We use it when we need to develop a code that deals with only the parent class
+
+27) What is Downcasting and why we need Downcasting ?
+   --------------------------------------------------
+    -> Child child = new Parent()   -> compile time error
+    -> Parent parent = new Child()
+          Child child = (Child)parent
+    -> Downcasting is used when we need to develop a code that accesses behaviors of the child class.
+
+28) Can super class reference variable hold an object of sub class?
+   ------------------------------------------------------------------
+    =>yes
+
+29) Is multiple inheritance allowed in java?
+   ------------------------------------------
+    =>yes. by using interfaces in 2 ways:
+      A Class implements multiple interfaces
+      An interface can extends multiple interfaces
+
+30) What is constructor?   
+   -----------------------                                                                         
+    => A constructor is a special method Which name is same as class name and have no return type
+       And a constructor is called wile object creation 
+       it is  used to initialize the instance variables of the class and it have two types default and parameterized
+
+31) What is a default constructor?
+   ----------------------------------
+    => If a constructor don’t have any arguments then it is known as default constructor
+
+32) How do you call a super class constructor from sub class constructor?
+   --------------------------------------------------------------------------
+    => using super()
+	   or
+       super(arg list)
+
+33) What is the use of this()?
+   ----------------------------
+    => this() can be used to call the current class no argument constructor
+
+34) What is the use of this , this() and this(args ) ?
+   --------------------------------------------------
+        this :  this keyword refer the current class object always and it is implicitly present into instance method, constructor , initialization block
+                note : explicitly required when instance variable and local variable name are same
+        this() :  call the default constructor of current class  and implicitly present
+        this( arg1 , arg2 ..)  : call parameterized constructor of current class we need to add explicitly as 1st statement  in default cons
+
+        class Demo{                                                class Demo{
+           
+             Demp(){                                                Demo(){
+             Sysout("default cons")                                 this(5);
+             }                                                       Sysout("default cons");
+                                                                     }
+             Demo(int x){                                            Demo(int x){
+             this();                                                 sysout(" param cons" x);
+             Sysout("parameter cons x");                             }
+             }
+
+            public static void main(String[] args ){                 public static void main(String[] args ){
+            new Demo(5);                                              new Demo();
+          }                                                            }
+        }                                                             }
+        output -> default cons                                      output -> param cons 5 
+                  param Cons 5                                                 default cons
+
+35) Explain this keyword with example
+    ---------------------------------
+    class Demo{
+
+     int x = 10;
+     void show(){         // note if this method is static then this code gives error why because of this not refer
+     sysout(x);          //here implicitly this.x
+     }
+    public static void main(String[] args ){
+         Demo d = new Demo();
+         d.show();
+       }
+    }
+
+    explanation : here int x is an instancr variable and d is refrence variable 
+                  d scope is within the method only but it gives output as 10 why
+                  because x is implicitly this.x so 
+
+36) Expalin this code 
+   -------------------
+   class Demo{
+
+   Demo(int x){};
+   public static void main(String[] args ){
+       new Demo();
+     }
+   }
+  // error why  :- because of default constructor not present so 
+
+37) How static method and static initialization block refer this keyword and super keyword
+    --------------------------------------------------------------------------------------
+    => this keyword cannot refer by static method and static initialization block
+
+38) What is the use of super , super() , super( args) ?
+   ---------------------------------------------------
+     super : super keyword is refer the super class members(variable or method)  and explicit required to write when super and sub class member are same
+     super() : is used to called default constructor of super class and implicitly present as 1st sta
+     super(args1 , arg2) : is used to call param  constructor of super class , explicity required to write
+
+39)  super , super() , super( args)  explain with code ?
+   -------------------------------------------------------
+         super                                     super keyword with method
+         =====
+         class A{
+           int x =10'                               show( super class method)
+         }
+         class B extends A{
+           int x=20;                                show( instance emthod)
+
+           void print(){
+            int x = 30;                              show();
+            sysout(x);    // 30                      this.show();
+            sysout(this.x); // 20                    super.show();
+            sysout(super.x); //10
+           }
+           public static void main(String[] args ){
+
+             B obj = new B();
+             obj.print();
+           }
+         }   output: 
+
+      super() and super(param)
+      ========================
+      class A{
+        A(){
+        this(20);
+        sysout(A class);
+        }
+
+        A(int x){
+        sysout( A class Param x)
+        }
+      }
+
+      class B extends A{
+
+      B(){     // implicitly super()
+      sysout(B class);
+      }
+
+      B(int y){
+      this();
+      sysout(B param y);
+      }
+
+      public static void main(String[] args ){
+      new B(10);
+      }
+      }
+      output:  A class param 20 
+               A class
+               B class
+               B class param 10
+40) Can a constructor be called directly from a method?
+   ----------------------------------------------------
+    => at the time f object creation constructor is directly called
+
+41) Is a super class constructor called even when there is no explicit call from a sub class constructor?
+   ------------------------------------------------------------------------------------------------------
+    => yes . super keyword implicitly present
+
+42) What is the use of instanceof operator in java?
+   ------------------------------------------------
+    =>It is used to check whether the given object belongs to the given class or not. it returns true if it belongs to the class otherwise returns false.
+
+43) What is interface?
+   ------------------------
+    => An interface is just like a class, which contains constant variables and public abstract methods.
+    -> note : In interface  method cannot be final, static , private , but in java 8 static method
+       class A extends B implements C,D,E{}
+
+44) How do u define an interface?
+   ------------------------------
+
+45) How do you implement interface?
+   ---------------------------------
+    => class implements interface
+
+46) What else u know about interface?
+   -------------------------------------
+        ⦁	It is a used to achieve 100% abstraction.
+        ⦁	Multiple Inheritance is achieved in java using interfaces
+        ⦁	from java 8 default and static methods we can write in interface
+        ⦁	We should not create object for interface because it contains incomplete methods or abstract methods.
+        ⦁	but we can create implementation classes for interface.
+        ⦁	By default, all the methods in interface are public and abstract.
+        ⦁	By default, the variables in interface are public static final.
+
+47) Can u extend an interface?
+   -----------------------------
+=>	yes
+
+48) Can a class extend multiple interfaces?
+   --------------------------------------------
+  => No ,  A class can implements multiple interfaces
+
+49) What is an abstract class?
+   ---------------------------
+   => An abstract class is a class which contains both abstract methods and non-abstract methods.
+
+50) When do u use an abstract class?
+   --------------------------------
+  =>Separate ideas with implementation
+
+51) How do you define an abstract method?
+   --------------------------------------
+  => abstract returntype methodname();
+
+52) Compare abstract class and interface?
+   ---------------------------------------
+  => We cant achieve 100% abstraction using abstract classes but we can achieve 100% using interfaces.
+    Multiple inheritance cannot be achieved using abstract classes but we can achieve inheritance using interfaces.
+
+
+53) What is private access modifier?
+   ----------------------------------
+  => Private variables and methods we can use it only with in the class where it is declared.
+
+54) What is default or package access modifier?
+   -------------------------------------------
+  => If no modifier is used it is called default access modifier
+
+55) What is protected access modifier?
+   ------------------------------------
+  => When we declare any variable or method as protected that we can use it any where in any class within 
+     the package,and its sub package outside of the package 
+
+56) What is public access modifier?
+   --------------------------------
+   => we can use everywhere, in any package.
+
+57) What access types of variables can be accessed from a class in same package?
+   ------------------------------------------------------------------------------
+  => default, public, protected
+
+
+58)  What access types of variables can be accessed from a class in different package?
+   ----------------------------------------------------------------------------------
+   => public
+
+59) What access types of variables can be accessed from a sub class in same package?
+   ---------------------------------------------------------------------------------
+  => default, protected, public
+
+60) What access types of variables can be accessed from a sub class in different package?
+   --------------------------------------------------------------------------------------
+  => protected, public
+
+61) What is the use of final modifier on a variable?
+   ---------------------------------------------------
+  => Final variable value is fixed cannot be changed
+
+62) What is the use of final modifier on a class?
+  ------------------------------------------------
+  => Final classes cannot be inherited then no use of that class
+
+63) What is the use of final modifier on a method?
+  ------------------------------------------------
+  => Final methods cannot be overridden
+
+64) What happens when a variable is marked as volatile?
+   ------------------------------------------------------
+  => A separate copy gets created for each and every thread
+
+65) What is static variable?
+  ---------------------------
+  => A variable which is declared inside a class and declared with static modifier it is known as static variable.
+  =>  The variable gets memory once at execution time and change same memory
+
+66) Should default be the last case in a switch statement?
+   -------------------------------------------------------
+   => no
+
+67) What is an enhanced for loop?
+  --------------------------------
+   => For each loop or enhanced for loop is used to iterate the group of elements in an array or in a collection
+
+68) What are the default values in an array?
+   ------------------------------------------
+       ⦁	For byte, short, int, long it is 0
+       ⦁	float, double it is 0.0
+       ⦁	char it is space
+       ⦁	boolean it is false
+       ⦁	String and any reference type it is null
+
+68) How many ways are there to read input through the keyboard?
+   ------------------------------------------------------------
+    ⦁	BufferedReader and InputStreamReader classes
+    ⦁	Scanner class
+    ⦁	Console class
+    ⦁	CommandLine Arguments etc...
+
+
+68) Difference between final, finally and finalize in java
+    -------------------------------------------------------
+     ⦁	final is the keyword used to declare a variable value as constant. final variable values cannot be changed.
+     ⦁	finally is used in exception handling
+     ⦁	finalize method will be called before the object gets garbage collected. but it is deprecated now.
+
+69) What are wrapper classes?
+   ---------------------------
+     ⦁	Wrapper classes are mainly used to wrap the primitive content into an object.
+     ⦁	This operation of wrapping primitive content into an object is called boxing.
+     ⦁	The reverse process i.e., unwrapping the object into corresponding primitive data is called Unboxing.
+
+69) Why do we need wrapper classes?
+   ---------------------------------
+     ⦁	int a=10;
+     ⦁	Integer I = a;//autoboxing
+     ⦁	int b = I;//auto unboxing
+
+
+70) What is String immutability?
+   -----------------------------
+   => String class are immutable in nature. That is ones we stored the data we cannot modify it.
+      Even if we do modification that modification will not be done in same memory location.
+
+
+71) What is the difference between creating the String class object using new operator and with String literal
+   -----------------------------------------------------------------------------------------------------------
+    If we create String class objects using new operator then memory will be created in Heap and in String constant pool , so more memory
+    If we create String class objects using String literal then memory is allocated in String constant pool only , less memory aquired
+    String str = new String("Nilesh"); with new operator
+    String str = "Nilesh";  with literal
+
+72) What is the difference between String and StringBuffer and String Builder classes
+   ----------------------------------------------------------------------------------
+    ⦁	String class objects are Immutable , Async and Thread safe          fast
+    ⦁	StringBuffer class objects are Mutable , Sync and Thread safe       slow
+    ⦁	StringBuilder class objects are Mutable, Async and non Thread safe. fast
+
+73) How do u print contents of an array?
+  --------------------------------------
+    There are 3 ways to print contents or elements of an array.
+    ⦁	Using Arrays class toString()
+    ⦁	Using for loop
+    ⦁	Using for each loop
+
+
+74) What are the different ways of creating Wrapper class instances?
+   ------------------------------------------------------------------
+   =>	Using Boxing, and AutoBoxing
+
+75) What is auto boxing
+  ----------------------
+    From JDK 1.5 onwards, Auto-Boxing is introduced.
+    According to this feature, you need not to explicitly wrap the primitive content into an object. 
+    Just assign primitive data to corresponding wrapper class reference variable, java automatically wraps primitive data into corresponding wrapper object.
+    byte b = 10; //Primitive byte data Byte B = b; //Auto-Boxing of byte data
+
+76) Can you give examples of different utility methods in String class?
+   ----------------------------------------------------------------------
+   => charAt(), length(), substring(int index), startsWith(), endsWith(), indexOf(), lastIndexOf(), Contains(),
+      format(), join(), split(), etc… refer java.lang.String class.
+
+77) Why should you always use blocks around if statement?
+   ------------------------------------------------------
+   => Under if without curly braces we can write only single statement. But if we want to write multiple statements under if we should write curly braces.
+
+78) How do you loop around an array using enhanced for loop?
+   ----------------------------------------------------------
+        for( datatype varname : array name / collection name)
+        {
+        //body of the loop
+        }
+
+79) What is an enum?
+   -----------------
+   => Enums in java are mainly used for grouping similar type of constants as a one unit. constants means static and final.
+      Enums are introduced in java in JDK 1.5 onwards enum Directions
+        
+
+80) Can you use a switch statement around an enum?
+   ---------------------------------------------------
+    => yes
+
+81) What is Static Initialization block?
+    ------------------------------------
+    ⦁	the main purpose of static blocks is to initialize static variables of the class.
+    ⦁	static blocks will be executed only ones when class is loaded into the memory.
+    ⦁	the purpose of constructor is to initialize the instance variables and it will be called by JVM each and every time whenever an object is created.   
+      Whereas static block is used for initializing static variables and it will be called by JVM only ones when class is loaded into memory.
+    ⦁	we should not initialize instance variables inside static blocks.
+    ⦁	If we use static block and main method in a program then JVM first executes static block and then main method.
+    ⦁	writing static blocks in a program is optional
+    ⦁	static blocks must be written inside a class but not inside a method.
+    ⦁	we can write multiple static blocks in a class but internally all of the static blocks will be treated as a single static block and the code inside that static blocks will be executed in the order how they are written in the program.
+    ⦁	when we define static variable initialization in our program without using static block then compilation environment will provide a system defined static block in that it will do that static variable initialization.
+
+82) What is Instance Initialization block?
+   -----------------------------------------
+     ⦁	The main purpose of instance block is to initialize instance variables of the class.
+     ⦁	its purpose is exactly similar to the constructor.
+     ⦁	instance block is executed each and every time when an object is created before executing constructor and after executing static block.
+     ⦁	we can write multiple instance blocks in a class but internally all of the instance blocks will be treated as a single instance block and the code  
+      inside that instance blocks will be executed in the order how they are written in the program.
+     ⦁	instance blocks must be written inside a class but not inside a method.
+
+83) Difference between Static Method and Instance Method?
+   ------------------------------------------------------
+   Instance methods: the methods which are defined inside a class are known as instance methods.
+      ⦁	Instance methods memory is created inside object in heap.
+      ⦁	we can use instance variables directly without using object in instance methods when both belongs to the same class.
+      ⦁	but when we want to use static variables in instance methods we should access by using class name or directly also.
+      ⦁	we can call one instance method from another instance method directly without using object when both belongs to same class.
+      ⦁	hen we call instance methods of one class in another class or in static methods then we should access by using object.
+   STATIC METHODS:
+      ⦁	when we define methods inside a class but declared with static keyword or modifier then those methods are called static methods.
+      ⦁	static methods memory is created in method area .
+      ⦁	only one copy of a static method is created for the whole class and that is shared by all objects of the class.
+      ⦁	static data is in the scope of class.
+      ⦁	we can use static variables and static methods directly from another static methods without using class name when all belongs to same class.
+      when we are accessing static methods from instance methods or from another class static methods then we should access by using class name.
+
+84) What is the difference between this and super?
+  ------------------------------------------------
+      this and super are the default reference variables. this is always used to refer current class variables, methods.
+      super is used to refer super class variables, methods
+
+85) What is the difference between this() and super()?
+   ---------------------------------------------------
+      this() is used to call current class constructor explicitly from another constructor of same class. Or to achieve constructor chaining we use this() and super().
+      super() is used to call super class no argument constructor.
+
+86) Can we use this() and super() at a time in a constructor?
+   ----------------------------------------------------------
+   => No. we should not use because this() and super() should be the first statement to be executed in a constructor.
+      So if we use both at a time we will get compile time error saying this() or super() must be the first statement to be executed error.
+
+87) What is Constructor Overloading?
+   ----------------------------------
+   => Defining more than one Constructor in a class but difference in parameters then those constructors are called overloaded 
+      constructors and concept is known as Constructor Overloading.
+
+
+88) How can you achieve inheritance in Java? How many ways are there?
+   ------------------------------------------------------------------
+   We can achieve inheritance using both extends and implements keywords.
+   Single Inheritance, Multilevel Inheritance, Hierarchical Inheritance.
+
+89) What are Object class methods?
+   -------------------------------
+   Object class is the super class for all classes in Java.
+   getClass(), hashCode(), wait(), toString(), clone(), equals(), finalize(), notify(), notifyAll() methods
+
+
+89) What is the default hashCode() implementation?
+   -----------------------------------------------
+   => The default hashcode method in the object class returns a value a number that is nothing but the memory location of that particular object.
+      So if we do not provide our own Hash code method, the value that will come back is the memory location of that object
+
+90 ) What is the default toString() implementation?  default toString() method means object class toString() method
+   ------------------------------------------------
+  => In user defined classes if we try to print an object of that class, then we will see a value in the format of
+     class name, followed by the @ symbol and the hexadecimal number which represent the memory location of that particular object. 
+     So that is the default implementation in the object class.
+   -> The toString() method is implemented in such a way that it will always return the class name followed by @ symbol and then the hexadecimal   
+      representation of the objects address.
+   -> And if we override it, then we will see whatever implementation we provide, whatever we return back from the toString method that will be used instead.
+
+
+91) Why are Strings Immutable?
+   ---------------------------
+  => String class objects are Immutable in nature. Ones we store the contents we cannot modify it.
+     Even if we change also, modification will be done in another location.
+
+92) Difference between Immutable and Mutable String objects?
+   ---------------------------------------------------------
+  => If we want to create mutable String objects then we should use StringBuffer and StringBuilder classes. 
+     In this classes even if we do modification it will be done in same memory location. 
+     String class objects are immutable which cannot be modified. Modified string will be stored in another memory location.
+
+93) Difference between equals() and == operator?
+   ---------------------------------------------
+  => Both are used to Compare object references. But when we override equals() it compares the content.
+
+
+94) Where are string values stored in memory?
+   -------------------------------------------
+  => If we create String using String literal, memory is allocated in String constant pool. 
+     But if we create String using new operator memory is allocated in Heap area.
+
+95) What is the difference between String and StringBuffer and String Builder classes
+   ----------------------------------------------------------------------------------
+  => All are final classes. String class Objects are Immutable and Thread safe StringBuffer class objects are Mutable and Thread safe
+     StringBuilder class objects are Mutable and Non Thread safe
+
+
+96) Explain about toString() method?
+   ----------------------------------
+  => The toString() method is implemented in such a way that it will always return the class name followed 
+     by @ symbol and then the hexadecimal representation of the objects address.
+  => And if we override it, then we will see whatever implementation we provide, whatever we return back from the toString method that will be used instead.
+
+97)  What is the use of equals method in java?
+    ------------------------------------------
+  => Equals method is used to compare two objects. This method is present in Object class.
+     It is similar to that of == operator, used to compare references to objects. 
+     But if we want to compare contents present in objects then we should override this method in our class, then it compares the content of two objects.
+     It has already overridden in String class, Wrapper classes, and Enum class.
+
+
+98) What is the use of hashCode() method?
+   -----------------------------------------
+   => hashCode() method is used to get the unique reference of an object
+.
+99) Can you give examples of different utility methods in String class?
+   ---------------------------------------------------------------------
+   => length(), charAt(), contains(), substring(), startsWith(), endsWith(), indexOf() etc..
+
+100) What are differences between String and StringBuffer?
+   -------------------------------------------------------
+   => String class is used to create Immutable objects. 
+      String class objects will be created by using String literal and new operator.
+      StringBuffer class is used to create Mutable objects. 
+      StringBuffer class objects are created by using new operator.
+
+101) What are differences between StringBuilder and StringBuffer?
+    --------------------------------------------------------------
+   => Both are used to create Mutable objects. But StringBuffer is threadsafe and StringBuilder is non thread safe.
+
+
+102) Define Assert statements and when it is used?
+   ----------------------------------------------
+   => An assertion allows testing the correctness of any assumptions that have been made in the program.
+      An assertion is achieved using the assert statement in Java.
+      While executing assertion, it is believed to be true. If it fails, JVM throws an error named AssertionError. 
+      It is mainly used for testing purposes during development.
+      The assert statement is used with a Boolean expression and can be written in two different ways.
+      First way: assert expression;
+      Second way: assert expression1: expression2;
+
+103) What is Coupling?
+    ------------------
+    => Coupling is a measure of how much a class is dependent on other classes. There should be minimal dependencies between classes. So, We should always aim for low coupling between classes.
+
+104) What is Cohesion?
+   -------------------
+   => Cohesion is a measure of how related the responsibilities(methods) of a class are. 
+      A class must be highly cohesive that is its responsibilities should be highly related to one another.
+
+EXCEPTION HANDLING:
+###################
+
+105) How can you handle exceptions in Java?
+   --------------------------------------
+   => By using try catch and finally blocks.
+
+
+106)	Why is exception handling important?
+   ---------------------------------------
+   => Because if at run time if any Exception cause then it will damage the normal execution flow of our application
+      To avoid this damge we use Exception handling 
+      also We can provide our own user friendly exception messages.
+
+
+107) What is the super class for all exceptions and errors in java?
+     ----------------------------------------------------------------
+   => Throwable class which is in java.lang package
+
+
+108) What is the super class for all exceptions in java?
+    ---------------------------------------------------
+    => Exception class
+
+
+109) What are the keywords used to handle an exception in java?
+    -----------------------------------------------------------
+   => Try, catch, and finally keywords
+
+
+110) Name different type of exceptions in java?
+    ---------------------------------------------
+   => Checked and Unchecked exceptions
+
+
+111) Can we write statements between try block and catch block?
+    ------------------------------------------------------------
+   => No , systax error
+
+
+112) What design pattern is used to implement exception handling features in most languages?
+   ---------------------------------------------------------------------------------------
+   => Chain of responsibility design pattern  a way of passing a request between chain of objects.
+
+
+113) What is the need for finally block?
+    ------------------------------------
+   => Clean up or closing operations will be performed in finally block. Finally block always gets executed where exception is there or not.
+
+
+114) In what scenarios is code in finally not executed?
+   ----------------------------------------------------
+  => If JVM crashes in between like if we use System.exit() and if exception is thrown in finally.
+
+
+115) Is try without a catch is allowed?
+    -----------------------------------
+  => Yes. We can use try and finally blocks without a catch block.
+
+
+116) What is exception handler in java?
+    -----------------------------------
+  => The code that catches the exception thrown by JVM.
+
+
+117) Can we just use try instead of finally and catch blocks?
+   ---------------------------------------------------------
+    => No.
+
+
+118) Can you explain the hierarchy of exception handling classes?
+    -----------------------------------------------------------
+  =>  Throwable class is the super class for all exceptions and errors 
+      Error class is the super class for all Error classes
+      Exception class is the direct super class for all checked exceptions(exceptions which are detected by compiler at compile time)
+      RuntimeException class is the super class for all unchecked exceptions(exceptions which are detected by JVM at runtime)
+
+
+119) Difference between 1. System.out.println(1/0); 2. System.out.println(2.0/0);
+    => In first case, Arithmetic Exception raises at run time
+       In second case, Infinity is the output.
+
+
+120) What is the difference between error and exception?
+    ----------------------------------------------------
+    => Error is used in situations where the programmer cannot do anything about that error. 
+        this is realted to machine , memory Ex: VirtualMachineError, StackOverFlowError, OutOfMemoryError
+    => Exception is used in situations when a programmer can handle the exception.
+
+
+121) What is the difference between checked exceptions and unchecked exceptions?
+    ----------------------------------------------------------------------------
+   => Checked exceptions are detected by compiler at compile time. Exception class is super class for all checked exceptions.
+      Unchecked exceptions are detected by JVM at runtime. RuntimeException class is the super class for all unchecked exceptions.
+      Exception class is super class for RuntimeException class.
+
+
+122) Which Exception class can you use in the catch block to handle both checked and unchecked exceptions?
+    ------------------------------------------------------------------------------------------------------
+    => Exception class
+
+123) Difference between throw and throws keywords?
+    ----------------------------------------------
+   => Throw is used to throw an exception explicitly by the programmer.
+      Throws is used when the programmer don’t want to handle the exception.
+
+
+124) How do you throw an exception from a method?
+    ---------------------------------------------
+   => Using throw keyword
+
+
+125) What happens when you throw a checked exception from a method?
+   ---------------------------------------------------------------
+   => It raises a compile time error.(unhandled exception type exception)
+
+
+126) What are the options you have to eliminate compilation errors when handling checked exceptions?
+    -------------------------------------------------------------------------------------------------
+   => Declaring that a method would throw an exception Handling the checked exception with a try catch blocks
+
+127) How do you create a custom exception?
+    --------------------------------------
+    => Create a user defined class which extends Exception class or RuntimeException class.
+
+128) How do you handle multiple exceptions in a single catch block?
+    ---------------------------------------------------------------
+   => Using Pipe operator
+
+129) Can you explain about try with resources?
+    ------------------------------------------
+   => When the try block ends the resources are automatically released. We don not need to create a separate finally block.
+         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+         // logic
+         }
+         catch(Exception e)
+         {
+         e.printStackTrace();
+         }
+
+130) What is the need for threads in Java?
+    ---------------------------------------
+    => Threads allow java code to run in parallel. We want to do more things in less time
+
+131) How do you create a thread?
+    ---------------------------------
+      By extending Thread class
+      By implementing Runnable interface
+      By implementing Callable interface
+
+132) How do you create a thread by extending thread class?
+    -----------------------------------------------------
+      class UserDefinedThread extends Thread { 
+      public void run( ) {
+      // logic
+       }
+      }
+
+
+
+133) How do you create a thread by implementing runnable interface?
+   --------------------------------------------------------------
+class UserDefinedThread implements Runnable{
+  public void run()
+{
+// logic
+}
+}
+
+134) How do you run a thread in Java?
+    --------------------------------
+   => By using Thread class start() method
+
+135) What are the different states of a thread?
+    --------------------------------------------
+   => New, Runnable, Running, Blocked / Waiting, Treminated / Dead states
+
+136) What is priority of a thread? How do you change the priority of a thread?
+    ----------------------------------------------------------------------------
+   => Thread priorities ranges from 1 to 10. Default thread priority is 5. We can change the thread priority using setPriority() method.
+
+137) What is Executor Service?
+    --------------------------
+   => Java.util.concurrent.ExecutorService interface is a new way of executing tasks asynchronously in the background. 
+      It is similar to that of a Thread pool.
+
+138) Explain different ways of creating executor services
+    -----------------------------------------------------
+   There are 3 ways of creating executor services.
+   ExecutorService executorService1 = Executors.newSingleThreadExecutor(); 
+   ExecutorService executorService2 = Executors.newFixedThreadPool(10); 
+   ExecutorService executorService1 = Executors.newScheduledThreadPool(10);
+
+139) How do you check whether an executionservice task executed successfully?
+    ---------------------------------------------------------------------------
+   => We can use a Future interface to check the return value. 
+      Future interface get method will return null if the task finished successfully.
+
+140) What is callable? How do you execute a callable from executionservice?
+    ------------------------------------------------------------------------
+   => Runnable interface run method has a return type void. It cannot return any result from executing a task. 
+      A Callable interface class method has a return type. 
+      If you have multiple return values possible from a task, we can use the Callable interface.
+      Future future = executorService1.submit(new Callable(){ public String call() throws Exception{
+      return “hello”;
+      }
+      });
+      S.o.pln(future.get());
+
+
+141) Can you give an example of a synchronized block?
+    --------------------------------------------------
+      synchronized(this){
+      // logic
+      }
+
+142) Can a static method be synchronized?
+   --------------------------------------s
+    => Yes
+
+143) What is the use of join method in threads?
+    --------------------------------------------
+   => We can maintain the order of execution of threads.
+
+144) Describe a few other important methods in threads?
+    ------------------------------------------------------
+   => isDaemon(), setDaemon(),setName(), getName(), getId(), yield(), sleep(), interrupted() etc..
+
+145) What is a deadlock?
+    ---------------------
+    => Lets consider a situation where thread1 is waiting for thread2 and thread2 is waiting for thread1. 
+       This situation is called a Deadlock. In this situation, both threads would wait for one another for ever.
+
+146) What are the important methods in Java for inter-thread communication?
+    -----------------------------------------------------------------------
+   => wait(), notify(), notifyAll() methods
+
+147) What is the use of wait method?
+    -----------------------------
+   => This method is present in Object class. This causes the thread to wait until it is notified.
+
+148)  What is the use of notify method?
+    -----------------------------------
+   => This method is present in Object class. This causes the object to notify other waiting threads.
+
+149) What is the use of notifyAll method?
+    -----------------------------------------
+   => If more than one thread is waiting for an object, we can notify all the threads by using notifyAll methods.
+
+150) What is difference between Collection Collection framework and Collections
+--------------------------------------------------------------------------------
+  -> COllection :  
+   -------------- -> Collection are used to store group of values / objects in growable format means dynamically increase 
+                 -> We can store any type of data in Collections (homogeneous and heterogeneous).
+                 -> Collections providing predifined methods to insert , update , delete , retrive , sort etc
+                 -> Collections.sort() , reverse etc
+
+  -> Collection framework :
+  -----------------------  -> Framework means readymade software // means predefine method  to sort , insert , update , delete
+                           -> Collections is called as framework because it is providing predefine interfaces , classes and methods
+                              to perform operations on data
+  -> COllectios :  same as collections framework , this is interface having list ,set, map interfaces 
+
+ 151) What is the hiercarchy of the collection framework
+ --------------------------------------------------------
+    iterable 
+       |
+    collection 
+        What is super interface for all collections : Iterable
+      - All collections are interface
+      - List , Set , Queue are in Collection family and Map is in another family
+

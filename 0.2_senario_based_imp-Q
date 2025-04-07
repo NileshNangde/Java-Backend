@@ -1,0 +1,132 @@
+EPAM Genpact HCL TCS
+1) In Microservices which design patterns you aware 
+  ++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2) In Java which design patterns you aware
+++++++++++++++++++++++++++++++++++++++++++
+
+1) How the communication happent between the microservices in your project
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2) Suppose your microservices running slow in the production enviorment then how do you fixed it what are the steps that you follow
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+3) What is server less architecture
++++++++++++++++++++++++++++++++++++
+
+4) How do you integrate the Database in your application
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+5) How do you handle the multiple beans in your application
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+6) How do you call the stored procedure of Relational Databases from the spring boot 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+7) Explain What is Garbage collections and how its work in java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+8) Do you aware which algorithm is used behind the Garbage collection in java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+9) Does finalize() plays any role in garbage collection
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+10) What is the difference between inheritence and composition in java
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+11) What is difference between when to use abstract class and when to use interfaces
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+12) Can we achive 100 % abstraction after java 8 
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+13) Do you know parallel stream in java
+++++++++++++++++++++++++++++++++++++++++
+
+14) With try catch we also have the keyword finally can you explain this 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+15) Can you explain me the difference between the == and equals() method in the string
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+16) In java do you know what are the methods that are introduce in string in java 8
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+17) Can you explain what is Eureka in Microservices architecture and Why it use
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+18) What are the various ways how communication happent between microservices
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+19) In Synchronous and Asynchronous class in microservices where the eureka server stands
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+20) How do you handle Fault tollerance in your microservices
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+21) Is there any way to monitor if any microservices when it is down or when it is failed
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+22) What differences you see in Spring and Spring boot while implementing Dependency Injection
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+23) How do you test your application in case of Spring boot and Microservices 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+24) Do you know the spring boot hibernate - DDL property
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+25) What is Executor is Java
++++++++++++++++++++++++++++++
+
+26) Can we use GET method to create and Update the resource
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+27) What are the http headers used for 
+++++++++++++++++++++++++++++++++++++++
+
+28) What will happent if there is only try block and finally block but not catch block
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+29) How do resolve the out of memeory error 
++++++++++++++++++++++++++++++++++++++++++++
+
+30) When do you choose hashmap over hashtable
++++++++++++++++++++++++++++++++++++++++++++++
+
+31) When we define the String as literal and When we define the String using new object can you tell me the difference
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+32) In Spring boot what is Component Repository and Service
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+33) Can we add Component itselt at every where in Service or Repository
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+34) Like @Component Can we create our own custom components
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+35) Can you Explain LoadBalance in context of microservices
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+36) What is JPA
++++++++++++++++++
+
+37) WHat is API GateWay in Microservices 
++++++++++++++++++++++++++++++++++++++++++
+
+38) Suppose we have Functional Interface having one abstract method and we are adding toString() do you think that this is correct 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+39) Can you explin Internal changes in HashMap in Java 8
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+40) Can you explain why default methods are introduce in java 8
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+41) What is Synchronized HashMap and Concurrent HashMap
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+42) What is Serilization in java
+++++++++++++++++++++++++++++++++

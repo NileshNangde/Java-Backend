@@ -1,0 +1,53 @@
+
++++++++++++++++
+Radis Cache
++++++++++++++++
+   1) Transactional table and Non Transactional table
+   ---------------------------------------------------
+      -> Transactional table    : table are modify with create / update / delete / select cmd or dynamic data 
+      -> Non Transactional table: table without modification , only select cmd ex: country names or static data
+                                  for Non Transactional data every time we dont communicate with database because for performance issue
+                                  when we have such type of senario then we go with Cache memory database
+   
+   2) Cache : is a location or memeory where we store Non Transactional table data in key and value format
+              using cache we can reduce the number od DB calls and increase the performance of the application
+
+        -> Local Cache : when we implement cache data with one application
+        -> Distributed cache : when we want to use cache data in multiple application(microservices) then we use distributed cache data ex  : Radis cache
+   
+   3) Redis 
+   -----------
+     -> Radis is one cache software and used to store the data in key and value format 
+     -> Multiple applications can connect to Radis cache to access the data
+
+    4) Redis setup
+    ----------------
+     -> In real time redis software downloaded into anooher machine and our application is running into another machine , we establish the communication between them
+
+     -> setup 
+         - download radis software 
+         - extract zip file 
+         - redis-server.exe file  open - software started with 6379 port number
+         - Redis cli also we can use
+
+   1) Spring boot inrtegration with Radis cache( use runner to execute and store data into redis server)
+   -----------------------------------------------
+       1) dependiciess
+          -> Spring-data-redis
+       2) Configure redis db server details in application.properties file
+       3) Create Configuration class  
+           crate bean method - JedisConnFactory class to establish the connection between Redis server 
+           create another bean  RedisTemplate and inject JedisConnFactory into it 
+       4) this template provide HashOps ( hash-operation )- same as hashMap to perform the operation on redis server
+          - put , get , delete method we can use with HashOps
+       5) Controller class for request and response
+       Architecture
+       --------------                           JedisConnFactory                       
+                                                   |
+       Controller class  -> serviec class  --> Redis Template  -> Database
+                                                   |
+                                                HashOps ( put , get, delete ) 
+        
+
+        Note : while connectiing with redis server in real time we need to pass user id and password in JedisConnFactory 
+              for practice both app and redis server is in same machine so no need of user id and password  

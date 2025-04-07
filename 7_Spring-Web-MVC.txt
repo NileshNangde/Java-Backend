@@ -1,0 +1,86 @@
+
+
+	1) What is Spring Web MVC
+	   ++++++++++++++++++++++
+	   -> Spring Web MVC is one module in Spring Framework to develop web applications.
+       -> And with the help of this Web MVC module web application development process is more simplified .
+	   -> To develop web application using spring-boot we need to add ### spring-boot-starter-web ### starter in pom.xml	
+	   -> The above starter provides support for below things
+		1) MVC based web applications
+		2) RESTFul Services
+		3) Embedded Container (Tomcat)
+
+	2) Web Application vs. Distributed Application
+	   +++++++++++++++++++++++++++++++++++++++++++
+              Web Application
+             ------------------
+       -> A web application is an application that is accessed all 
+          over Internet .It uses a web browser as a client. 
+
+	4) Spring Web MVC Architecture
+	   ++++++++++++++++++++++++++
+	   -> MVC design pattern is divided into 6 parts 
+	   -> 1) DispatcherServlet 2) Handler Mapper 3) Controller 4) ModelAndView 5) ViewResolver 6) View
+	   -> DispatcherServlet :- This act as the Front Controller.
+                               And it is Responsible to perform Pre-Processing and Post-Processing of Http request
+       -> Handler Mapper    :- After pre-processing of the request Dispatcher servelet send request to hander mapper
+                               Handler Mapper is going to identify the controller method and map the http request to that controller class method
+                               And again send response to Dispatcher servlet that the controller class method is available
+       
+	   -> Controller        :- After Dispatcher servlet knows that in controller class request method is available then 
+	                           Dispatcher servlet send http request to that Controller 
+	                           Controller is one Java class which is responsible to handle the main request & response
+		                       This class is going to be execute the logic by loading  controller -> service -> dto classes and return data and file logical name
+                               This Controller will be return the data in ModelAndView object format to DispatcherServlet.
+							   Model: Represents data in key-value format
+							   View: Logical File Name
+		                      Note: Controllers are loosely coupled with Presentation technology ex( jsp , thymeleaf).
+		 
+	   -> ViewResolver: To identify presentation file location and technology( where is that view file and what technology is means JSP , thymeleaf)
+	   -> View: It is responsible to render Model data in view file.
+   
+    5) What is mean by Embedded database or H2 DataBase
+       +++++++++++++++++++++++++++++++++++++++++++++++++
+       -> H2 Data base is one embedded database , embedded database means one temporary database
+       -> And this H2 database is one example id embedded data base
+       -> When application starts this H2 DB will start. When application stopped database will be stopped.
+       -> Note: Embedded Databases are used for Proof Of Concept (POC) development.
+
+    6) How to use Embedded DB in Spring Boot
+       +++++++++++++++++++++++++++++++++++++
+       -> Add H2 dependency in pom.xml file
+           <dependency>
+               <groupId> com.h2database </groupId>
+               <artifactId> h2</artifactId>
+               <scope> runtime </scope>
+           </dependency>
+
+       -> Configure H2 DB properties in application.properties file
+          spring.datasource.url=jdbc:h2:mem:testdb
+          spring.datasource.username=abc
+          spring.datasource.password=abc
+          spring.datasource.driver-class-name
+ 
+       -> Once application started we can access H2 DB console using below URL
+          localhost:8080/h2-console/
+    
+    7) How to change Embedded Container from Tomcat to Jetty?
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       -> first of all in <exclusions> tag in pom.xml we need to add the tomcat dependency 
+       -> exclusion means remove 
+       -> then add jetty dn dependency in pom.xml
+
+    8) How to change Embedded Container Port Number?
+       +++++++++++++++++++++++++++++++++++++++++++++++
+       -> server.port=9090
+
+    9) How to handle Exception handling in spring boot application
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       -> In Spring Boot we can handle exceptions in below 2 ways
+		  1) Local Exception Handling (Controller Specific)
+		  2) Global Exception Handling (Application specific)
+
+    10) What is differnce between  @Controller & @RestController?
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	   
+	

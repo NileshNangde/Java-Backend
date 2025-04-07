@@ -1,0 +1,383 @@
+
+note spring version : November 2023 Spring 6.1.x
+                      November 2024 Spring 6.2x
+                      November 2025 SPring 7.0.x
+Which version you working on springFW -> spring 5.1.2 (2017) version which support JDK 8 to 21
+
+What are the changes they have done in spring 5 
+ => -> Java 8 to 21 support
+    -> For non-blocking programming they give Reactive programming support (Reactor and WebFlux)
+    -> Functional ,Kotlin for bean registration
+    -> WebSocket support , Comprehensive HTTP/2
+    -> Core container performance improvements
+
+Note : to test the Spring 5.1.2 application JUnit 5.2 required
+       Hibernate 5.3
+       Tomcat 9
+---------------------------------------------------
+
+ 1) What is Spring and what are the main features of spring framework
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> Spring is java application development framework  which is develop by Rod Johnson in 2004
+
+   -> and it used to build light-weight ,loosely coupled enterprises Applications
+
+   -> In Spring there are pre-define API's are available for developing  Persistance logics , Restful web services ,
+       micro services and security develpment for our application etc.
+
+   -> Deveoping  distributed applications are very fast if we use Spring Fw , 
+
+   -> and it is mainly used to develop backend applications using java language
+
+   The main Features of Spring FW is 
+   -----------------------------------
+   Spring provides 
+      
+   -> Predifened templates  =>  we have JPA templates , rest templates , Hibernate templates  , 
+                                templates are the classes which reduces boiler plate code
+
+   -> Loose Coupling    => Modules are loosely coupled , means if we improve  one module then that  change is not affect to another module
+
+   -> Light weight   => occupied very less memeory as compare to other framework
+
+   -> Easy to test   => we use JUnit or Mockito to test our application is working properly or not
+
+   -> Powerful Abstraction  => which gives lot interface and abstract classes
+
+   -> Fast development   => (RAD) rapid appliaction development
+
+
+  2) What is Depenency Injection and types of DI
+    +++++++++++++++++++++++++++++++++++++++++++
+   -> Dependency means -> one independent class is connect with another independent class to perform the operation
+   -> Depedency injection -> means Injecting one class object into the another class 
+   -> here the class object we are creating means Dependent class and where that dependent class object  we are injecting means Target class
+   -> And we are injecting Dependent class object into the target class with the help of Target class setter methods, constructor and variable 
+
+   -> The process of injecting the Dependent class object into the target object with 
+      the help of target class setter methods , target class constructor and target class variables
+
+   -> With the help of DI we can develop the Loosly coupled application
+      loosely coupled means :-we add dependency no need to change the code , no need new keyword to create the object
+      tightly coupled means :- new dependency add then every time to change the code , like new key word required to create the object
+
+    types of Dependency Injection
+   -------------------------------
+    -> Constructor Injection  => Object is created by using parameterized constructor and values are injected.
+
+    -> Setter injection  => In this case Default constructor is used and setter methods are called and values are injected // constructor and setter injection supports XML 
+
+    -> Field Injection (@Autowired)  // only annotation suppoort
+
+  3) What is IOC in Spring and what are the different ways to create the IOC container , how to start the IOC contianer
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    -> IOC means Inversion of control and this is the container of spring FW
+    -> And with the help of this container the bean class life cycle is going to manages 
+    -> like bean class object creation and provide the bean class object dependency to all over the application
+    -> To create a normal java class as bean class we need to give that class as input to the IOC container
+    -> For that we use stereotypes annotations to give normal java class to IOC container , then IOC will produces Spring Beans 
+    -> In spring , IOC is responsible for DI
+
+     There are 2 ways to create the IOC container in Spring FW -> BeanFactory and ApplicationContext and both are interfaces
+     -------------------------------------------------------------
+
+    -> BeanFactory             and             ApplicationContext 
+    ------------------------------------------------------------
+    -> Fundamental container                  -> Advanced container
+    -> supports stand alone application       -> Supports web, ORM,and Distributed application
+        only
+    -> supports only singleton and prototype  -> supports all types of bean scope
+       bean scope       
+    -> not support annotation based           -> AnnotationCOnfigWebApplicationCOntext   -
+       configuration                             AnnotationConfigApplicationCOntext
+                                                 XmlWebApplcaitionCOntext
+    -> ClassPathXmlApplicationCOntext
+       FileSystemXmlApplicationCOntext
+
+   How to start the IOC container
+   -------------------------------
+   -> To start the IOC container while developing the spring project we choose the dependency at that time 
+      start class automatically create the IOC container based on the Dependency we are added
+
+
+  4) What is Spring Bean or Bean or spring BEan class
+     +++++++++++++++++++++++++++++++++++++++++++++++++
+
+     -> Those classes which are configured with IOC container are called as Spring Bean classes 
+        and object of that classes is managed by the IOC , that object is called as Spring Bean
+  
+  5) What is difference between Constructor and Setter Injection
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                                                         Setter Injection                                Constructor Injection
+        Point 1: Through which way depencies are injected          Setter methods for setter injection                Constructor for constructor injection
+        ---------------------------------------------- 
+
+        Point 2: At what time Dependecies are injected             In setter injection after object is created      In constructor injection at the time of object creation 
+        ----------------------------------------------             dependencies are injected                        dependecies are injected
+
+        Point 3: WHich one value os easily modified                setter injection values are easily modified       constructor injection , values are not modified once
+        ---------------------------------------------               after object creation                            object is created
+ 
+        Point 4: Required Dependecies                             it is optional to inject all the dependicies ,     constructor injection required all dependicies to 
+        ---------------------------------------------             if value not inject null value is set              provide during object creation
+ 
+        Point 5: Which one is more readiable                        more readeable , because dependicies pass as     not more readable , because of setter methods
+        ---------------------------------------------             parameter in constructor
+
+        Point 6: Which is more easy to test                                    ------------                          constructor injection
+        ---------------------------------------------
+
+     -> If Bean have many properties then we preffer constructor injection
+        if bean have only few properties the we preffer for setter injection
+
+     -> In COnstructor injection new instance will create and if any modification is done then that instance only modified , no new instance is create 
+        but in setter injection new instance is create
+
+  6) What is mean by Bean Scope and What are the Bean Scope provided by SPring FW and its annotations
+     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+     ->  Bean scope means:- how many objects can be create for the bean class 
+
+     -> Spring provide 4 types of Spring scope
+        1) Singleton (default)
+        2) Prototype   => every time a new object is created when we access
+        3) Request      
+        4) Session
+
+      -> Request and session works only web application only
+
+      -> Request indicates when client makes any request then only object is created in spring container
+
+      -> session is like logging and logout , when client login then only object is created , and when client logout then object is destroyes
+
+  7)  What is Autowiring in Spring and What are the different modes of it 
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+      => To perform the dependency injection automatically in spring boot application we are using Autowiring 
+      => DI means injecting dependent class object in the target class object with the help of variable , setter , and constructor 
+      => But  in spring boot we develop annotation based application so @Autowried annotation is used to perform the dependency injection with the help of variable
+      => Autowiring at field level internally IOC using Reflection api to perform autowiring
+      => @Autowired -> by defaut  byType mode is here
+      => @Qualifier we use then mode is byName  of the Autowired
+      =>XML based  Autowiring works based on below modes
+            1) byName       -  -> byName MODE will identify dependent bean based on variable name matching with bean id.
+            2) byType       -  -> byType MODE will identify dependent bean  based on variable data type.
+                                  Note: There is a chance of getting ambiguity in byType mode.
+                               => If variable data type is interface then we can have multiple implementation classes in this 
+                                  scenario IOC can't decide which bean it has to inject.
+                               => We can resolve byType ambiguity in 2 ways
+                                  1) auto-wire-candiate="false" 
+                                  2) primary = "true"
+            3) constructor
+            4) none
+  
+  8) What are Stereotype annotation
+     +++++++++++++++++++++++++++++++
+   -> Spring Framework provides some special types of annotations and These annotations are used to create the Spring beans 
+      automatically in the IOC container. 
+
+   -> @Component annotation is the main Stereotype Annotation. 
+
+   -> There are some Stereotype meta-annotations which is derived from this @Component those are
+
+   -> @Service: We specify a class with @Service to indicate that they’re holding the business logic. Besides being used in the service layer, there isn’t any other special use for this annotation. The utility classes can be marked as Service classes.
+
+   -> @Repository: We specify a class with @Repository to indicate that they’re dealing with CRUD operations, usually, it’s used with DAO (Data Access Object) or Repository implementations that deal with database tables.
+
+   ->  @Controller: We specify a class with @Controller to and responsible to indicate that a class serves as a controller, handle user requests and return the appropriate response. It is mostly used with REST Web Services
+
+   -> So the stereotype annotations in spring are @Component, @Service, @Repository, and @Controller.
+
+
+  9) What is Spring Configuration file an spring Configuration
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> In Spring we can done Configuration with the help of XML file and java class( with setter methods and constructor)
+     -> In spring boot configuration is done by annotation only
+
+  10) What is Bean Wiring
+      +++++++++++++++++++
+      -> Bean wiring means the process of connecting java class to IOC container for that we use sterotypes annotations
+      -> With the help of Bean wiring we make make Loosely coupled classes
+      -> And through @Autowired annotation we perform DI 
+    
+
+  11) What is difference between @Component and @Bean
+     +++++++++++++++++++++++++++++++++++++++++++++++++++
+      -> @Component  => IOC container is used to create object for bean class
+      -> @Bean       => If we want to create custom bean object for the class then we use @Bean along with @Configuration
+
+  12) What is the use of @Qualifier and @Primary and @Required annotation in SPring FW
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      1) @Qualifier :- -> When we have one interface and its 2 implementation classes and both implementation object we are using in same class 
+                       -> THen IOC container is confused to call which class implementaion object , here ambiguity to call
+                       -> So to avoid this ambiguity we give refrence to call which implementation class object with the help of @Qualifier annotation 
+                          with @Autowired annotation
+                       -> This @Qualifier annotaion we are explicity write 
+
+                      Ex: @Autowired
+                          @Qualifier(“MySql)
+                      Realtime ex: Suppose we have 1 interface and 2 implementation classes like  2 different database oracle and mySql 
+                                   and we want to load  specific MySql class  then we use @Qualifier (“MySql”) annotation to and pass the value 
+      2) @Primary   :- THis @Primary annotation indicate for  implicilt call
+                       THis is same like above senario when 1 interface have 2 implementation and IOC container have ambiguity to call
+                       but we define @Primary then by default called taken by the IOC container because of @Primary  
+                       it gives highest preference over the other beans for autowiring
+                       Explaination: We have class A and class B , which are implementing from interface X , 
+                                     now which bean object we want to give more priroty then we declare that bean class with @primary annotation 
+ 
+
+
+  13) What are lifecycle methods in Spring and What are different ways of writing lefecycle methods in Spring
+      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      -> Bean object life cycle is related to bean object creation and bean destroy in the IOC container 
+      -> When we give the input of java class to IOC container then the bean object is going to create by the container
+      -> Here in 1st phase -> all bean definations are going to load like -> java class , its annotations , xml file , etc
+      -> In 2nd phase      -> Bean instantion means default values are inserted into the properties like name= null , ex through default constructor
+      -> In 3rd phase      -> Bean object is Initializate -> means values are injected through  setter , @Value  -> init() method called which annoted by @PostConstruct
+      -> In 4th phase      -> that bean we use , like context.getBean() 
+      -> In 5th phase      -> after bean object is used bean is destroyed destroy() which is annotated with @PreDestroy
+      -> Life cycle methods of spring related to IOC container
+       note : depending upon the requirement values are instantiate
+
+  14) What is POJO and What is POM.xml
+     ++++++++++++++++++++++++++++++++++
+     -> POJO - Plain old java object class
+               this POJO class is simple ordinary class , without any specification 
+               And this class does not implement  or extends and api in it
+               Generally this class is related to properties and there setter and getter methods
+
+    -> pom.xml - Project object model
+                 In pom.xml file all dependencies  of our project are configured 
+
+
+  15) What are the Modules available in SPring FW Explain them 
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+      1) Spring Context                      5) Spring Core                           9) Spring Cloud
+      2) Spring DAO                          6) Spring Web MVC                       10) Spring Security
+      3) Spring ORM                          7) Spring REST                          11) Spring Social
+      4) Spring AOP                          8) Spring Data JPA                      12) Spring Batch   etc
+
+     1) Spring Core
+     --------------
+            -> Base module of spring framework and it provide fundamental concepts of Spring like IOC and DI 
+    
+     2) Spring Context
+     ------------------
+            -> Spring Context is to manage configurations support in Spring application 
+            -> configuration support means mapping  classes
+              ( classes are map to IOC this internal support is done by spring context)
+     
+     3) Spring AOP   AOP : Aspect Oriented Programming
+     ----------------
+        -> AOP is used to separate cross cutting logics in the application ,
+        -> Cross cutting logics are divided into 3 parts like primary logic / secondary logic/ helper logic
+        -> Primary logic is business logic  in separate class
+        -> Secondary logic is logging , security , exception handling etc …
+        -> Note : this primary classes and secondary classes are manage by Sring AOP at run time , this is work of AOP
+        -> Cross Cutting / Secondary / Helper Logics
+        Ex : Security, transaction, Logging, Auditing & exception handling etc...
+
+     4) Spring DAO / Spring JDBC
+     ----------------------------
+        -> Spring JDBC is extension for Java JDBC
+        -> To simplify persistence logic development we can use Spring JDBC
+
+        JDBC Logic
+        -----------
+        1. load driver
+        2. get connection
+        3. Create statement
+        4. Execute query
+        5. process result
+        6. Close connection
+
+     5) Spring ORM  ORM - Object relational mappping
+     -------------
+        -> SPring ORM module is extension for existing ORM frameworks
+        -> To suppport ORM integrations we have Spring ORM module
+        -> Spring ORM = Spring + ORM Framework (Ex: Hibernate)
+        Hibernate
+        ---------
+        1. Create Config obj
+        2. create session factory
+        3. create session
+        4. begin tx
+        5. execute methods
+        6. commit tx
+        7. close session
+        8. close sf
+
+     6) Spring Web MVC
+     -----------------
+      -> To develop both web & distributed (web services) applications
+      -> It is used to simplify web layer development in applications
+
+     7) Spring REST
+     --------------
+      -> To simplify REST API development
+
+     8) Spring Data JPA
+     -------------------
+      -> It is extension for Spring ORM
+      -> It is providing readymade methods to perform CRUD operations in DB
+    
+     9) Spring Security
+     --------------------
+      -> It is used to secure our spring based application
+      -> We can implement both Authentication & Authorization by using Spring Security
+      -> Authentication: Decide who can access our application?
+      -> Authorization: Identify logged in user having access for the functionality or not?
+
+     10) Spring Batch
+     -----------------
+      => Batch means bulk operation
+      Ex:
+      sending bulk email to customers
+      sending bulk sms to students regarding course update
+      sending bank statement to account holders
+      read records from file and store into DB
+
+     11) Spring Cloud
+     -----------------
+      -> It provides configurations required for Micro services development
+          Service Registry
+          Admin Server
+          API Gateway
+     
+    16) What is Lombok
+       +++++++++++++++
+       -> Lombok is one 3rd party library which provides bolier plates for the code 
+       -> While developing the application we use setter getter methods , constructor , param non param  all param constructor , 
+          toString() , equals() and hashCode() methods
+       -> So to reduce this code lines in the application we use Lombok which provides annotations for this like 
+          1) setter methods
+          2) getter methods
+          3) 0-param constructor
+          4) param-constructor
+          5) toString ( ) method
+          6) equals ( ) method
+          7) hashCode ( )
+     
+
+    17) Expalain the annoations which are available in Spring FW
+       +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       -> @Configuration : To represent java class as config class
+          @Component : To represent java class as Spring Bean class
+          @Service : To represent java class as Spring Bean class
+          @Repository : To represent java class as Spring Bean class
+          @Scope : To represent scope of spring bean (default : singleton)
+          @Autowired : Inject dependent into target
+          @Bean : To customize bean object creation.
+          @Qualifier : If we have two or more than bean in a class then which bean refrence is inject during the dependency injection 
+                       that refrence we give with the help of @Qualifier annaotation
+          @Primary : it gives highest preference over the other beans for autowiring
+          
+
+    20) What is inner beans in SPring
+       +++++++++++++++++++++++++++++++
+      
+      
+     
+       

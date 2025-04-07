@@ -1,0 +1,2575 @@
+
+*) java program to Move all the negative numbers present in integer array to start. 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public class Demo {
+    public static void main(String[] args)  {
+       
+        //add all negative numbers first int order
+        int[] arr = {1, -2, 3, -4, 5, -6, 7, -8, 9, -10};
+        
+         List<Integer> negatives = Arrays.stream(arr).filter(num -> num < 0).boxed().collect(Collectors.toList());
+         List<Integer> positives = Arrays.stream(arr).filter(num -> num >= 0).boxed().collect(Collectors.toList());
+         
+         List<Integer> result = Stream.concat(negatives.stream(), positives.stream()).collect(Collectors.toList());
+         System.out.println(result);
+    }
+}
+
+using for loop
+--------------
+public class Demo {
+    public static void main(String[] args)  {
+       
+        //add all negative numbers first int order
+        int[] arr = {1, -2, 3, -4, 5, -6, 7, -8, 9, -10};
+        int j =0;
+        for(int i =0 ; i<arr.length ;i++) {
+            if(arr[i] <0) {
+                 int temp = arr[i];
+                 arr[i]= arr[j];
+                 arr[j]=temp;
+                 j++;
+            }
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+*) Write a java program to have an array int[]a={0,1,4,2,5,0,8,9,0} sorted in ascending order and then place 0s in the middle. Output array={1,2,4,0,0,0,5,8,9}
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+1) collect(Collectors.toList()) example  -> gives output in array format -> [Nilesh, Mayur, Vaishu, Om]
+ +++++++++++++++++++++++++++++++++++++
+     import java.util.*;
+    import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            List<String> list= Arrays.asList("Nilesh" , "Mayur","Vaishu", " Om");
+            List<String> data =list.stream().collect(Collectors.toList());
+            System.out.println(data);
+            
+            String[] list1 = {"Nilesh" , "Mayur","Vaishu", " Om"};
+            List<String> data1 =Arrays.stream(list1).collect(Collectors.toList());
+            System.out.println(data1);
+            
+            Stream<String> list2= Stream.of("Nilesh" , "Mayur","Vaishu", " Om");
+            List<String> data2 = list2.collect(Collectors.toList());                       note : allready Stream.of()   so not list.stream() again
+            System.out.println(data2);
+        }
+    }
+    output is like this => [Nilesh, Mayur, Vaishu, Om]
+
+2) Given list of String , you need to print the string with its length ex: seven : 5 length
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.*;
+    import java.util.stream.*;
+    import java.util.function.*;
+    class Main {
+        public static void main(String[] args) {
+            List<String> list= Arrays.asList("Nilesh" , "Mayur","Vaishu", "Om");
+            
+            Map<String , Integer> map = list.stream().collect(Collectors.toMap(Function.identity() , String::length));
+            System.out.println(map);
+        }
+    }
+
+3) collect(Collectors.toSet())
+ +++++++++++++++++++++++++++
+     import java.util.*;
+    import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+           List<String> names = Arrays.asList("John", "Mary", "John", "Peter", "Mary");
+            Set<String> uniqueNames = names.stream().collect(Collectors.toSet());
+
+            System.out.println(uniqueNames); // Output: [John, Mary, Peter]
+        }
+    }
+
+4) Collectors.groupingBy() , Function.identity() , Collectors.collecting()
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+        List<String> g= Arrays.asList("geeks", "for", "geeks");
+        Map<String, Long> result  = g.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        System.out.println(result);
+    }
+}
+
+5) Collectors.joining()
+   +++++++++++++++++++
+   import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            char[] ch = { 'G', 'e', 'e', 'k', 's', 'f', 'o','r', 'G', 'e', 'e', 'k', 's' };
+            String chString= Stream.of(ch).map(arr -> new String(arr)).collect(Collectors.joining());
+            System.out.println(chString);
+        }   
+    }
+6) Collectors.maxBy()
++++++++++++++++++++
+list.stream().collect(Collectors.minBy(Comparator.comparing(Box::getWeight))).orElse(null);
+
+7) Group the Employees by city. -> gives data in json format
++++++++++++++++++++++++++++++
+Map<String , List<Employee>> empData =  empList.stream().collect(Collectors.groupingBy(Employee::getCity));
+ System.out.println(empData);
+
+ output:  {
+               Chennai=
+                        [
+                         Employee [id=3, name=efg, age=30, salary=115, gender=M, deptName=HR, city=Chennai, yearOfJoining=2014], 
+                         Employee [id=4, name=def, age=32, salary=125, gender=F, deptName=HR, city=Chennai, yearOfJoining=2013]
+                        ], 
+          }
+
+
+8)Group the Employees by age. 
+  ++++++++++++++++++++++++++
+  Map<Integer , List<Employee>> empData = empList.stream().collect(Collectors.groupingBy(Employee::getAge));
+     System.out.println(empData);
+
+9) Find the count of male and female employees present in the organization.
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Map<String , Long> empData =  empList.stream().collect(Collectors.groupingBy(Employee::getGender , Collectors.counting()));
+    System.out.println(empData);
+
+10) Print the names of all departments in the organization.
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   empList.stream().map(emp -> emp.getDeptName()).distinct().forEach(System.out::println);
+
+11) Print employee details whose age is greater than 28.
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++
+   empList.stream().filter(emp ->emp.getAge() > 28).forEach(System.out::println);;
+
+12) Find maximum age of employee.
+   ++++++++++++++++++++++++++++
+    Optional<Employee> age = empList.stream().max(Comparator.comparing(Employee::getAge));
+      if(age.isPresent()) {
+          System.out.println(age.get());
+      }
+13) Find the details of employee who has maximum age 
+   +++++++++++++++++++++++++++++
+   Optional<Employee> maxAge = empList.stream().max(Comparator.comparing(Employee::getAge));
+      if(maxAge.isPresent()) {
+          System.out.println(maxAge.get());
+      }
+
+ output : Employee [id=4, name=def, age=32, salary=125, gender=F, deptName=HR, city=Chennai, yearOfJoining=2013]
+
+14) Find the maximun age of the employee not any details
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++
+   OptionalInt maxAge = empList.stream().mapToInt(Employee::getAge).max();
+    if(maxAge.isPresent()) {
+        System.out.println(maxAge.getAsInt());
+    }
+  output : 32
+
+15) Given a list of integers, find maximum and minimum of those numbers?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.Comparator;
+      import java.util.List;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              List<Integer> listOfIntegers = Arrays.asList(45, 12, 56, 15, 24, 75, 31, 89); 
+              int max = listOfIntegers.stream().max(Comparator.naturalOrder()).get(); 
+              System.out.println("Maximum Element : "+max);
+              int min = listOfIntegers.stream().min(Comparator.naturalOrder()).get();
+              System.out.println("Minimum Element : "+min);
+          }
+      }
+      Output 
+      Maximum Element : 89
+      Minimum Element : 12
+
+     
+15) Print Average age of Male and Female Employees
+   ++++++++++++++++++++++++++++++++++++++++++++++
+    Map<String , Double> emp =empList.stream().collect(Collectors.groupingBy(Employee::getGender , Collectors.averagingDouble(Employee::getAge)));
+    System.out.println(emp);    
+    }
+    {F=27.4, M=26.25}
+
+16) Print the number of employees in each department.
+  +++++++++++++++++++++++++++++++++++++++++++++++++
+  empList.stream().map(Employee::getName).forEach(System.out::println);
+
+17) Find oldest employee by Age
+    +++++++++++++++++++++++++++
+    Optional<Employee> maxAgeEmp =  empList.stream().max(Comparator.comparing(Employee::getAge));
+    System.out.println(maxAgeEmp);
+
+    Optional[Employee [id=4, name=def, age=32, salary=125, gender=F, deptName=HR, city=Chennai, yearOfJoining=2013]]
+
+18) Find youngest female employee
+    +++++++++++++++++++++++++++++
+    Optional<Employee>minAge =  empList.stream().filter(emp -> emp.getGender()=="F").min(Comparator.comparing(Employee::getAge));
+    if(minAge.isPresent()) {}
+    System.out.println(minAge.get());
+    }
+
+19) Find employees whose age is greater than 25 and less than 30.
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+20) Find the department name which has the highest number of employees.
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Map.Entry<String, Long> map = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting())).
+                                                 entrySet().stream().max(Map.Entry.comparingByValue()).get(); 
+    System.out.println(map.getKey());
+
+21) Find if there any employees from HR Department.
+    +++++++++++++++++++++++++++++++++++++++++++++++
+    Optional<Employee> emp = empList.stream().filter(e -> e.getDeptName().equalsIgnoreCase("HR")).findAny();
+    emp.ifPresent(employee -> System.out.println(employee));
+ 
+22) Find the department names whose emloyee are more than 3
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      Map<String , Long> map =empList.stream().collect(Collectors.groupingBy(Employee::getDeptName(), Collectors.counting()));
+      map.entrySet().filter(entry -> entry.getValue > 3).forEach(System.out::println);
+
+23) Find distinct department names that employees work for.
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    empList.stream().map(Employee::getDeptName).distinct().forEach()
+
+24) Find all employees who lives in ‘Blore’ city, sort them by their name and print the names of employees .
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    empList.stream().filter(emp -> emp.getCity().equalsIgnoreSpace("Blore")).sorted(Comparator.comparing(Employee::getName)).forEach();
+
+25) Find No of employees in the organisation.
+    +++++++++++++++++++++++++++++++++++++++++
+    System.out.println("No of employees in the organisation :: " + empList.stream().count());
+
+26) Find employee count in every department
+ ++++++++++++++++++++++++++++++++++++++++++++
+    Map<String, Long> employeeCountInDepartmentMap = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()));
+     System.out.print("Employee department and its count :- \n"+ employeeCountInDepartmentMap);
+
+27) Find the department which has the highest number of employees.
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Optional<Map.Entry<String, Long>> deptNameWithHighestEmp = employeeCountInDepartmentMap.entrySet().stream().max(Map.Entry.comparingByValue());
+   if (deptNameWithHighestEmp.isPresent()) {
+    System.out.println("Department which has the highest number of employees " + deptNameWithHighestEmp.get());
+    }
+
+28) Sorting a Stream by age and name fields.
+    +++++++++++++++++++++++++++++++++++++++++++++
+    Comparator<Employee> comparator1 = Comparator.comparing(Employee::getName);
+    Comparator<Employee> comparator2 = Comparator.comparingInt(Employee::getAge);
+    empList.stream().sorted(comparator1.thenComparing(comparator2)).forEach(System.out::println);
+
+    or
+    empList.stream().sorted(Comparator.comparing(Employee::getName).thenComparing(Comparator.comparing(Employee::getAge))).forEach(System.out::println);
+
+29) Highest experienced employees in the organization.
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Optional<Employee> seniorEmp = empList.stream().sorted(Comparator.comparingInt(Employee::getYearOfJoining)).findFirst();
+    System.out.println("Senior Employee Details :" + seniorEmp.get());
+
+30) Print average and total salary of the organization.
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    DoubleSummaryStatistics empSalary = empList.stream().collect(Collectors.summarizingDouble(Employee::getSalary));
+    System.out.println("Average Salary in the organisation = " + empSalary.getAverage());
+    System.out.println("Total Salary in the organisation  = " + empSalary.getSum());
+  
+  Note: Using summarizingDouble we can get 
+         1) average sal  : sal.getAverage()
+         2) sum of sal   : sal.getSum()
+         3) max sal      : sal.getMax()
+         4) min sal      : sal.getMin()
+         5) count of sal : sal.getCount()
+        
+
+31) Print Average salary of each department.
+ +++++++++++++++++++++++++++++++++++++++++++++
+   Map<String, Double> avgSalary = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.averagingDouble(Employee::getSalary)));
+   Set<Map.Entry<String, Double>> entrySet = avgSalary.entrySet();
+   for (Map.Entry<String, Double> entry : entrySet) {
+     System.out.println(entry.getKey() + " : " + entry.getValue());
+   }
+
+32) Find Highest salary in the organisation.
+    +++++++++++++++++++++++++++++++++++++++++
+    1) DoubleSummaryStatistics sal =  empList.stream().collect(Collectors.summarizingDouble(Employee::getSalary));
+       System.out.println(sal.getMax());
+
+    2) Employee maxSal = empList.stream().max(Comparator.comparing(Employee::getSalary)).get();
+       System.out.println(maxSal.getSalary());
+       
+    3) Employee emp = empList.stream().sorted(Comparator.comparing(Employee::getSalary)).skip(empList.size()-1).findFirst().get();
+       System.out.println(emp.getSalary());
+       
+    4) Optional<Employee> emp1 = empList.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).findFirst();
+       System.out.println(emp.getSalary());
+
+33) Find Second Highest salary in the organisation.
+   +++++++++++++++++++++++++++++++++++++++++++++++++++
+    Optional<Employee> emp2 = empList.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).skip(1).findFirst();
+    System.out.println("Second Highest Salary in the organisation : " + emp2.get().getSalary());
+
+34) Nth Highest salary.
+   ++++++++++++++++++++
+    int n = 10;// this can be any nth number highest salary
+    Optional<Employee> emp2 = empList.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).skip(n-1).findFirst();
+    System.out.println("Second Highest Salary in the organisation : " + emp2.get().getSalary());
+
+35) Find highest paid salary in the organisation based on gender.
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Map<String, Optional<Employee>> highestPaidMFEmployee = empList.stream()
+                                                                  .collect(Collectors.groupingBy(Employee::getGender, Collectors.maxBy((t1, t2) -> (int) (t1.getSalary() - t2.getSalary()))));
+   System.out.println("Highest paid male and female employee : " + highestPaidMFEmployee);
+
+   or
+   Stream<Employee> empl =  empList.stream().filter(emp -> emp.getGender().equalsIgnoreCase("M"));
+   //int maxSal =  empl.map(Employee::getAge).max(Comparator.naturalOrder()).get();
+   Optional<Employee> maxSal =  empl.max(Comparator.comparing(Employee::getAge));
+   if(maxSal.isPresent()) {
+       System.out.println(maxSal.get());
+   }
+
+
+36) Find lowest paid salary in the organisation based in the organisation.
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Map<String, Optional<Employee>> lowestPaidMFEmployee = empList.stream()
+                                                                  .collect(Collectors.groupingBy(Employee::getGender, Collectors.minBy((t1, t2) -> (int) (t1.getSalary() - t2.getSalary()))));
+    System.out.println("Lowest paid male and female employee : " + lowestPaidMFEmployee);
+
+37) Sort the employees salary in the organisation in ascending order
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    System.out.println("Sorting the organisation's employee salary in ascending order ");
+    empList.stream().sorted(Comparator.comparingLong(Employee::getSalary)).toList().forEach(System.out::println);
+
+38) Sort the employees salary in the organisation in descending order.
+     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    System.out.println("Sorting the organisation's employee salary in descending order ");
+    empList.stream().sorted(Comparator.comparingLong(Employee::getSalary).reversed()).toList().forEach(System.out::println);
+
+39) Highest salary based on department.
+     ++++++++++++++++++++++++++++++++++++++
+       System.out.println("Highest salary dept wise:: \n" + empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, Collectors.collectingAndThen(Collectors.toList(),list -> list.stream().max(Comparator.comparingDouble(Employee::getSalary))))));
+       
+       or output like this ({Finance=110000.0, HR=112000.0, IT=1020.0, Admin=103000.0})
+       Map<String , Double> data =  empList.stream().collect(Collectors.groupingBy(Employee::getDeptName ,
+             Collectors.collectingAndThen(Collectors.toList(), 
+                     list -> list.stream().map(Employee::getSalary).sorted(Comparator.naturalOrder()).findFirst().get())));
+    
+
+40) Print second highest salary record of each department
+       ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       System.out.println("Highest second salary dept wise:: \n" + empList.stream().collect(Collectors.groupingBy(Employee::getDeptName,
+                   Collectors.collectingAndThen(Collectors.toList(),
+                   list -> list.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).skip(1).findFirst()))));
+        or
+         Map<String, Object> data = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName , Collectors.collectingAndThen(Collectors.toList(), 
+              list -> list.stream().map(Employee::getSalary).sorted(Comparator.reverseOrder()).skip(1).findFirst())));
+      System.out.println(data);
+
+41) Sort the employees salary in each department in ascending order
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      System.out.println("Sorting the department wise employee salary in ascending order:: ");
+      Map<String, Stream<Employee>> sortedEmployeeAsc = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, 
+                                                   Collectors.collectingAndThen(Collectors.toList(),
+                                                   list -> list.stream().sorted(Comparator.comparingDouble(Employee::getSalary)))));
+       sortedEmployeeAsc.forEach((k,v)->{
+            System.out.println(k);
+            System.out.println(v.collect(Collectors.toList()));
+        });
+
+        or
+        Map<String, Object> data = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName , Collectors.collectingAndThen(Collectors.toList(), 
+              list -> list.stream().map(Employee::getSalary).sorted(Comparator.naturalOrder()).collect(Collectors.toList()))));
+     
+       data.forEach( (k , v) ->{
+           System.out.println(k);
+           System.out.println( v);
+       });
+
+42) Sort the employees salary in each department in descending order
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      System.out.println("Sorting the department wise employee salary in descending order ");
+      Map<String, Stream<Employee>> sortedEmployeeDesc = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName, 
+                                                            Collectors.collectingAndThen(Collectors.toList(),
+                                                            list -> list.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()))));
+      sortedEmployeeDesc.forEach((k,v)->{
+            System.out.println(k);
+            System.out.println(v.collect(Collectors.toList()));
+        });
+     or
+     Map<String, Object> data = empList.stream().collect(Collectors.groupingBy(Employee::getDeptName , Collectors.collectingAndThen(Collectors.toList(), 
+              list -> list.stream().map(Employee::getSalary).sorted(Comparator.reverseOrder()).collect(Collectors.toList()))));
+     
+       data.forEach( (k , v) ->{
+           System.out.println(k);
+           System.out.println( v);
+       });
+
+
+43) How do you merge two unsorted arrays into single sorted array using Java 8 streams?
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.stream.IntStream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              int[] a = new int[] {4, 2, 7, 1};
+              int[] b = new int[] {8, 3, 9, 5};
+              int[] c = IntStream.concat(Arrays.stream(a), Arrays.stream(b)).sorted().toArray();
+              System.out.println(Arrays.toString(c));
+          }
+      }
+      Output :  [1, 2, 3, 4, 5, 7, 8, 9]
+
+ => Without Java 8
+ ++++++++++++++++++
+            class Main {
+            public static void main(String[] args) {
+                int[] a = new int[]{2,5,3,6,8,1};
+                int[] b = new int[]{7,1,4,9};
+                int[] result = new int[a.length + b.length];
+                
+                for(int i=0 ; i<a.length ;i++){
+                    result[i]=a[i];
+                }
+                for(int i=0 ;i<b.length ;i++){
+                    result[a.length +i] = b[i];
+                }
+                Arrays.sort(c);
+                System.out.println(Arrays.toString(c));
+               // Arrays.reverse(c); not present method in arra
+               or
+                System.out.println(Arrays.toString(result));
+               List<Integer> list =   Arrays.stream(result).distinct().boxed().collect(Collectors.toList());
+               System.out.println(list);
+               or
+               List<Integer> data = Arrays.stream(c).distinct().boxed().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+              System.out.println(data);
+        
+            }
+           }
+           =======================================================================
+           Note : .boxed() → Converts int to Integer in Streams before collecting.
+           =======================================================================
+
+44) How do you merge two unsorted arrays into single sorted array without duplicates?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.stream.IntStream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              int[] a = new int[] {4, 2, 5, 1};
+              int[] b = new int[] {8, 1, 9, 5};
+              int[] c = IntStream.concat(Arrays.stream(a), Arrays.stream(b)).sorted().distinct().toArray();
+              System.out.println(Arrays.toString(c));
+          }
+      }
+    =============================================
+    Note: IntStream.concat()  for primitive array
+          Stream.concat() for Object array
+    ==============================================
+      Output : [1, 2, 4, 5, 8, 9]
+      
+        import java.util.*;
+        import java.util.stream.*;
+        class Main {
+            public static void main(String[] args) {
+               List<Integer> a =Arrays.asList(4, 2, 7, 1);
+               List<Integer> b =Arrays.asList(8, 3, 9, 5,1);
+            List<Integer> c = Stream.concat(a.stream(), b.stream()).distinct().collect(Collectors.toList());
+                      System.out.println(c);
+            }
+        }
+
+ => Without Java 8
+ ++++++++++++++++++
+
+45) How do you find common elements between two arrays?
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.List; 
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              List<Integer> list1 = Arrays.asList(71, 21, 34, 89, 56, 28);
+              List<Integer> list2 = Arrays.asList(12, 56, 17, 21, 94, 34); 
+              list1.stream().filter(list2::contains).forEach(System.out::println);
+          }
+      }
+      Output :
+      21
+      34
+      56
+ 
+ => Without Java 8
+ ++++++++++++++++++
+    class Main {
+    public static void main(String[] args) {
+        int[] a = { 2,4,3,6,5};
+        int[] b = {1,8,9,3};
+        
+        for(int i=0 ; i<a.length ;i++){
+            for(int j=0 ;j<b.length ;j++){
+                if(a[i]==b[j]){
+                    System.out.println(a[i]);
+                }
+            }
+          }
+        }
+      }
+      or
+      List<Integer> data= Arrays.stream(a).filter(x->Arrays.stream(b).anyMatch( y-> y==x)).boxed().collect(Collectors.toList());
+      System.out.println(data);
+
+46) How To Check The Equality Of Two Arrays
+   +++++++++++++++++++++++++++++++++++++++++++
+   import java.util.*;
+   class HelloWorld {
+    public static void main(String[] args) {
+        int[] one={1,2,3,4,5};
+        int[] two={1,2,3,4,5};
+       boolean data= Arrays.equals(one,two);
+       if(data){
+           System.out.println("Two arrays are equal");
+       }else{
+           System.out.println("Not are equal");
+       }
+    }
+   } 
+
+47) Find sum of Array
+   ++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+    int[] number = {1,2,2,3,4,5};
+    int sum=0;
+    for(int i=0; i<number.length;i++){
+        sum= sum+number[i];
+    }
+        System.out.println(sum);
+    }
+   }
+   or
+   int sum = Arrays.stream(number).sum();
+
+   or
+   DoubleSummaryStatistics stat=    Arrays.stream(number).boxed().collect(Collectors.summarizingDouble(Integer::doubleValue));
+   System.out.println(stat.getSum());
+   
+48)  How do you get last element of an array without sorting?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.List; 
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              List<String> listOfStrings = Arrays.asList("One", "Two", "Three", "Four", "Five", "Six");
+               
+              String lastElement = listOfStrings.stream().skip(listOfStrings.size() - 1).findFirst().get();
+               
+              System.out.println(lastElement);
+          }
+      }
+      Output :
+      Six
+  
+49) Given the list of integers, find the first element of the list using Stream functions?
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+      import java.util.stream.*;
+
+      public class FindFirstElement{
+        public static void main(String args[]) {
+                List<Integer> myList = Arrays.asList(10,15,8,49,25,98,98,32,15);
+                myList.stream()
+                      .findFirst()
+                      .ifPresent(System.out::println);
+        }
+      }
+
+      or 
+      Integer number=myList.stream()
+                      .findFirst()
+                      .get();
+             System.out.println(number);
+
+      Output: 
+      10
+
+51) Find the largest second number in the array
+    ++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.Arrays;
+    class HelloWorld {
+    public static void main(String[] args) {
+       int[] number = {11,232,12, 2,1,2,43,5};
+       Arrays.sort(number);
+       System.out.println(number[number.length-2]);
+     }
+    }
+  
+52) Java program to count numbers of even and odd elements in an array
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+       class HelloWorld {
+       public static void main(String[] args) {
+        int[] number = {1,2,3,4,5,6};
+        int evenNo=0;
+        int oddNo=0;
+        for(int i=0 ; i<number.length ; i++){
+            if(number[i]%2==0){
+                evenNo++;
+            }else{
+                oddNo++;
+            }
+        }
+        System.out.println("even number are :"+ evenNo);
+        System.out.println("odd number are :"+ oddNo);
+       }
+      }
+
+53) reverse the string array in reverse order
+   +++++++++++++++++++++++++++++++++++++++++
+   import java.util.*;
+    import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+             List<String> array = Arrays.asList("Mango", "Apple", "Grapes", "Papaya", "Pineapple", "Banana", "Orange");
+              List<String> list = array.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+            System.out.println(list);
+        }
+    }
+   
+    
+
+ Java program to check string palidrome or not
+ ++++++++++++++++++++++++++++++++++++++++++++
+ public class Demo {
+    public static void main(String... args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input");
+        String str = sc.next();
+        
+        StringBuffer buffer = new StringBuffer(str);
+        StringBuffer reverse = buffer.reverse();
+        System.out.println(reverse);
+        
+        if(reverse.toString().equals(str)) {
+            System.out.println("Output : true" );
+        }else {
+            System.out.println("Output : false" );
+        }
+        
+        //Note StringBuffer .equals(str)  always retrun false , why because stringBuffer cannot comapre with string so
+     }
+}
+
+
+54) reverse the string array in decending order
+  ++++++++++++++++++++++++++++++++++++++++++
+   import java.util.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            List<String> array = Arrays.asList("Mango", "Apple", "Grapes", "Papaya", "Pineapple", "Banana", "Orange");
+             Collections.reverse(array);
+
+             array.stream().forEach(System.out::println);
+             or
+             List<String> list = array.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+             System.out.println(list);
+        }
+    }
+
+55) Reverse an integer array without any assending or sorting  order
+   ++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+        class HelloWorld {
+            public static void main(String[] args) {
+                List<Integer> array = Arrays.asList(5, 1, 7, 3, 9, 6);
+                 Collections.reverse(array);
+                 array.stream().forEach(System.out::println);
+            }
+        }
+      Output :
+
+      [6, 9, 3, 7, 1, 5]
+
+56) reverse Array in Assending order using stream Api 
+   ++++++++++++++++++++++++++++++++++++++++++++++++
+     import java.util.*;
+     import java.util.stream.*;
+     import java.util.function.Function;
+
+     public class SortDescending{
+       public static void main(String args[]) {
+               List<Integer> myList = Arrays.asList(10,15,8,49,25,98,98,32,15);
+                myList.stream()
+                      .sorted(Collections.reverseOrder())
+                      .forEach(System.out::println);
+       }
+     }
+
+57) reverse Array in Assending order using Arrays method 
+   ++++++++++++++++++++++++++++++++++++++++++++++++
+   import java.util.Arrays;
+   import java.util.Collections;
+   class HelloWorld {
+    public static void main(String[] args) {
+        Integer[] array = {12,22,43,42,11,4,23,2,3};   // note reverseOrder() only applicable for wrapper classes
+        Arrays.sort(array,Collections.reverseOrder());
+        System.out.println(Arrays.toString(array));
+    }
+   } 
+ 
+58) reverse Array in Assending order using for loop 
+   ++++++++++++++++++++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+        int[] array = {12,22,43,42,11,4,23,2,3};
+        
+        for(int i=0 ;i<array.length ; i++){
+            for(int j=i+1 ; j<array.length ; j++){
+                int temp ;
+                if(array[i] < array[j]){
+                    temp = array[i];
+                    array[i]=array[j];
+                    array[j]=temp;
+                }
+            }
+            System.out.println(array[i]);
+        }
+    }
+   }
+
+59) Given a list of integers, sort all the values present in it using Stream functions?
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+      import java.util.stream.*;
+      import java.util.function.Function;
+
+      public class SortValues{
+        public static void main(String args[]) {
+                List<Integer> myList = Arrays.asList(10,15,8,49,25,98,98,32,15);
+
+                 myList.stream()
+                       .sorted()
+                       .forEach(System.out::println);
+        }
+      }
+
+
+61) sort Array in Assending order without using loop 
+   +++++++++++++++++++++++++++++++++++++++++++++++++
+
+   import java.util.Arrays;
+   class HelloWorld {
+    public static void main(String[] args) {
+        int[] array = {12,22,43,42,11,4,23,2,3};
+        Arrays.sort(array);
+        System.out.println(Arrays.toString(array));
+    }
+   }
+
+62) Java program to remove the dublicate form the array integer
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   import java.util.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            int arr[] = { 0, 1, 4, 5, 7, 8, 9, 10, 2, 6, 3, 0, 2, 3,  10 };
+            Set<Integer> set = new LinkedHashSet();
+            for(int i=0 ;i<arr.length ; i++){
+                set.add(arr[i]);
+            }
+            System.out.println(set);
+        }
+    }
+ 62) Java program to remove the dublicate form the array integer
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class Main {
+            public static void main(String[] args) {
+              int arr[] = { 0, 1, 4, 5, 7, 8, 9, 10, 2, 6, 3, 0, 2, 3,  10 };
+            List<Integer> newArrays = Arrays.stream(arr).distinct().boxed().collect(Collectors.toList());
+            System.out.println(newArrays);
+           }
+        }
+
+63) Java program to print dublicate characters from the integer array
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+            int arr[] = { 0, 1, 4, 5, 7, 8, 9, 10, 2, 6, 3, 0, 2, 3,  10 };
+            for(int i=0 ; i<arr.length ;i++){
+                for(int j=i+1 ;j<arr.length ;j++){
+                    if(arr[i]==arr[j]){
+                        System.out.println(arr[i]);
+                    }
+                }
+            }
+        }
+    }
+
+64) Java program to delete the specific element form the array index
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+            int[] a = { 1,2,3,4,5,6};
+            int n=4;
+            int[] b = new int[a.length - 1];
+            for(int i=0 ;i<a.length ;i++){
+                if(a[i] < n){
+                    b[i] = a[i];
+                }
+                else if(a[i] == n){  // here now both index have index 4 
+                    continue;
+                }else{
+                    b[i-1]=a[i];     // here we decreasing the index 4 by 1
+                } 
+            }
+           System.out.println(Arrays.toString(b));
+        }
+    }
+      // this also works
+      --------------------
+           class Main {
+            public static void main(String[] args) {
+              int[] a = { 1,2,3,4,5,6};
+              int n=4;
+              int[] result = new int[a.length];
+              
+              for(int i=0 ; i<a.length ;i++){
+                  if(a[i] < n){
+                     result[i] =a[i];
+                  }else if(a[i] == n){
+                      continue;
+                  }else{
+                      result[i]=a[i];
+                  }
+              }
+            System.out.println(Arrays.toString(result));
+            }
+        }
+
+65) Find all pairs equal to a given sum
+   +++++++++++++++++++++++++++++++++++
+      class HelloWorld {
+        public static void main(String[] args) {
+            int[] nums = new int[]{15, 12, 4, 16, 9, 8, 24, 0};
+            int sum = 24;
+            for(int i=0 ;i<nums.length ;i++){
+                for(int j=i+1 ; j<nums.length ;j++){
+                    if((nums[i]+nums[j])==sum){
+                        System.out.println(nums[i] +", " +nums[j]  );
+                    }
+                }
+            }
+        }
+    }
+
+66) Write a Java 8 program to concatenate two Streams?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         import java.util.Arrays;
+         import java.util.List;
+         import java.util.stream.Stream;
+         public class Java8 {
+             public static void main(String[] args) {
+                 List<String> list1 = Arrays.asList("Java", "8");
+                 List<String> list2 = Arrays.asList("explained", "through", "programs");
+                 List<String> concatenatedList = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+                 System.out.println(concatenatedList);
+             }
+         }
+       
+67) Write a Java 8 program to sort an array and then convert the sorted array into Stream?
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         import java.util.Arrays;
+         public class Java8 {
+             public static void main(String[] args) {
+                 int arr[] = { 99, 55, 203, 99, 4, 91 };
+                 Arrays.parallelSort(arr);
+                 // Sorted the Array using parallelSort()  
+                 Arrays.stream(arr).forEach(n > System.out.print(n + " "));
+                 /* Converted it into Stream and then
+                    printed using forEach */
+             }
+         }
+
+68) Given a list of strings, find out those strings which start with a number?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.List;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              List<String> listOfStrings = Arrays.asList("One", "2wo", "3hree", "Four", "5ive", "Six");
+               
+              listOfStrings.stream().filter(str -> Character.isDigit(str.charAt(0))).forEach(System.out::println);
+          }
+      }
+      Output :
+      2wo
+      3hree
+      5ive
+
+69) Given a list of integers, find out all the numbers starting with 1 using Stream functions?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+      import java.util.stream.*;
+      public class NumberStartingWithOne{
+          public static void main(String args[]) {
+                  List<Integer> myList = Arrays.asList(10,15,8,49,25,98,32);
+                  myList.stream()
+                        .map(s -> String.valueOf(s)) // Convert integer to String
+                        .filter(s -> s.startsWith("1"))
+                        .forEach(System.out::println);
+          }
+      }
+      or
+      Arrays.stream(a).filter(s -> String.valueOf(s).startsWith("1") ).forEach(System.out::println);
+
+      Output:
+      10, 15
+
+70)  How to find duplicate elements in a given integers list in java using Stream functions?
+     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=+++
+      import java.util.*; 
+      import java.util.stream.*;
+      public class DuplicateElements {
+        public static void main(String args[]) {
+                List<Integer> myList = Arrays.asList(10,15,8,49,25,98,98,32,15);
+                Set<Integer> set = new HashSet();
+                myList.stream()
+                      .filter(n -> !set.add(n))
+                      .forEach(System.out::println);
+        }
+      }
+
+      Output:
+      98, 15
+ 
+71) How do you remove duplicate elements from a list using Java 8 streams?
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     import java.util.*;
+      class HelloWorld {
+          public static void main(String[] args) {
+             List<String> list = Arrays.asList("Java", "Python", "C#", "Java", "Kotlin", "Python");
+            list.stream().distinct().forEach(System.out::println); 
+          }
+      }
+      [Java,  Python, C#, Kotlin]
+
+72) String input = "Nilesh Nangde Java Test"  
+
+	NILESH Nangde JAVA Test = > output  
+
+	        class Main {
+	    public static void main(String[] args) {
+	        String str = "Nilesh Nangde Java Test";
+	        // Output should be: NILESH Nangde JAVA Test
+	        
+	        String[] words = str.split(" ");
+	        
+	        StringBuffer result = new StringBuffer();
+	        
+	        for(int i=0 ; i< words.length ; i++){
+	            if(i%2==0){
+	                result.append(words[i].toUpperCase()+" ");
+	            }
+	            else{
+	                result.append(words[i]+" ");
+	            }
+	        }
+	        System.out.println(result.toString());
+	    }
+	}
+
+73) Write a java program to find Array triplets with sum of two elements equals third
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+        int[] array = {27,13,14s,15,33,18,21,31,32};
+        for(int i=0;i<array.length;i++){
+            for(int j=i+1 ;j<array.length; j++){
+                for(int k =j+1 ; k<array.length ;k++){
+                    if(array[i]+array[j]==array[k]){
+                         System.out.println("Triplets of i j k");
+                        System.out.println(array[i] +" "+ array[j]+ " "+array[k]);
+                    }
+                    else if(array[j]+array[k]==array[i]){
+                        System.out.println("Triplets of  j k i");
+                        System.out.println(array[j] +" "+ array[k]+ " "+array[i]);
+                    }
+                    else if(array[k]+array[i]==array[j]){
+                        System.out.println("Triplets of k i j");
+                        System.out.println(array[k] +" "+ array[i]+ " "+array[j]);
+                    }
+                }
+            }
+         }  
+       }
+    }
+ 
+74) write the java program to count how many character in the string without using length() or predefine method
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+            String str = "Nilesh";
+            int count=0;
+            char[] ch = str.toCharArray();
+            for(char c :ch){
+                count++;
+            }
+            System.out.println(count);
+        }
+       }
+
+75) Remove all whitespace and convert into lowercase
+  +++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+           String str = "Java Concept Of The Day".replaceAll("\\s" ,"").toLowerCase();
+           System.out.println(str);  
+        }
+    }
+
+76) Java Program to reverse the string 
+   +++++++++++++++++++++++++++++++++      
+     class HelloWorld {
+     public static void main(String[] args) {
+        String str = "Nilesh";
+        String reverse ="";
+        for(int i=0 ;i<str.length() ;i++){
+            char ch = str.charAt(i);
+            reverse = ch + reverse;
+        }
+        System.out.println(reverse);
+       }
+     }
+
+77)  Java Program to reverse the string StringBuffer
+     +++++++++++++++++++++++++++++++++++++++++++++++
+     class HelloWorld {
+     public static void main(String[] args) {
+     String str = "Nilesh";
+     StringBuffer buffer = new StringBuffer(str);
+     System.out.println(buffer.reverse());
+      }
+     }
+
+78) Java Program to reverse the string  String Builder
+     +++++++++++++++++++++++++++++++++++++++++++++++++
+     class HelloWorld {
+     public static void main(String[] args) {
+        String str = "Nilesh";
+        StringBuilder buider = new StringBuilder();
+        System.out.println(buider.append(str).reverse());
+      }
+     }
+         
+
+79)  Java Program to reverse the string    Using Java 8
+    ++++++++++++++++++++++++++++++++++++++++++++++++++
+     String str = "hello";
+     String reversed = new StringBuilder(str).reverse().toString();
+     System.out.println(reversed); // Output: olleh
+
+80) Write a Java program to check if a vowel is present in a string.
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println(isVowel("Nilesh"));
+    }
+    public static boolean isVowel(String str){
+        boolean isVowel = false;
+        for(int i = 0 ; i<str.length(); i++){
+            char ch = str.charAt(i);
+            if(ch=='a' ||ch=='e' ||ch=='i' ||ch=='o' ||ch=='u'){
+                isVowel = true;
+                break;
+            }
+        }
+        if(isVowel){ return true;}else{return false;}
+    }
+   }
+
+81) Write a Java program to check if a vowel is present in a string Using Stream api.
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   class HelloWorld {
+    public static void main(String[] args) {
+        String str = "nlsh".toLowerCase();
+        boolean isVowel = Arrays.stream(str.split("")).anyMatch(c ->"aeiou".indexOf(c) != -1);
+        if(isVowel){
+            System.out.println("String contain vowel");
+        }else{
+            System.out.println("String not contain vowel");
+        }
+    }
+  }
+81) Java program to remove the vowels form the String
++++++++++++++++++++++++++++++++++++++++++++++++++++
+        String input = "Nilesh Nangde java test"  ;
+        String n = input.replaceAll("[aeiouAEIOU]", "");
+        System.out.println(n);
+
+82) Program to check how many vowels are present in string 
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+        String str = "nilesh";
+        int num=0;
+        for(int i=0 ; i<str.length() ; i++){
+            char ch = str.charAt(i);
+            if(ch =='a' ||ch =='e' ||ch =='i' ||ch =='o' ||ch =='u' ){
+                System.out.println(ch);
+                num++;
+            }
+        } 
+        System.out.println("Number of vowels are : " +num);
+     }
+   }
+
+83) How to remove dublicate characters from string using stream api
+   +++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> 4 Approch -1) Using java8 2) indexOf() 3) character array 4) using set interface
+
+   import java.util.*;
+   class HelloWorld {
+    public static void main(String[] args) {
+        String str = "programming" ;
+        StringBuilder sb1 = new StringBuilder();
+        str.chars().distinct().forEach(c ->sb1.append((char)c));
+        System.out.println(sb1);
+        
+      }
+      }
+
+    import java.util.*;
+    import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            StringBuilder builder = new StringBuilder();
+            String str = "P rogramming".replaceAll(" ","").toUpperCase();  
+            Arrays.stream(str.split("")).distinct().forEach(s ->builder.append(s));
+            System.out.println(builder); 
+        }
+    }
+
+84) How to remove dublicate characters from string using LinkedHashSet   
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+      class HelloWorld {
+          public static void main(String[] args) {
+              String str = "nniilleesshh"; 
+              StringBuilder builder = new StringBuilder();
+              Set<Character> set = new LinkedHashSet();
+              for(int i=0 ; i<str.length() ; i++){
+                  set.add(str.charAt(i));
+              }
+              for(Character c : set){
+                  builder.append(c);
+              }
+              System.out.println(builder);
+          }
+      }
+
+    
+85) Java Program to Check Palindrome String
+    +++++++++++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+        
+        String str = "nitin";
+        String reverse = "";
+        for(int i =0 ; i<str.length() ; i++){
+            char ch = Character.toLowerCase(str.charAt(i));
+            reverse = ch + reverse;
+            
+        }
+        if(reverse.equals(str)){
+           System.out.println("String is Palidrome"); 
+        }else{
+        System.out.println("String is not Palidrome");
+        }
+     } 
+
+86) Java Program to Check Palindrome Number
+    +++++++++++++++++++++++++++++++++++++++++
+     class HelloWorld {
+     public static void main(String[] args) {
+        int num = 12321;
+        String str = Integer.toString(num);
+        String reverse = "";
+        for(int i =0 ; i<str.length() ; i++){
+            char ch = Character.toLowerCase(str.charAt(i));
+            reverse = ch + reverse;
+            
+        }
+        if(reverse.equals(str)){
+           System.out.println("String is Palidrome"); 
+        }else{
+        System.out.println("String is not Palidrome");
+        }
+    }
+   }
+
+87)  Java program to find the frequency of each character in the string
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+          String str = "AABBCCDEF";
+          Map<Character , Integer> map = new HashMap();
+          for(int i =0 ;i<str.length();i++){
+              char ch = str.charAt(i);
+              if(map.containsKey(ch)){
+                  map.put(ch ,map.get(ch) + 1);   // get() method get the value based on key
+              }else{
+                  map.put(ch , 1);
+              }
+          }
+          System.out.println(map);
+        }
+    }
+    Output : {A=2, B=2, C=2, D=1, E=1, F=1}
+
+
+88)  Java program to find the frequency of each character in the string Using stream api
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    import java.util.Arrays;
+      import java.util.LinkedHashMap;
+      import java.util.Map;
+      import java.util.function.Function;
+      import java.util.stream.Collectors;public class Demo {
+    public static void main(String... args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input");
+        String str = sc.next();
+        
+        StringBuffer buffer = new StringBuffer(str);
+        StringBuffer reverse = buffer.reverse();
+        System.out.println(reverse);
+        
+        if(reverse.toString().equals(str)) {
+            System.out.println("Output : true" );
+        }else {
+            System.out.println("Output : false" );
+        }
+        
+        
+     }
+}
+
+       
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              String inputString = "Java Concept Of The Day".replaceAll("\\s+", "").toLowerCase();
+               
+              Map<String, Long> map = 
+                                  Arrays.stream(inputString.split(""))
+                                          .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+              System.out.println(map);
+          }
+      }
+      // Note LinkedHashMap to Maintian the insertion order
+      -----------------------------------------------------
+      Map<String , Long> map =  Arrays.stream(str.split("")).collect(Collectors.groupingBy(Function.identity() ,LinkedHashMap::new ,  Collectors.counting()));
+        System.out.println(map);
+
+
+89) Java program to find the first non repeated character or repeated character from the string 
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    => 
+    import java.util.*;
+    import java.util.Map.*;       // Note : this import is important for Entry
+    class HelloWorld {
+    public static void main(String[] args) {
+      String str = "AAABBCCDEF";
+      Map<Character , Integer> map = new HashMap();
+      for(int i =0 ; i<str.length() ; i++){
+          char ch = str.charAt(i);
+          if(map.containsKey(ch)){
+              map.put(ch , map.get(ch)+1);
+          }else{
+          map.put(ch , 1);
+          } 
+      }
+      System.out.println(map);
+      for(Entry <Character , Integer> entryset : map.entrySet()){
+          if(entryset.getValue() ==1){
+              System.out.println(entryset.getKey());
+             break;
+          }
+      }
+     }
+    }
+    //or
+      Optional<Entry<String , Long>> maxEntry=map.entrySet().stream().min(Map.Entry.comparingByValue());
+      if (maxEntry.isPresent()) {
+            System.out.println("Most frequent character: " + maxEntry.get().getKey());
+        } else {
+            System.out.println("No characters found.");
+        }
+      
+
+90) Java program to find the first non repeated character or repeated character from the string using stream api
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   
+        import java.util.Arrays;
+          import java.util.LinkedHashMap;
+          import java.util.Map;
+          import java.util.function.Function;
+          import java.util.stream.Collectors;
+           
+          public class Java8Code 
+          {
+              public static void main(String[] args) 
+              {
+                  String inputString = "Java Concept Of The Day".replaceAll("\\s+", "").toLowerCase();
+                   
+                  Map<String, Long> charCountMap = 
+                                      Arrays.stream(inputString.split(""))
+                                              .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+                   
+                  String firstNonRepeatedChar = charCountMap.entrySet()
+                                                          .stream()
+                                                          .filter(entry -> entry.getValue() == 1)
+                                                          .map(entry -> entry.getKey())
+                                                          .findFirst()
+                                                          .get();
+                  System.out.println(firstNonRepeatedChar);
+              }
+          }
+          Output :
+
+          j
+
+
+91) Java program to find the Second most repeated character from the string  // note we can skip the index number and get ex: skip(1)
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.*;
+    import java.util.Map.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+            String str = "AABBCCCDEF";
+            Map<Character , Integer > map = new HashMap();
+            List<Character> list = new ArrayList();
+            for(int i=0 ; i<str.length() ;i++){
+                char ch = str.charAt(i);
+                if(map.containsKey(ch)){
+                    map.put(ch , map.get(ch)+1);
+                    if(map.get(ch) ==2){         // here add in list 
+                        list.add(ch);            
+                    }
+                }else{
+                map.put(ch , 1);
+                }
+                
+            }
+            System.out.println(map);
+            System.out.println(list.get(1));   // through index number get the value 1st or second 
+            
+            for(Entry<Character , Integer> entryset :map.entrySet()){
+                if(entryset.getValue() ==2){
+                    System.out.println("First repeated character is " + entryset.getKey());
+                    break;
+                    
+                }
+            } 
+        }
+    }
+
+    // For second non repeating
+    ----------------------------
+
+     for (Map.Entry<String, Long> entry : map.entrySet()) {
+            if (entry.getValue() == 1) {
+                count++;
+                if (count == 2) {  // Skip the first non-repeating character
+                    System.out.println("Second non-repeating character: " + entry.getKey());
+                    break;
+                }
+            }}
+
+
+91)Java program to find the Second most repeated character from the string Using stream api
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    import java.util.Arrays;
+      import java.util.LinkedHashMap;
+      import java.util.Map;
+      import java.util.function.Function;
+      import java.util.stream.Collectors;
+       
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              String inputString = "Java Concept Of The Day".replaceAll("\\s+", "").toLowerCase();
+               
+              Map<String, Long> charCountMap = 
+                                  Arrays.stream(inputString.split(""))     
+                                          .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+               
+              String firstRepeatedChar = charCountMap.entrySet()
+                                                      .stream()
+                                                      .filter(entry -> entry.getValue()>1)
+                                                      .map(entry -> entry.getKey())
+                                                      .skip(1)
+                                                      .findFirst()
+                                                      .get();
+               
+              System.out.println(firstRepeatedChar);
+          }
+      }
+
+      
+92) Print string in accending order
+    +++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+       String str = "nilesh";
+       char temp;
+       char[] array = str.toCharArray();
+       for(int i=0 ;i<array.length ;i++){
+           for(int j=i+1 ;j<array.length ;j++){
+               if(array[i] > array[j]){         // array[i] < array[j] => for decending order
+                   temp = array[i];
+                   array[i]=array[j];
+                   array[j] = temp;
+                 }   
+               }
+           }
+           System.out.println(array);
+       }   
+    }
+
+or
+String s =Arrays.stream(str.split("")).sorted(Comparator.naturalOrder()).collect(Collectors.joining(""));
+
+93) Print string in accending order using sort method
+    ++++++++++++++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+       String str = "nilesh";
+       char temp;
+       char[] array = str.toCharArray();
+       Arrays.sort(array );
+       System.out.println(array);
+         
+    }
+  }
+ 
+94)  Print String in reverse order uisng sort method
+    ++++++++++++++++++++++++++++++++++++++++++++++++++
+
+95) Print if the strings are Anagram or not?
+    +++++++++++++++++++++++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+           String str1 = "one";
+           String str2 = "eno";
+           char[] string1 = str1.toCharArray();
+           char[] string2 = str2.toCharArray();
+           Arrays.sort(string1);
+           Arrays.sort(string2);
+           System.out.println(string1);
+           System.out.println(string2);
+           
+           if(Arrays.equals(string1,string2)==true){
+               System.out.println("String is anagram");
+           }else{
+               System.out.println("String is not anagram");
+           }
+            
+        }
+    }
+96) Print if the strings are Anagram or not? stream api
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.stream.Collectors;
+      import java.util.stream.Stream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              String s1 = "RaceCar";
+              String s2 = "CarRace"; 
+              s1 = Stream.of(s1.split("")).map(String::toUpperCase).sorted().collect(Collectors.joining());
+              s2 = Stream.of(s2.split("")).map(String::toUpperCase).sorted().collect(Collectors.joining()); 
+              if (s1.equals(s2)) 
+              {
+                  System.out.println("Two strings are anagrams");
+              }
+              else
+              {
+                  System.out.println("Two strings are not anagrams");
+              }
+          }
+      }
+97) Java program to reverse each character in the sub string ex: hi java => ih avaj
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+           String str= "Java is awesome";
+           String reverse ="";
+           String output="";
+             String[] words = str.split(" ");
+            
+             for(String word : words ){
+                  reverse="";
+                 for(int i=0;i<word.length();i++){
+                   char ch = word.charAt(i);
+                   reverse = ch+reverse;
+               }
+               output=output+reverse+" ";
+             }
+              System.out.println(output);
+        }
+    }
+    output:avaJ si emosewa
+
+    or
+    String s = Arrays.stream(str.split(" ")).map(word ->new StringBuffer(word).reverse()).collect(Collectors.joining(" "));
+-------------------------------------------------------------------
+    class Main {
+        public static void main(String[] args) {
+            String s = "Hello My Friend";
+            String[ ]  arr = s.split(" ");
+            for(int i = 0; i < arr.length ; i++){
+                String x = arr [ i ];                           
+                StringBuffer sb = new StringBuffer(x);
+                sb.reverse( );
+                System.out.print (sb+" ");                  
+            }           
+         }
+        }
+
+98) Reverse each word of a string using Java 8 streams?
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.stream.Collectors;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              String str = "Java Concept Of The Day";
+              String reversedStr = Arrays.stream(str.split(" "))
+                                          .map(word -> new StringBuffer(word).reverse())
+                                          .collect(Collectors.joining(" ")); 
+              System.out.println(reversedStr);
+          }
+      }
+      Output :
+      avaJ tpecnoC fO ehT yaD
+
+99) Java program to replace the character in the string with specific index input:opentext  , output:open1ex1 
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+            String str = "opentext";
+            char charToReplace='t';
+            char newChar='1';
+            char[] chars = str.toCharArray();
+            for(int i=0 ; i<chars.length ; i++){
+                if(chars[i]==charToReplace){
+                    chars[i]=newChar;
+                }
+            }
+            System.out.println(chars);  
+        }
+       }
+
+100) Java program to replace the character in the string with specific index input:opentext  , output:open1ex1  using predifine method
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                        ++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+            String str = "opentext";
+            String string = str.replace('t' , '1');   // note both character only
+            System.out.println(string);
+        }
+       }
+
+
+101)  Java program to replace the repeating character in string with number in increment format ex: opentext -> open1ex2
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+        String str = "opentext";
+        char charToReplace ='t';
+        int count =1;
+        char[] arr = str.toCharArray();
+        for(int i=0 ;i<arr.length ;i++){
+            if(arr[i]==charToReplace){
+                arr[i]=String.valueOf(count).charAt(0);
+                count++;
+            }
+        }
+        System.out.println(arr);
+    }
+  }
+
+
+102) Java program to replace the repeted character in the string with number in the increment order Ex: Nilllesh -> Ni123sh
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+103) Java program to sort sub string in assending order ex: java is awesome -> aajv is aeemosw  // assending order
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  -> awesome is java  // 1st char as assending order
+        class HelloWorld {                                                  -> avaj si emosewa  // in decending order
+        public static void main(String[] args) {
+            String str = "java is awesome";
+            String[] words = str.split(" ");
+            for(String word : words){
+                char[] array = word.toCharArray();
+                for(int i=0 ;i<array.length ;i++){
+                    for(int j=i+1 ;j<array.length ; j++){
+                        if(array[i] > array[j]){
+                            char temp;
+                            temp = array[i];
+                            array[i] = array[j];
+                            array[j] = temp;
+                        }
+                    }
+                }
+                System.out.println(array);
+            }
+        }
+    }
+    // same using stream api   // output aajv is aeemosw  // assending order
+    -----------------------
+        import java.util.*;
+        import java.util.stream.*;
+
+        class Main {
+            public static void main(String[] args) {
+                String str = "java is awesome";
+                
+            String sortedStr = Arrays.stream(str.split(" ")).map(word -> Arrays.stream(word.split("")).sorted().collect(Collectors.joining(""))).collect(Collectors.joining(" "));
+
+                System.out.println(sortedStr);
+            }
+        }
+
+    // reverse string in decending order// avaj si emosewa  // in decending order
+    ------------------------------------------------------------------------------
+        import java.util.*;
+        import java.util.stream.*;
+        class Main {
+            public static void main(String[] args) {
+                String str = "java is awesome";
+                String sortedStr = Arrays.stream(str.split(" ")).map(s -> new StringBuffer(s).reverse()).collect(Collectors.joining(" "));
+                System.out.println(sortedStr);
+            }
+        }
+    
+
+104) implement indexOf() 
+    +++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+            String str = "Nilesh";
+            char charContain ='1';
+           if(str.indexOf(charContain)== -1){
+               System.out.println("String not contains 1 as character");
+           }else{
+              System.out.println("String contains 1 as character"); 
+           }
+        }
+       }
+
+105)  Java program to print number of words in the String
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+            String str = "Java is one of the ";
+            int count=0;
+            String[] words = str.split(" ");
+            for(String word : words){
+                count++;
+            }
+            System.out.println(count);
+        }
+     }
+
+106)  Write a Java program to count the total number of occurrences of a given character in a string 
+      String s = "Java is java again java again";  char c = 'a';
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+            String str = "Java is java again java again";
+            char c = 'a';
+            int count=0;
+            char[] arr = str.toCharArray();
+            for(int i=0; i<arr.length ;i++){
+                if(arr[i]==c){
+                    count++;
+                }
+            }
+            System.out.println(count);
+        }
+     }
+
+107)   Write a Java program to count the total number of occurrences of a given character in a string without using any loop? 
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+            String str = "Java is java again java again";
+            char c = 'a';
+            int count = str.length() - str.replace("a","").length();
+            System.out.println(count);
+        }
+       }
+
+108) Write a Java program to reverse a given string with preserving the position of spaces?
+    Ex: I Am Not String ->  g ni rtS toNmAI  Note : every time practice
+
+    class HelloWorld {
+    public static void main(String[] args) {
+        String str = "I Am Not String";
+        char[] array = str.toCharArray();
+        char[] result = new char[array.length];
+       
+        for(int i=0;i<array.length;i++){
+            if(array[i]==' '){
+                result[i]=' ';
+            }
+        }
+        
+         int resultLength=array.length -1;
+        for(int i=0;i<array.length;i++){
+            if(array[i] !=' '){
+                if(result[resultLength]==' '){
+                    resultLength--;
+                }
+                result[resultLength]=array[i];
+                resultLength--;
+            }
+        }
+        System.out.println(result);
+    }
+ }
+  
+  Java Program to reverse the string  I Am Not String  to String Not Am I 
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     class Main {
+        public static void main(String[] args) {
+            String str = "I Am Not String";
+            String result="";
+            StringBuilder builder = new StringBuilder();
+            String[] words = str.split(" ");
+            for(int i=words.length-1 ;i>=0; i--){
+                result = result+ words[i] + " ";
+            }
+                System.out.println(result); 
+        }
+    }
+
+
+109) Java program to print the percentage of upper characters , lower Characters , digits and special character present in the string 
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class HelloWorld {
+        public static void main(String[] args) {
+          String str =  "In Tiger Runs @ The Speed Of 100 km/hour. :" ;
+          int upperCaseChar=0;
+          int lowerCaseChar = 0;
+          int digitChar=0;
+          int specialChar =0;
+          int total = str.length()-1;
+          for(int i=0 ;i<total ;i++){
+              char ch =str.charAt(i);
+              if(Character.isUpperCase(ch)){
+                  upperCaseChar++;
+              }
+              else if(Character.isLowerCase(ch)){
+                  lowerCaseChar++;
+              }
+              else if(Character.isDigit(ch)){
+                  digitChar++;
+              }
+              else{
+                  specialChar++;
+              }
+          }
+          double lowerCasePercent = lowerCaseChar *100/total;
+          double upperCasePercent = upperCaseChar *100/total;
+          double digitPercent = digitChar *100/total;
+          double specialCharPercent = specialChar *100/total;
+            System.out.println("lowerCasePercent"+lowerCasePercent + "%");
+            System.out.println("upper CasePercent"+upperCasePercent + "%");
+            System.out.println("digitPercent"+digitPercent + "%");
+            System.out.println("specialChaPercent"+specialCharPercent + "%");
+        }
+    }
+
+110) An Example To Prove Strings Are Immutable in java
+    +++++++++++++++++++++++++++++++++++++++++++++++++
+    class HelloWorld {
+    public static void main(String[] args) {
+        String s1 ="Java";
+        String s2="Java";
+        System.out.println(s1==s2);  output : true
+        
+        s2=s2+"J2EE";
+        System.out.println(s1==s2);  output : false
+    }
+   }
+    here if we create two string with same string literal object ,
+    then two two seperate string object not create because 
+    in String the string constant pool refer the same refrence object for the same literal 
+    so in above ex we create the two different string with same literal object only one object is create 
+
+111) Write a Java program to check if the given number is a prime number. 
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   => Prime number means number that is divided by  1 or itself and it remainder is 0
+     
+     Java program to check if the given number is a prime number.
+       class HelloWorld {
+        public static void main(String[] args) {
+            int n = 12;
+            int count = 0;
+            for(int i=1 ; i<=n ;i++){
+                if(n%i==0){            // here reaminder is zero or not we will check
+                    count++;
+                }
+            }
+            if(count == 2){
+                System.out.println("Number is prime number");
+            }else{
+                System.out.println("Number is not prime number");
+            }
+        }
+     }
+112) Java program to print prime number between n value 
+    +++++++++++++++++++++++++++++++++++++++++++++
+     class HelloWorld {
+        public static void main(String[] args) {
+            int n1 = 10;
+            int n2 = 50;
+            int i ,j;
+            for(i=n1 ; i<=n2 ;i++){
+                for(j=2 ; j<=i ;j++){
+                    if(i%j==0){
+                        break;
+                    }
+                }
+                if(i==j){
+                    System.out.println(j);
+                }
+            }
+        }
+    }
+
+
+
+113) java program to count how many prime numbers are available in n value 
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+
+
+114) Program to print Fibonacci Series of given number using loop
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       class HelloWorld {
+        public static void main(String[] args) {
+            faboSeries(10);
+        }
+        
+        public static void faboSeries(int n){
+            int firstNo = 0;    // why 0 and 1 , because 0 and 1 itself printed  so 
+            int secondNo= 1;
+            for(int i=0 ; i<=n ; i++){
+                System.out.println( firstNo +",");
+                int nextNo = firstNo+secondNo;
+                firstNo=secondNo;
+                secondNo=nextNo;
+            }
+        }
+      } 
+115) Given an array of integers from 1 to n, one number is missing find  array.
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Note : No dublicate in array
+    ->        No need to sort // sort if (no in order)
+    ->        Values are in range means ( 1 , 3 , 4,5,6,7)
+
+       class HelloWorld {
+       public static void main(String[] args) {
+        int[] a = { 1 ,2,3,5,6,7};
+        int sum1 = 0;
+        int sum2=0;
+        for(int i=0 ; i<a.length ; i++){
+            sum1 = sum1+a[i];
+        }
+        for(int i=1 ; i<=7; i++){
+            sum2= sum2+i;
+        }
+        System.out.println("missing number is :"+ (sum2-sum1));
+        } 
+       }
+
+116) Program to count number of digits in the number
+    +++++++++++++++++++++++++++++++++++++++++++++++++++
+      class HelloWorld {
+      public static void main(String[] args) {
+        int number = 123451231;
+        int count =0;
+       String str = Integer.toString(number);
+       for(int i=0 ; i<str.length() ; i++){
+           count++;
+       }
+        System.out.println(count);
+        }
+      }
+ 
+117) Program to count the sum of the digits 12345 = 15
+ ++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+    while(a>0) {
+            b= a%10;
+            sum=sum+b;
+            a = a/10;
+        }
+         System.out.println(sum);
+
+
+
+118) Java program to check Number is Amstrong number or not : Amstrong number means  153 ,9474 ,54748
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        3 digits Amstrong number 
+        +++++++++++++++++++++++
+
+         class HelloWorld {
+          public static void main(String[] args) {
+              int n = 123;
+              int sum =0;
+              int x = n;      //why n value we put in x , at last n value becomes zero so by putting that value in x we compare original value
+              while(n>0){
+                  int d = n%10;     // to get last number of the n number 
+                  sum = sum+(d*d*d);    //sum = sum+(d*d*d*d) for 4 digits
+                  n=n/10;       // to come the second last number
+              }
+              if(x==sum){       // sum and original value comapre , if we use n value that value is zero here so not comapre
+                  System.out.println("Number is amstrong number");
+              }else{
+              System.out.println("Number is not amstrong number");
+              }
+          }
+         }
+
+        }
+   
+    
+119) Program to print randon number or string 
+    +++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.Random;
+    class HelloWorld {
+    public static void main(String[] args) {
+        Random random = new Random();
+        System.out.println(random.nextInt(1234));
+    }
+   }
+
+
+120) Find the factorial of the number
+   +++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+        int number = 10;
+        int factor=1;
+        for(int i=1; i<=number ; i++){
+            factor = factor*i;
+        }
+        System.out.println(factor);
+    }
+   }
+
+121) Find the factors of the number
+   +++++++++++++++++++++++++++++++++++++
+   class HelloWorld {
+    public static void main(String[] args) {
+     int  a= 34;
+     
+     for(int i=1 ; i<a ; i++){
+        if(a%i==0){
+            System.out.println(i);
+        }
+     }
+    }
+    }
+
+122) How To Remove White Spaces from String In Java
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.*;
+    import java.io.*;
+    import java.util.stream.*;
+    class HelloWorld {
+        public static void main(String[] args) {
+           String str = "    Geeks     for Geeks     ";
+            String newStr = str.chars()                               // convert string into character
+                            .filter(c -> !Character.isWhitespace(c))  // remove the white spaces
+                            .mapToObj(c -> String.valueOf((char) c))  // convert into string again 
+                            .collect(Collectors.joining());           // concate that string
+ 
+            System.out.println(newStr);
+        }
+    }
+
+     class HelloWorld {
+     public static void main(String[] args) {
+        String str = "  Hello,  World!  ";
+        String result = str.replaceAll("\\s", "");     // \\s is the regular expresssion to remove white spaces
+        System.out.println(result); // Output: "Hello,World!"
+      }
+     }
+ 
+123) Java 8 program to perform cube on list elements and filter numbers greater than 50.
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        import java.util.*;
+        public class Main {
+            public static void main(String[] args) {
+               List<Integer> integerList = Arrays.asList(4,5,6,7,1,2,3);
+               integerList.stream()
+                          .map(i -> i*i*i)
+                          .filter(i -> i>50)
+                          .forEach(System.out::println);
+            }
+        }   
+
+124) Given a list of strings, join the strings with ‘[‘ as prefix, ‘]’ as suffix and ‘,’ as delimiter?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       import java.util.Arrays;
+       import java.util.List;
+       import java.util.stream.Collectors;
+       public class Java8Code 
+       {
+           public static void main(String[] args) 
+           {
+               List<String> listOfStrings = Arrays.asList("Facebook", "Twitter", "YouTube", "WhatsApp", "LinkedIn");
+               String joinedString = listOfStrings.stream().collect(Collectors.joining("," , "[", "]"));
+               System.out.println(joinedString);
+           }
+       }
+       Output :
+       [Facebook, Twitter, YouTube, WhatsApp, LinkedIn]
+
+125) From the given list of integers, print the numbers which are multiples of 5?
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.Arrays;
+      import java.util.List;   
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              List<Integer> listOfIntegers = Arrays.asList(45, 12, 56, 15, 24, 75, 31, 89);
+               
+              listOfIntegers.stream().filter(i -> i % 5 == 0).forEach(System.out::println);
+          }
+      }
+
+126) How do you get three maximum numbers and three minimum numbers from the given list of integers?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+          import java.util.Arrays;
+          import java.util.Comparator;
+          import java.util.List;  
+          public class Java8Code 
+          {
+              public static void main(String[] args) 
+              {
+                  List<Integer> listOfIntegers = Arrays.asList(45, 12, 56, 15, 24, 75, 31, 89);           
+                  listOfIntegers.stream().sorted().limit(3).forEach(System.out::println);   
+                  listOfIntegers.stream().sorted(Comparator.reverseOrder()).limit(3).forEach(System.out::println);
+              }
+          }
+          Output :
+
+127) Given a list of strings, sort them according to increasing order of their length?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+          import java.util.Arrays;
+          import java.util.Comparator;
+          import java.util.List; 
+          public class Java8Code 
+          {
+              public static void main(String[] args) 
+              {
+                  List<String> listOfStrings = Arrays.asList("Java", "Python", "C#", "HTML", "Kotlin", "C++", "COBOL", "C");   
+                  listOfStrings.stream().sorted(Comparator.comparing(String::length)).forEach(System.out::println);
+              }
+          }
+          Output :
+          C
+          C#
+          C++
+          Java
+          HTML
+          COBOL
+          Python
+          Kotlin
+
+128)  Given a list of integers, find the maximum value element present in it using Stream functions?
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.*;
+      import java.util.stream.*;
+      public class FindMaxElement{
+        public static void main(String args[]) {
+                List<Integer> myList = Arrays.asList(10,15,8,49,25,98,98,32,15);
+                int max =  myList.stream()
+                                 .max(Integer::compare) 
+                                 .get();
+                System.out.println(max);                    
+        }
+      }
+
+      Output:
+      98
+
+129) Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         public class Demo {
+            public static void main(String[] args) 
+            {
+               boolean isDublicate = containsDublicate(new int[] {1,2,3,4,4});
+               if(isDublicate==true) {
+                   System.out.println("No duplicate");
+               }else {
+                   System.out.println("Contains duplicate");
+               }
+            }
+            
+            public static boolean containsDublicate(int[] nums) {
+                List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
+                
+                Set<Integer> set = new HashSet<>(list);
+                
+                if(list.size()==set.size()) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+
+         Input: nums = [1,2,3,1]
+         Output: tru
+         Input: nums = [1,2,3,4]
+         Output: false
+
+130) How will you get the current date and time using Java 8 Date and Time API?
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         class Java8 {
+             public static void main(String[] args) {
+                 System.out.println("Current Local Date: " + java.time.LocalDate.now());
+                 //Used LocalDate API to get the date
+                 System.out.println("Current Local Time: " + java.time.LocalTime.now());
+                 //Used LocalTime API to get the time
+                 System.out.println("Current Local Date and Time: " + java.time.LocalDateTime.now());
+                 //Used LocalDateTime API to get both date and time
+             }
+         }
+
+131) How to convert a List of objects into a Map by considering duplicated keys and store them in sorted order?
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+       public class TestNotes {
+           public static void main(String[] args) {
+           List<Notes> noteLst = new ArrayList<>();
+           noteLst.add(new Notes(1, "note1", 11));
+           noteLst.add(new Notes(2, "note2", 22));
+           noteLst.add(new Notes(3, "note3", 33));
+           noteLst.add(new Notes(4, "note4", 44));
+           noteLst.add(new Notes(5, "note5", 55));
+
+           noteLst.add(new Notes(6, "note4", 66));
+           Map<String, Long> notesRecords = noteLst.stream()
+                                                   .sorted(Comparator
+                                                   .comparingLong(Notes::getTagId)
+                                                   .reversed()) // sorting is based on TagId 55,44,33,22,11
+                                                   .collect(Collectors.toMap
+                                                   (Notes::getTagName, Notes::getTagId,
+                                                   (oldValue, newValue) -> oldValue,LinkedHashMap::new));
+       // consider old value 44 for dupilcate key
+       // it keeps order
+               System.out.println("Notes : " + notesRecords);
+           }
+       }
+
+132) Find sum of all digits of a number in Java 8?
+   ++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.stream.Collectors;
+      import java.util.stream.Stream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              int i = 15623;
+              Integer sumOfDigits = Stream.of(String.valueOf(i).split("")).collect(Collectors.summingInt(Integer::parseInt));
+              System.out.println(sumOfDigits);
+          }
+      }
+      Output :
+      17
+
+
+134) How do you find sum of first 10 natural numbers?
+   +++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.util.stream.IntStream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              int sum = IntStream.range(1, 11).sum();
+              System.out.println(sum);
+          }
+      }
+      Output :
+      55
+
+135) Print first 10 even numbers
+    +++++++++++++++++++++++++++
+      import java.util.stream.IntStream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              IntStream.rangeClosed(1, 10).map(i -> i * 2).forEach(System.out::println);
+          }
+      }
+      Output :
+
+      2
+      4
+      6
+      8
+      10
+      12
+      14
+      16
+      18
+      20
+
+136) First 10 odd numbers
+    ++++++++++++++++++++
+      import java.util.stream.Stream;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              Stream.iterate(new int[] {1, 3}, f -> new int[] {f[1], f[1]+2})
+                      .limit(10)
+                      .map(f -> f[0])
+                      .forEach(i -> System.out.print(i+" "));
+          }
+      }
+      Output :
+      1 3 5 7 9 11 13 15 17 19
+
+137) Find the age of a person in years if the birthday has given?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      import java.time.LocalDate;
+      import java.time.temporal.ChronoUnit;
+      public class Java8Code 
+      {
+          public static void main(String[] args) 
+          {
+              LocalDate birthDay = LocalDate.of(1985, 01, 23);
+              LocalDate today = LocalDate.now();
+              System.out.println(ChronoUnit.YEARS.between(birthDay, today));
+          }
+      }
+138 ) Java Program to swap 2 string String s1= java , String s2= program | output s1= program , s2= java
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        class Main {
+            public static void main(String[] args) {
+                String s1= "java";
+                String s2= "program";
+                // s1= program , s2= java  , without using third variable
+                s1= s1+s2; //11
+                System.out.println(s1);
+                s2= s1.substring(0, s1.length() - s2.length());
+                System.out.println(s2);
+                s1= s1.substring(s2.length());
+                System.out.println(s1);
+            }
+        }
+139) Java program to count how many words in this senetence  and remove the space and write into proper sentence
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public class Demo { 
+    public static void main(String[] args) {
+        String s = "      Hello    Hello           My        Friend";
+
+        String[ ] arr = s.trim().split("\\s+"); //  \s+ Splits the string into words, ignoring multiple spaces. 
+            
+        System.out.println(arr.length);
+        System.out.println(Arrays.toString(arr));
+        String n =Arrays.stream(arr).collect(Collectors.joining(" ", "",""));
+        System.out.println(n);
+    }
+ }
+
+ 140) Write a java program to read shoes brand name from keyboard, based on brand name print brand slogan like below
+    ===============================================================================================================
+
+Nike -> Just do it
+
+Adidas -> Impossible is nothing
+
+Puma -> Forever Faster
+
+Reebok -> I Am What I Am
+
+==============================================================================
+
+import java.io.*;
+
+class Shoes {
+
+    public static void main(String... args) throws Exception {
+        
+            InputStreamReader isr = new InputStreamReader (System.in);
+            BufferedReader br = new BufferedReader ( isr );
+            System.out.println ("Enter Brand Name");
+            String brand = br.readLine ( );
+
+            switch ( brand ) {  
+    
+                case "Nike" : System.out.println("Just do it");      break;
+
+                case "Adidas" : System.out.println("Impossible is nothing");  break;
+
+                case "Puma" : System.out.println("Forever Faster");  break;
+
+                case "Reebok" :  System.out.println("I Am What I Am");  break;
+
+                default : System.out.println("Brand Not Found");
+            }
+    }
+141) Java program to remove all vowels in the String
+  +++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Main {
+    public static void main(String[] args) {
+        String s = "hello, i love my india";
+        String s1 = s.replaceAll("[aeiouAEIOU]", "");
+        System.out.println(s);
+        System.out.println(s1);
+    }
+}
+
+142) Right Half Pyramid Pattern
+  ++++++++++++++++++++++++++++++
+    *
+    **
+    ***
+    ****
+    *****
+    ******
+      class Main {
+        public static void main(String[] args) {
+           for(int i=1 ; i<=5 ; i++){
+               for(int j=1 ;j<=i ;j++){
+                   System.out.print("*");     // note not use println
+               }
+               System.out.println();
+           }
+        }
+    }
+143) Right half Reverse Pyramid
++++++++++++++++++++++++++++++++
+    *****
+    ****
+    ***
+    **
+    *
+    class Main {
+    public static void main(String[] args) {
+       for(int i=1 ; i<=5 ; i++){
+           for(int j=6-i ;j>=1 ;j--){
+               System.out.print("*");
+           }
+           System.out.println();
+       }
+    }
+   }
+
+144) Left Half Pyramid Pattern
+  ++++++++++++++++++++++++++++++
+  class LeftTriangle {
+
+        public static void main(String... args) {
+
+                for( int i = 1; i<=5 ; i ++ ){
+                
+                    for ( int k = 5-i ; k >= 1 ; k-- ){
+                        System.out.print(" ");
+                    }                   
+                    
+                    for( int j = 1; j<=i ; j++ ){
+                            System.out.print ("*");
+                    }
+
+                    System.out.println();
+                }
+        }
+     }
+
+
+145) Write a java program to print Pyramid pattern
+
+    * 
+   * * 
+  * * * 
+ * * * * 
+* * * * *
+==========================================================================================
+class Pyramid {
+
+        public static void main(String... args) {
+
+                for( int i = 1; i<=5 ; i ++ ){
+                
+                    for ( int k = 5-i ; k >= 1 ; k-- ){
+                        System.out.print(" ");
+                    }                   
+                    
+                    for( int j = 1; j<=i ; j++ ){
+                            System.out.print ("* ");
+                    }
+
+                    System.out.println();
+                }
+        }
+}
+
+145) Write a java program to check given year is a leap year or not
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    import java.util.Scanner;
+
+    public class LeapYearChecker {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter a year: ");
+            int year = scanner.nextInt();
+            scanner.close();
+
+            if (isLeapYear(year)) {
+                System.out.println(year + " is a leap year.");
+            } else {
+                System.out.println(year + " is not a leap year.");
+            }
+        }
+
+        public static boolean isLeapYear(int year) {
+            if (year % 4 == 0) {
+                if (year % 100 == 0) {
+                    return year % 400 == 0;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
+
+138) Explain the HashMap with Example
+   ++++++++++++++++++++++++++++++++
+   import java.util.HashMap;
+    import java.util.Iterator;
+    import java.util.Map;
+    import java.util.Map.Entry;
+
+    public class HashMapExample {
+        public static void main(String[] args) {
+
+            Map<String, Integer> map = new HashMap<>();
+            map.put("web", 1024);
+            map.put("database", 2048);
+            map.put("static", 5120);
+
+            System.out.println("Java 8 forEach loop");
+            map.forEach((key, value) -> System.out.println("[Key] : " + key + " [Value] : " + value));
+            Note : how to access real time data through HashMap
+            +++++++++++++++++++++++++++++++++++++++++++
+            key.getEmpName();
+            value.getEmpId();
+
+            System.out.println("for entrySet()");
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                System.out.println("[Key] : " + entry.getKey() + " [Value] : " + entry.getValue());
+            }
+
+            System.out.println("Iterator");
+            Iterator<Entry<String, Integer>> iter = map.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) iter.next();
+                System.out.println("[Key] : " + entry.getKey() + " [Value] : " + entry.getValue());
+            }
+
+        }
+
+    }
+
+139) Expalin how to Convert HashMap Into List with example
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.Iterator;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Map.Entry;
+
+    public class HashmapToArrayList {
+
+        public static void main(String[] args) {
+
+            HashMap<String, Integer> companyDetails = new HashMap<String, Integer>();
+
+            // create hashmap with keys and values (CompanyName, #Employees)
+            companyDetails.put("eBay", 4444);
+            companyDetails.put("Paypal", 5555);
+            companyDetails.put("IBM", 6666);
+            companyDetails.put("Google", 7777);
+            companyDetails.put("Yahoo", 8888);
+           //USe Iterator to iterate the HashMap Data
+           ++++++++++++++++++++++++++++++++++++++++++
+            System.out.println("==> Size of companyDetails Map: " + companyDetails.size());
+            
+            Iterator<Entry<String, Integer>> it = companyDetails.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, Integer> pairs = it.next();
+                System.out.println(pairs.getKey() + " = " + pairs.getValue());
+            }
+
+            // Converting HashMap keys into ArrayList
+            +++++++++++++++++++++++++++++++++++++++++
+            List<String> keyList = new ArrayList<String>(companyDetails.keySet());
+            System.out.println("\n==> Size of Key list: " + keyList.size());
+
+            for (String temp : keyList) {
+                System.out.println(temp);
+            }
+
+            // Converting HashMap Values into ArrayList
+            ++++++++++++++++++++++++++++++++++++++++++++
+            List<Integer> valueList = new ArrayList<Integer>(companyDetails.values());
+            System.out.println("\n==> Size of Value list: " + valueList.size());
+            for (Integer temp : valueList) {
+                System.out.println(temp);
+            }
+
+            List<Entry<String, Integer>> entryList = new ArrayList<Entry<String, Integer>>(companyDetails.entrySet());
+            System.out.println("\n==> Size of Entry list: " + entryList.size());
+            for (Entry<String, Integer> temp : entryList) {
+                System.out.println(temp);
+            }
+
+        }
+
+    }
+
+
+ 
+

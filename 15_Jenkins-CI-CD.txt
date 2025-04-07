@@ -1,0 +1,253 @@
+Jenkins
+++++++++++++
+   
+   1) What is Build and Deployment process
+   -----------------------------------------
+   - Developers are from diff location and store there code at 1 place , i.e in github
+     Build and Deployment process is 
+     -------------------------------
+   - Take the latest source code from github ,
+   - Step 1 : Compile that code 
+   - Step 2 : execute the Unit test cases ,
+   - Step 3 : perform code review using SonarQUbe ,
+   - Step 4 : then package app into jar or war file 
+   - Step 5 : upload into build Artifact i.e Nexus server( for jar , war file backup perpose we use this Nexus server)
+   - Step 6 : Create docker image
+   - Step 7 : Create the COntainer 
+   - Step 8 : ( deploy on K8S) Once we deploy the application on server then client can access those application , through www url
+
+
+   2) Realtime Application Enviorment 
+     ----------------------------------
+     - Enviorments are the platform where we run our application
+     - Dev, QA , prod etc to test our application
+     - When all code is develop by diff developers , then they integrate all the code into 1 unit and perform integration testing in DEV enviorment only
+     - DEV ENV-> Developer is used to perform integration testing 
+     - QA ENV -> Testers will use to perform Functional Testing
+     - Prod ENV> Live enviorment ( ends user can access the application) 
+   
+   3) WHat is DevOps
+   +++++++++++++++++
+     - The team which is colloborate with development team and Operation team
+     - Development + Operations => DevOps 
+     - Using Devops team we can simplify the application Build and Deploment process
+   
+   4) Challanges in Manual process of Build and Deployment
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     - Every day developers are writing the code and push it into git repo
+     - every day devops team need to deploy latest code
+     - Delpoy code in multiple enviorments
+     - Takes lot of time 
+     - Repeated WOrk( same thing we are going to do again and again)
+     - so mistake can be done
+
+     Solution : to overcome this challenges we are using Jenkins
+
+   5) Build and Deployment - Automation
+   --------------------------------------
+     - Above 7 steps of build and deploment are make automated by jenkins
+   
+   6) What is Jenkins   ( free , open source , build in java lang so jre required to run)
+   ++++++++++++++++++++
+     - Jenkins is used to automate build and Deploment process that means 
+     - taking the code , compile the code , package the code , review the code, package the application,  upload to artifact server , deploy to the server 
+     - using Jenkins we can implement CI CD
+     - Jenkins server runs on port:8080
+   
+   7) What is  CI DC
+   ++++++++++++++++++
+    CI -> stands for Continous Integration
+    CD -> stands for Continous Delivery / Continous Deployment
+
+    - When we do any code changes into the GitHub then that code automatically deploy into the server with the help of automatic 
+      build and deployment process this is called CI CD
+    - What ever the code we modify on GITHUB ,  that code is ready for the deployment on server , this is done by CI CD
+    - CI CD is one of the trending approch in software development life cycle
+    
+    - Continous Integration -> When code changes heppend it should be ready to test 
+    - Continous Delivery    -> Keep it ready to release in repository( means keep the project ready to deployment)
+    - Continous Deployment  -> Deploy the project to production
+    - Note : for production deployment we need to take client approval , so not automatic
+
+
+   8) Jenkins Setup 
+   ++++++++++++++++++++
+   1) We can install Jenkins manually
+   2) We can run Jenkins as a docker container
+   git repo - DEvops-Document/ jenkins-Docker-K8S   => on ashok it git
+
+    1) Mannual setup
+    -----------------
+       1) create VM on aws
+       2) install java 
+       3) download jenkins
+       4) Check Jenkins status
+       5) enable port 8080 on EC2
+
+      - access through 8080 port no
+      - add password
+      - give permission to install Plugins
+      - create Admin user
+      - we will get Jenkins server url , get started using jenkins
+
+  9) Next time login to Jenkins how
+  +++++++++++++++++++++++++++++++++++
+    url provided login
+
+  10 ) When to go with Freestyle project and Jenkins Pipeline project
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Simple build and deployment project  -> then Freestyle project - for developer practice
+    -> Complex build and deployment project - integrate maven , docker , k8S, Sonarqube
+
+  11) About Jenkins CI CD pipeline creation 
+  +++++++++++++++++++++++++++++++++++++++++++++++
+     1) Login 1st through URL 
+     2) New Item  -> To Create Job - ex : Spring-boot-app-job - Which project ( pipeline or Multi Config pipeline )
+     3) Go to that job - 
+        1) COnfigure- to define job specification , and edit jon speci
+          1) General 
+                Discription :ex this job is build to automation build and deployment
+          2) Source code Management 
+                - where is your source code available
+                - Git ( if private then add crediantials )
+                - specify git branch ( main /master)
+          3) Build Triggers
+                - means when you want to execute the job (either automatically or when only code is modify)
+                - Build periodically ( ***** - means every min job execute)
+                                       H*****- every hour
+                - Poll SCM - only code change then execute 
+                             ***** it will check every min any code is change or not
+          4) Build Enviorment : 
+          5) Build steps : How you want to execute the build 
+                            execute maven cmd
+                                     shell script 
+        2) Build now : to execute the job
+        3) Console output : to check console when app running
+
+    12) What is mean in Jenkin pipeline( note t2.micro not work for this pipeline because 1GB ram , use t2.medium - 4GB ram)
+    ++++++++++++++++++++++++++++++++++++
+      -> pipeline menas set of stages to perform build and deployment
+      -> Pipeline we are writing is an groovy script , or python script
+      -> Jenkins pipeline we can write in 2 ways 
+          1) Declarative pipeline
+          2) Scripted pipeline (python script , groove script )
+      -> I work on groovy script
+          this is dummy pipline to understand
+          -----------------------------------
+      -> pipeline{
+             agent any
+             stages{
+                stage('Clone repo'){            1st stage clone the repo
+                   step{
+                      echo 'Cloning repo'
+                   }
+                }
+                stage('Maven Build'){           2nd stage build maven 
+                   step{
+                      echo 'Maven Build'
+                   }
+                }
+                stage('Build image'){            3rd stage build image
+                   step{
+                      echo 'Docker image'
+                   }
+                }
+                stage('Create container'){
+                   step{
+                      echo 'Container creation'
+                   }
+                }
+             }
+         }
+       -> Real pipeline
+       -------------------
+           pipeline{
+             agent any
+             stages{
+                stage('Clone repo'){            1st stage clone the repo
+                   step{
+                      git branch: 'main' , url :'----'
+                   }
+                }
+                stage('Maven Build'){           2nd stage build maven 
+                   step{
+                      sh 'mvn clean package'      ( sh - shell)
+                   }
+                }
+                stage('Build image'){            3rd stage build image
+                   step{
+                      sh 'docker build -t sbapp .'
+                   }
+                }
+                stage('Create container'){
+                   step{
+                        sh ' docker run -d -p 8080:8080 sbapp' //directly run the app
+                    //  sh 'kubectl apply -f yml'// for K8S cmd
+                   }
+                }
+             }
+         }
+
+  ++++++++++++++++++++++++++++++++++++
+   Real time process of pipeline creation
+   How your project will be deployed
+   ++++++++++++++++++++++++++++++++++++++
+   1) Dev team will create JIra ticket for jenkins pipeline creation(ex ticketNo AR-342)
+
+   2) DEv team member will take that ticket will assing to his name(Nilesh Nangde) 
+
+   3) Send request to deveops team to create Jenkins pipeline for Non-proc env with git repo url
+
+   4) Devops team will create Jenkins pipelin eand will give replay to our email as confirmation
+
+   5) Developer will test pipeline functionality by deploying sample application( like hello word program)
+
+   6) If build and deployment is success then developer will close Jira ticker
+
+   7) If build and deployment is failed then developer will find root cause of the failure
+
+   8) If failure is code side then developer will fx , if failure  is in pipeline then Devops team fix it .
+
+Note : every team member will have Jenkins access ( user account will be created)
+
+    How your project will be deployed
+    -----------------------------------
+    -> 1st we will create a jira ticket for pipeline creation
+    -> And we are going to send a request for devops team with ticket id to create the pipeline
+    -> Once the pipeline will be created then one of our developer team member who is working on the stroy will run that Job and will see the job is working successfully or not
+    -> if Job executeing successfully then we will close that ticket ,and run the job again and again to do the deployment on daily basis
+    -> IF the Job is not executing then we will see the console output , to what is the root cause of the application
+    -> If the problem is from code side then we will fixed that problem and we will re-run the job
+    -> If the problem is in the pipeline , then we will send to the devops team they will work on that problem and fix it  
+    -> After that we will re-execute the same job to make sure the job is executing successfully
+
+
+Have you create pipline creation
+++++++++++++++++++++++++++++++++
+ -> yes , in my team for non production enviormnet  , developer will responsible to create the pipeline 
+ -> but for production enviorment we have the seperate Devops team
+ -> Note : service based company - devops team handle this
+           product based company - developer will handle this
+
+
+ ->  In my team for Non Production enviorment - devops team is not available 
+ -> Developer is responsible to perform activities on non prod env
+ -> Because even if we do something wrong in non prod then there is no loss for client , we can solve that mistake
+ -> Non prod enviorments are the internal enviorments , developer will use , tester will use 
+
+ Note : -> for PROD deployment ' Release Call' will be available
+        -> Release call is a Zoom meating , this friday at 6pm we have production deployment 
+        -> In this Release call Dev team , testing team , DEvops team , Manager
+        -> But devops team member do the production deployment
+        -> DEvops team will explain each step 
+            do maven build id happentning or not 
+            do image creation - creating or not 
+            deploy or not into docker hub
+            check the pods created or not 
+            send the request for the application 
+            see the logs of the application
+            - all this check list we will follow , devop steam do the deployment 
+         -> This release call is for 3 to 4 hours and they will share the screen 
+         -> at that time we will also observed how the production deploymenet will happent in the company
+  -> every 2 to 3 months production deloyment will hapent in compony for same project 
+  -> because some mistakes we solve , fixed and build again and deploy again

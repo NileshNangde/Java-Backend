@@ -1,0 +1,324 @@
+Docker    note : Ubantu is an Operating system
+++++++++++++++++
+
+1) What is Docker and Why Docker
++++++++++++++++++++++++++++++++++++
+-> Docker is used to containerized the application or microservice
+-> Containerized the application means Docker package the applcaiton dependecies , libraries into Docker image
+-> dependencies + its version we are specify in docker file , so docker automatically download the dependecies 
+-> So We dont need to boather the dependecies required to run the application in the different enviorments
+-> And to test the applcation by testing enviorments(SIT, UIT,prod) through docker hub they download docker image and test
+-> So Testing team no need to  take care about the dependicies and libraries required to run the applcation
+
+Why Docker
+-----------
+-> If we dont use Docker then Mannully Testing team Dowmload the Dependecies to execute the application 
+-> SO to avoid this problem we use DOcker 
+
+Docker FIle
+--------------
+ -> In docker file we specify dependicies required to run the application and also we specify how to execute the application
+ 
+
+What is Docker Image
++++++++++++++++++++++
+-> Docker image is the packaging of Source code , Library , and Dependicies( nothing but DOcker file) in single unit
+-> 2 types of image private and public 
+-> 1 Docker image = download on multiple container , so multiple Docker Container
+
+What is Diff between GITHUB and Docker-Hub 
+-------------------------------------------
+ -> Github is used to store the source code of the project 
+ -> Docker-Hub is used to store the Docker image of the project , we download Docker impage form the Docker hub into our virtual machine
+ -> Docker container = in virtual mahine with downloaded  docker image  and in this machine we execute the application is Docker container
+  Note : in Real time we use AWS ECR to store Docker image
+          ECR : Elastic container registry
+What is Docker Hub
++++++++++++++++++++
+-> Cloud place where Docker Images are available, and if any Enviorment want's to test and execute the application then from
+  Docker hub they are going to Pull the DOcker image and test the applcaiton
+
+What is DOcker container
+++++++++++++++++++++++++++
+COde + dependicies + VM to run the code
+- Application is execute inside Docker container
+
+What is Docker COmpose 
+---------------------
+ -> 8 Microservices for that we create 8 seperate Docker image is DOcker compose 
+ -> THis is one yml file
+
+How to download Docker in VM ,create Docker image and Run the Docker image in VM
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-> 1) Download docker in VM  => Verify , 
+-> 2) Create docker image 
+-> 3) Run Docker image
+-> 4) Access the running applcaiton
+
+How to download the Docker into VM
++++++++++++++++++++++++++++++++++++
+sudo yum upade -y
+sudo yum install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+
+How to verify docker install or not
++++++++++++++++++++++++++++++++++++++
+docker -v  
+
+How to verify docker working or not 
+++++++++++++++++++++++++++++++++++++
+docker info     -> true with some information 
+
+How to verify Docker image in machine of not
+++++++++++++++++++++++++++++++++++++++++++++++
+docker image
+
+How to create Docker image 
++++++++++++++++++++++++++++
+Go www.Docker.hub
+Here public images are available used them
+docker pull <imageName>
+
+How to run DOcker image
++++++++++++++++++++++++++
+sudo docker run <image-name> or <image-id>
+
+How to Stop docker image
+++++++++++++++++++++++++++
+sudo docker stop <contaner-name>
+ 
+Note: AWS - yum package manager
+      ubantu - apt package manager
+
+What is port mapping 
++++++++++++++++++++
+Docker have 1 port number 8080
+Java app have 1 port number 8080
+through docker port number we are calling java application port so -p  port mapping
+
+How to download any dependency through docker 
++++++++++++++++++++++++++++++++++++++++++++++
+go to docker hub website
+serch Jenkins
+      Tomcat
+      Java8
+
+How to delete docker image
+++++++++++++++++++++++++++++
+docker rmi <imageName> or<image-id>
+Note: If docker image is associate with container then delete 1st container then delete image 
+docker rm <containerName>  then
+docker rmi <imageName> or<image-id>
+
+What if we dont know port number for port mapping 
++++++++++++++++++++++++++++++++++++++++++++++++++++
+without downloading docker image run directly docker image 
+docker run -p 9090:9090 ashhokit/spring-boot-rest-api
+
+why we not execut next command in terminal while we run the docker image 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Run in detach mode (-d) -> then it will give the next terminal to execute next cmd
+docker run -d -p 8080:8080 ashhokit/spring-boot-rest-api
+
+How to check running docker container int the machine 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+docker ps
+
+How to access the running Docker appilcation 
+++++++++++++++++++++++++++++++++++++++++++++++++
+ -> Now our applcation is running -> through aws ip address access the applcation
+ -> before that allow public access for the applcation 
+ -> inbound rule -> 9090 port -> allow as public
+
+How to check docker container running or not 
++++++++++++++++++++++++++++++++++++++++++++++
+docker ps -a
+
+How to stop docker running container
++++++++++++++++++++++++++++++++++++++
+
+
+What is Docker file and WHat are the keywords required to write the Docker file
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ -> A file which contains instructions to build the docker image is Docker file 
+ ->  1) FROM        :- used to specify the specific dependency which are required for the application to run the application 
+                       like java , tomcat etc to run the application
+                       ex: FROM openjdk:8 , FROM tomcat:9.5 | openjdl is image name get from docker hub
+     2) MAINTAINER  :- used to specify author name in dockerfiel EX: MAINTAINER:<nileshnangde01>
+     3) COPY        :- used to copy one app code files details into another file | EX: COPY target/app.jar   /user/app/app.jar
+                       copy code from our system to continer machine
+     4) ADD         :- Same as COPY command : copy app code from source to destination but here source is URL 
+                        <URL>    /user/app/tomcat.webapp
+     4) RUN         :-  RUN Command is used to execute the LINUX command while docker image is creating
+                        EX: RUN 'sudo apt install git', 
+                        -   RUN 'sudo apt install maven
+                            RUN 'sudo apt git clone <repo>'
+                       git for if we want to download code from git hub, maven for compilation  | note : instructions are execute while image creation
+     5) CMD         :- used to execute the instructions while creating the continer : 
+                       EX: cmd 'java -jar <jar file>' Note : multiple cmd not execute
+     6) EXPOSE      :- used to specify the container port number as in document ,so devops people can understand which port no we use EX: EXPOSE:8081
+     7) WORKDIR     :- used to specify the working directory for path change
+     8) ENTRYPOINT  :- alternative for cmd , only used this why : because cmd instructions can override , entrypoint instructions are not override
+
+How to create a Docker file in VM
+++++++++++++++++++++++++++++++++++++++
+ FROM ubantu
+ RUN echo 'Hi'
+ RUN echo 'HELLO'
+ cmd echo ' How are you'
+
+How to convert Docker file into Docker Image
+++++++++++++++++++++++++++++++++++++++++++++
+ -> sudo docker built -t first-img .
+
+How to Tag Docker Image  - tag means we need to specify image with you user name
++++++++++++++++++++++++
+ -> sudo docker tag first-img ashokit/first-img   -> here first-img is tag into ashokit/first-img
+
+Login into Docker Hub
+++++++++++++++++++++++
+ -> sudo docker login    -> then enter login id and password
+
+Push Docker image into Docker hub
++++++++++++++++++++++++++++++++++
+ -> sudo docker push first-img or 
+    sudo docker push ashokit/first-img
+
+How to download image into our Vartual machine 
+++++++++++++++++++++++++++++++++++++++++++++++
+-> first prune all images from our VM     -> sudo docker system prune -a
+   Now check any image is available or not -> sudo docker images 
+-> download image into our system 
+   sudo docker pull ashokit/first-img
+
+How to run Docker image 
++++++++++++++++++++++++
+-> sudo docker run first-img
+
+How to Dockerrize java web application (note not spring boot app)( watch video 65)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-> Spring boot app -is jar file
+-> java web app is package into war file
+-> war file we deploy in tomcat server - webapps folder
+    1st I want tomcat server 
+    2nd I need to copy war file and add into docker file
+    3rd specify port number 
+
+    FROM tomcat 
+    COPY target/warfile    /user/tomcat/webapps/warfile
+    here java app is taken from target folder and put into webapps - warfile
+
+How to check Image container got created
++++++++++++++++++++++++++++++++++++++++++
+ -> sudo docker ps
+
+
+How to dockerize spring boot application(Interview Q)
+++++++++++++++++++++++++++++++++++++++++
+ -> Spring boot app is packaged as jar file 
+ -> sprirg boot provide embedded server for web application
+ -> to run Spring boot app we need to run jar file
+
+    FROM open-jdk:11   ( note : open-jdk:11  -> this is called public image)
+    COPY target/app.jar   /user/app/app.jar(container path)(app.jar is optional here)
+    WORDIR     /user/app    ( go to this file and execute the app )
+    EXPOSE 8080
+    ENTRYPOINT [ "java" "-jar" 'app.jar']   (means executing)
+
+         here entry point specify which cmd to execute 1st
+         java - open jdk execute 1st
+         -jar i.e app.jar execute 2nd
+
+How to create the docker image for spring boot app
++++++++++++++++++++++++++++++++++++++++++++++++++++
+  1st-> sudo docker build -t springbootimg .
+  2nd-> fail to create image 1st convert app into jar file - how 
+  3rd-> sudo apt install maven then mvn clean package (this package the app into jar app) => then it create the (target directory)[this target directory is important for us]
+  -> now do  -> sudo docker build -t springbootimg .
+  -> Run the Image = sudo docker run -d -p 9090:9090 springbootimg
+
+  Git ashok -> search sprin-boot-docker-app
+
+How much container we can executed in 1 VM(VM is 1 but container can be any)
+++++++++++++++++++++++++++++++++++++++++++++++++
+-> virtual machine runs on 8080 port number 
+-> Spring boot app runs in 9090 port number
+
+How to create Docker imagr for python app
+++++++++++++++++++++++++++++++++++++++++++
+-> git python-flask-docker-app
+
+
+Docker Compose (real time use)(repo spring-boot-mysql-docker-compose)
++++++++++++++++
+-> When we want to manage multi container based application then we are using Docker Compose tool
+-> Manage multi container based application means ( spring boot app 1st connect to data base then execute the application ,)
+-> Because application read the data from database 1st then execute another code , If not read the data from data base then it fails to load the next line
+-> So like 1 container is depend on another container which container to load 1st , this information is managed by docker container
+-> This Docker Compose is one tool(software) we need to install it 1st in our VM
+-> We cna create multiple contianer at a time by using Docker compose
+-> Using DOcker Compose we can define dependicies among the container 
+    Ex: App Container depends on DB container
+        ( so 1st create DB container , then create App container)
+       - Application is running on 1 container 
+       - DB is running on another container 
+       - comunnication done by DOcker compose
+       - Like DB we need to run another app also like radis , kafka
+-> How to tell which container will to load 1st
+   --------------------------------------------
+    -> We will provide container information to Docker compose tool using docker-compose.yml
+-> docker-compose.yml file contains below elements
+   -----------------------------------------------
+   with the help of this cmd
+   ------------------------------
+    1) version: we can specify container version  number
+    2) services:  we can container execution order (or information)
+    3) volumes: we can specify storage
+    4) network: we can specify connectivity( or identity purpose)
+    and many more
+ -> How to create the Docker container in Docker Compose 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     -> docker-compose up( or to execute the docker compose yml file)
+
+     to deleter the container 
+     ------------------------
+     -> docker-compose down
+
+     to stop the container
+     ----------------------
+     -> docker-compose stop
+
+     to start the container after stop
+     ---------------------------------
+     -> docker-compose start
+
+     how to list the container created by docker compose
+     --------------------------------------------------
+     -> docker-compose ps
+
+ -> Docker compose download and setup
+ +++++++++++++++++++++++++++++++++++++
+    1) How to check docker compose is installed or not
+     docker-compose --version
+
+    2) Download DOcker compose 
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.24/0/docker-compose-$(uname -s)-$(uname -m)" -o/usr/local/bin/docker-compose
+
+    3) GIve permissions
+    sudo chmod +x /usr/loacl/bin/docker-compose
+
+    GIT -> Spring-boot-Mysql-docker-compose  app for practice on ashok git
+
+    Execute spring boot app with MySQL DB using Docker compose
+    -----------------------------------------------------------
+    1st => download app from git 
+    2nd => mvn clean package - Package our application ( because target folder not available , if we package the it will create the target folder)
+           what is used of target folder - project compile and app convert into jar file  and jar is used to run the application
+    3rd => create docker image for spring boot application
+           sudo docker build -t spring-boot-mysql-app
+    docker-compose.yml    serch on google  , n number of examples are available
+
+    4th => create the container using docker compose
+        sudo docker-compose-up
+

@@ -1,0 +1,247 @@
+
+    SPring security 5.1 version we are using 
+-----------------------------------------
+
+
+1) What is Security in API's and How the Spring security works
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  -> Security is very important for any web application or REST API,s
+  -> Because if we dont secure the applcaition then  any one can directly access our URLS customize our application for there use
+  -> We need to protest our application against CSRF , session fixation, and clickjacking  attacks. (Cross-Site Request Forgery) .
+  -> To secure our application or REST api,s Spring provide Spring Security Framework 
+  -> The major functionalities of SPring security is to manage Authentication and Authorization at both side means at
+     Web request side  and server side method invocation side 
+  -> Authentication – means it verifying the credentials | Authorization- means after verifying  access the specific functionality
+  -> With the help od spring security  OAuth 2.0 and JWT are the main Security we are using to secure our application
+
+
+ 2) Explain the OAuth2 Security  ( We Authorize client form google to uses limited services of our application 
+ +++++++++++++++++++++++++++++++++    because google is more secured than our app security , so we can trust on them)
+   -> OAuth2 is one Autherization framework
+   -> Here user without directly login to our application , he can Autheticate by 3rd party(google) application where he allready register and login
+   -> OAuth2 will redirect user to 3rd party application- Authorization server  where user 1st login 
+   -> After Authicate  is success user redirect to our application with token generate from 3rd party OAuth service 
+   -> And in our application side Resource server is available where the Token is verifies that provided by client 
+   -> And our application gives limited http access to the user to use our applciaton secured resource 
+
+
+ 3) Expalin JWT to secure our application ( JWT introduce in Spring Boot 3 and spring 6 version )
+ +++++++++++++++++++++++++++++++++++++++++( because of JWT  server doesn't need to maintain session state)
+   -> Authentication request     : Through browser or Postman login request sends to the authentication endpoint (e.g., /authenticate).
+                                   request includes the username and password in the request body.
+   -> Authentication process     : authentication controller receives the login request.
+                                   credentials are passed to the AuthenticationManager to authenticate the user.
+                                   AuthenticationManager uses a custom implementation of UserDetailsService to load user details from a database 
+                                   The provided password is validated against the stored (hashed) password using a PasswordEncoder.
+                                   If the authentication is successful, JWT token generate ; otherwise, it returns an error response (e.g., 401 Unauthorized).
+   -> JWT Token Generation       : After successful authentication, JWT token is generated using the user details, secret key, 
+                                   and other claims (e.g., expiration time, roles).
+                                   The token is returned in the response body or as an HTTP header (e.g., Authorization: Bearer <token>).
+   -> Token Store at client side : client receives the JWT token and stores it securely in:
+								   LocalStorage or SessionStorage (in web apps).
+								   Secure storage or SharedPreferences (in mobile apps).
+   -> Request with JWT token     : For protected endpoints request , the client includes the JWT in the Authorization header ex Authorization: Bearer <token>
+                                   The server verifies the JWT token  before processing the request.
+   -> Token verification         : When client sends the request with Bearer then before the request goes to controller class 1st it goes to JWTFilter class
+                                   In JWTFIlter class Authentication header is there which extract the token 
+                                   Token's signature is Validates using the secret key.
+                                   Token expiration is checkked
+                                   If token is valid  user details are extracted from the token (e.g., username, roles).
+                                   UsernamePasswordAuthenticationToken is created and stored in the SecurityContext for subsequent access in the request lifecycle.
+   -> Control class Execution    : Then request proceeds to the appropriate controller if the user is authenticated and authorized.
+                                   The controller executes the business logic and returns the response.
+   -> Response                   : The response is sent back to the client.
+
+    Note : FOr microservices we are loging the filtering logic in API gateway
+
+    -> Ashok diagram Explain
+    ------------------------------
+    -> Client send login request through / authticate 
+    -> this /authenticate url map with method post method where AuthticationManager  method class 
+    -> In this Authtication Manager method we pass the crediantials like userName and Password 
+    -> THis details are correct or not configured by calling userDtlsService -> DB 
+    -> If user details are corect then AuthticationManager class call JwtUtils class 
+    -> In JwtUtils class token generation logic and token validation logic is available 
+    -> Now user credentials are valid during login so token generation logic call and token send to clien as response 
+    -> Now user send /hello request with token in header ex  authentication as key and barrear space token is value 
+    -> this /hello request cames to ReqFilter class here token is verify to verify the token JwtUtils class call
+    -> here token validation logic is available , if JwtToken class validate the token then 
+    -> request sends to SecurutyCOnfig class where urls secure logic is available 
+    -> which url is to secure and not to secure 
+    -> And with this SecurityCOnfig class we can acces the secured url  
+
+ 4) Explain Security Filter Chain
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> Security Filter Chain is provided by Spring Security for control access to HTTP endpoints. 
+   -> Execution flow : 1) Incoming HTTP Request: All incoming HTTP requests pass through the security filter chain.
+                       2) Filters              : The chain contains various security filters (e.g., for authentication, authorization, and token validation)
+                                                 that process the request sequentially.
+                       3) Decision Point       : Based on the filter logic, requests are either allowed to proceed to the controller or blocked.
+
+
+ 4) Explain Security for Resister and Login for Spring boot Application 
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   -> This is divided into 5 main Parts 
+   1) UserDetailsService Injection:
+   --------------------------------
+     -> This injection is responsible for loading user-specific data from database
+     -> It loads user details like username, password, roles, etc.
+     -> @Autowired
+        private UserDetailsService userDtlsService;
+
+   2) Password Encoder Configuration:
+   ----------------------------------
+     -> This uses BCrypt as a strong hashing algorithm to store the passwords during registration and verify them during login
+     -> @Bean
+		public PasswordEncoder pwdEncoder() {
+		    return new BCryptPasswordEncoder();
+		}
+	 -> During Register :
+	            String rawPassword = "userPassword123";
+				String encodedPassword = pwdEncoder().encode(rawPassword);
+				Stored in DB: $2a$10$JznY1u9Uq0gmvX.mSd6qUeYKlvwsNHv6vO3T4F
+	 -> During Login :boolean matches = pwdEncoder().matches(rawPassword, encodedPassword)
+
+   3) Authentication Provider Setup:  When User Login This is executed 
+   ----------------------------------
+     -> User submits login credentials
+	 ->	DaoAuthenticationProvider receives the authentication request
+	 ->	Calls userDtlsService.loadUserByUsername()
+	 ->	Uses pwdEncoder to verify the password
+	 ->	If successful, creates an authenticated Authentication object
+     -> @Bean
+		public AuthenticationProvider authProvider() {
+		    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		    authProvider.setUserDetailsService(userDtlsService);
+		    authProvider.setPasswordEncoder(pwdEncoder());
+		    return authProvider;
+		}
+
+   4) Authentication Manager Configuration:  This usage in COntroller class 
+   ----------------------------------------
+     -> During User Login Method call Authentication Manager calls the Authentication provider and In Authentication Provider actual Authentication takes place
+     -> AppConfiguration.java
+     -> @Bean
+		public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		    return config.getAuthenticationManager();
+		}
+	 ->COntroller.java
+	    @Autowired
+		private AuthenticationManager authenticationManager;
+
+		public String login(String username, String password) {
+		    try {
+		        Authentication auth = authenticationManager.authenticate(
+		            new UsernamePasswordAuthenticationToken(username, password)
+		        );
+		        // Generate JWT token or handle session
+		        return "Login successful";
+		    } catch (BadCredentialsException e) {
+		        return "Invalid credentials";
+		    }
+		}
+
+   5) Security Filter Chain Configuration:
+   -----------------------------------------
+     -> This Security Filter chain Configured with HTTP security  
+     -> If URL is not Secured then directly allowed 
+     -> If it is Secured then 1st Checks for authentication token/session , then Validates user authorities/roles , Either allows or denies access
+     -> Ex: /login => not secured , /amount -> secured
+     -> @Bean
+		public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
+		    return http
+		        .csrf(csrf -> csrf.disable())
+		        .authorizeHttpRequests(auth -> auth
+		            .requestMatchers("/register", "/login", "/swagger-ui.html",
+		                "/swagger-ui/index.html#", "/actuator/**")
+		            .permitAll()
+		        )
+		        .build();
+		}
+	
+
+
+
+     Security App For login register - greeksofGreeks 
+     ----------------------------------------------------
+     folder structure 
+     ---------------
+     config :
+             SecurityCongif.java
+     entity : 
+              UserInfo.java
+     filter :
+              JwtAuthFilter.java
+     repository :
+              UserInfoRepo.java
+     service:
+             JwtService.java
+             UserInfoDetails.java
+             UserInfoService.java
+     Binding:
+             RequestBinding.java
+             ResponseBinding.java
+
+     Entity  :
+
+      UserInfo.java
+      ------------------------------
+            @Entity
+			public class UserInfo {
+
+			    @Id
+			    @GeneratedValue(strategy = GenerationType.IDENTITY)
+			    private int id;
+			    private String name;
+			    private String email;
+			    private String password;
+			    private String roles;
+
+			    //setter getter
+
+			}
+      AuthRequest.java
+      -----------------
+            @Data
+			@AllArgsConstructor
+			@NoArgsConstructor
+			public class AuthRequest {
+
+			    private String username;
+			    private String password;
+
+			}
+      UserInfoRepo.java
+      ------------------------
+			@Repository
+			public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
+			    Optional<UserInfo> findByEmail(String email); // Use 'email' if that is the correct field for login
+			}
+
+       UserDetailsService.java
+       ----------------------
+       @Service
+	public class UserInfoService implements UserDetailsService {
+
+	    @Autowired
+	    private UserInfoRepository repository;
+
+	    @Autowired
+	    private PasswordEncoder encoder;
+
+	    @Override
+	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	        Optional<UserInfo> userDetail = repository.findByEmail(username); // Assuming 'email' is used as username
+
+	        // Converting UserInfo to UserDetails
+	        return userDetail.map(UserInfoDetails::new)
+	                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+	    }
+
+	    public String addUser(UserInfo userInfo) {
+	        // Encode password before saving the user
+	        userInfo.setPassword(encoder.encode(userInfo.getPassword()));
+	        repository.save(userInfo);
+	        return "User Added Successfully";
+	    }
+	}

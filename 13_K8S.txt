@@ -1,0 +1,206 @@
++++++++++++++++
+  Kubernates  K8S ( between K and S , 8 characters)   ( Open-Shift software , alternate of Kubernate )
++++++++++++++++
+ -> With the help of K8S we are not deploy the application on Production only , we deploy the application on every enviorment 
+ -> like Developer , testing , production etc
+
+Docker : Docker is used for Containerization
+         Containerization means : packaging the application , application dependicies as one single unit for the deployment and execution is called containerization
+
+Kubernetes:
+   -> Kubernates is used for Orchestration 
+   -> Orchestration means managing the containers
+   -> managing containers  means ( create the container , stop , udate ,delete, scale up the container , scale down container , monitor the container)
+   -> K8S develop by Google company 
+   -> K8S is develop by using GO language
+   -> Using K8S we can manage the Docker container (means Orchestrate the DOcker container)
+   -> K8S is more big than spring boot cource , min 3 months required to learn ( totaly develops people )
+
+Why K8S is used to deploy our application
+++++++++++++++++++++++++++++++++++++++++++
+ because of this IMP points 
+ --------------------------
+   1) High availability 
+   2) Auto Scaling - HPA ( horizontal pod autoscaling) - more request comes then horizontally pods creates , less request the pods decrease
+      ( 1 pod cannot handle 1 lakh request then auto scaling of pods)
+   3) Inbuild LoadBalancing
+   4) Pods we can increase manually
+   5) Self healing ( 1 pod get down another pod comes )
+
+   You work on Kubernate
+   ======================
+   Yes I have Idea on kubernates , I practice on K8S , I developed one application also using K8S cluster
+
+   K8S follows which Architecture
+   ===============================
+   -> Cluster Architecture 
+   -> Cluster means group of servers 
+       1 Master Node manages all worker Nodes
+                              WOrker Node
+       Master Node    =====>  WOrker Node
+                              Worker Node
+
+       Master Node : responsible to create the container and container assign to Worker node
+       Worker Node : responsible to run the container  assign by master container 
+       Master Node is also called as Control Plate
+
+
+   What is K8S cluster 
+   ====================
+   -> 
+   
+   K8S Architecture Components
+   ===========================
+   1) Control Plane
+       1) API Server
+       2) Schedular
+       3) Controller Manager
+       4) ETCD
+   2) Worker Node
+       1) Kubelet
+       2) Kuby Proxy
+       3) POD
+       4) Container
+       5) Docker Engine
+   
+   => TO deploy application in K8S cluster we will use 'kubectl' CLI
+
+   => 'API Server' will recieve request from 'kubectl' and will Store in 'etcd'
+
+   => 'etcd ' K8S database which is used to store request details
+
+   => Schedular will check pending requests in 'etcd' and will talk to 'kubelet' to schedule POD creation
+
+   => 'Controller-Manager' will manage tasks in K8S cluster
+
+   => 'Kubelet' is worker node agent which will maintain worker node information
+
+   => 'kube-proxy' will provide network for cluster communication( Master node and Worker node communication is done by kube proxy)
+
+   => POD is a smallest building block that we can deploy in K8S cluster( our application we are converting into POD and deploy on kubernates)
+
+   => In K8s , docker container will be created inside POD
+
+  Note : POD is also called as Runtime Instance in K8S cluster
+         for high availibility we are going to create the multiple POD( means our application multiple replicas )
+   ++++++++++++++++++
+   K8S cluster setup   not our responsibility , Devops people responsibility
+   ++++++++++++++++++
+    -> Several ways to setup for K8S cluster
+       1) Mini Kube  :                     to learn or practice purpose , because single node cluster
+       2) Self Managed CLuster (Kubeadm) : Multi Node Cluster
+                                       ( we need to create the cluster and managed the cluster ) - this is very difficult process , only develops people can do this
+       3) Provider Managed Cluster :     AWS EKS , Azure AKE , GCP GKE ( real time use)
+                                         ( we get the ready made cluster by AWS  and also they only manage the cluster )
+
+  
+   K8S cluster setup using AWS EKS
+   +++++++++++++++++++++++++++++++++
+     AWS EKS architecture 
+     ---------------------
+                                      Worker Node - 1
+     Kubectl  ->     control place    
+    ( EKS host )                      Worker Node - 2
+
+    -> Note all setup creation for AWS EKS is on ashok git 
+       ( Devops document - EKS-setup)
+
+    Steps:
+      step 1: create Linux OS and download 3 softwares
+              1) Kubectl
+              2) AWS CLI
+              3) eksctl
+      step 2 : create new IAM role and attach to EKS Management Host
+      step 3 : Create EKS Cluster using eksctl
+
+      How to know how many worker nodes are available 
+      ------------------------------------------------
+       -> kubectl get nodes
+
+      Cmd to get pods 
+      ----------------
+      -> kubectl get pods
+
+      Cmd to delete the Cluster 
+      ---------------------------
+      eksctl delete cluster --name ashokit-cluster1 --region ap-south-1
+
+   Kubernates Components
+   +++++++++++++++++++++++
+     1) POD        : means our application instances 
+
+     2) Deployment  - deployment.yml ( which container to create we are specify)
+
+     3) Service  - TO access the PODs outside the K8S cluster ( means to acces our application through K8S)
+                    Services available ( means 3 ways to access)
+                    -------------------
+                    1) CLuster IP     -> to access the pod only within the K8S cluster there is ip  with the help of ip we can access the pod
+                    2) Node Port      -> To access the pod outside the cluster with the help of worker node ip address
+                    3) Load balancer  -> Load balancer provide url to access the worker node 
+ 
+ If application is running on 2 pods then request will go to which pod
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ -> request will go to Load Balancing
+
+
+
+
++++++++++++++++++++++++++
+ Logs monitoring in K8S
+ +++++++++++++++++++++++++++
+ -> Real time Log monitoring is done by EKF and Splunk
+ -> Splunk has licence to access so we cannot setup in our System now so we are using EKF
+
+ If application is running on K8S then how to get the log messages of our application
+ -------------------------------------------------------------------------------------
+ note: as a developer we dont have access to on K8S cluster we caanot use this cmd directly  in real time 
+       develops people can use this cmd directlyto get log messages
+       developer people uses EFK tool to get log messages from K8S ( elasticsearch Kibana filesearch) 
+
+ kubectl get pods -o wide  => to get node ( beacuse every application is deploy as pod application)
+
+ kubectl logs <node_name>  => to get logs msg
+
+ But why Log messages required 
+ ------------------------------
+  -> If application have any problem then that problem we trouble shooting using log messages
+ 
+ 
+ EFK Stack setup
+ +++++++++++
+ -> EFK Stack setup will do by Devops people then will provide us the Kibana Url to access the logs messages
+ -> EFK stack is the Combination of open source 3 products
+ -> E -> Elastic Search
+    F -> File Bean / Fluent D
+    K -> Kibana
+ -> THis EKF stack will provide centralized logging in order to identify problems with servers or applications
+ -> It allows you to search all the logs in a single place
+
+ => Fluent D is responsible to collect logs from PODS and store into Elastic Seacrh
+ => Elastic search is like log database , in which logs will be stored and it will index logs for faster retrival 
+ => Kibana is a web application which provide user interface to fetech logs from Elastic search
+
+Note: 
+ -> With the help of K8S we are not deploy the application on Production only , we deploy the application on every enviorment 
+ -> like Developer , testing , production etc
+ -> Each enviorment has any problem then we can found it by log messages
+ -> Each Enviorment has its seperate Kibana URL
+ -> Testing env have any problem then solve it , check there log messages and solve it .
+
+
+=> How to delete all the pods , services, deployment from CLuster 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ using cmd : kubectl delete all --all
+
+ delete all namespace(package) then all tools you install they are delete
+      cmd : kubectl delete ns efklog
+          this cmd delete all the names in the namespcae 
+
+ cmd to delete cluster: eksctl delete cluster --name <cluster_name> --region ap-south 1
+
+ WHat is difference between microservices Load balancer and K8S load balancer
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Microservices Laod Balancer : client side load balancer
+ K8S Load balancer           : service side Load balancer
+
+

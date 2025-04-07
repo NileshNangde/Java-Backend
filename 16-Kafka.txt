@@ -1,0 +1,327 @@
+Note : message brokers available in market : Apache Kafka,RabbitMQ , ActiveMQ ,Redis , Amazon SQS (Simple Queue Service) , 
+                                             Google Cloud Pub/Sub , Amazon SNS (Simple Notification Service)
+
+Apache Kafka (mimp topic)
++++++++++++++++++++++++++
+ -> kafka is called as message broker
+ -> Kafka is an distributed streaming paltform ( means continously data send from publisher into topic and subscriber receview from topic )
+ -> With the help of kafka we can send the data form 1 application to another application without any REST api call
+ -> ex Data : stocks data , news data , Social media data , flights data , etc
+ -> we dont send the data directly to the another application , through message broker we send the data to another application
+ -> kafka is act as mediator between 2 application 
+ -> Without kafka we can send the data through http request but it is not recommended
+ -> we know about provider and consumer  , but if kafka is mediator then provider and subscriber
+ -> Kafka works based on publisher and subscriber
+     publisher - store the data into kafka
+     subscriber- read the data form kafka
+ -> Real time senario
+       techie battery search on flipkart , but now there add is showing me on instagram, youtube , facebook -  how because of kafka
+
+
+  Kafka Terminologies 
+  --------------------
+     1) Zookeeper     -> run time enviorment or server  inside kafka is run
+     2) kafka Server  ->  kafka software
+     3) Kafka Topic   -> topic is like database of kafka and used to store the data inside the kafka
+                         In topic we can store , string data , JSON , XML data
+                         we can create multiple topics in kafka
+     4) Message       -> 
+     5) Publisher     -> app who store the data into kafka
+     6) Subscriber    -> app who read the data from kafka
+
+  Kafka inbuild API's
+  ----------------------
+    1) Connector API  - is used to make connection between application  and Kafka
+    2) Publisher API  - api is used to send data to kafka
+    3) Subscriber API - api to get data from kafka
+    4) Stream API
+
+  In Real time Kafka Admins are available to do the setup for kafka 
+  and gives us the url to connect with topic
+  Kafka setup is done by kafka admin we are not responsible , for practice purpose we do in one system 
+  ------------------------------------------------------------------------------------------------------
+
+  Kafka Setup - not our responsiblity
+  --------------------------------------
+    1) Download Zookeeper from below url
+       url : http://mirroe.estointernet.in/apache/zookeeper/stable/
+    2) Download Kafka
+       url : http://mirror.estointernet.in/apache/kafka
+    3) Set path to zookeeper in enviorment variable ( upto ) bin folder
+    4) zookeeper.properties file will be available in kafka/config folder 
+         we can copy zookeeper.properties and server.properties files from kafka.config folder to kafka.bin/windows folder if linux machine then use Linux folder
+    5) start Zookeeper server using below cmd from kafka/bin/windows folder
+          cmd : zookeeper-server-start.bet zookeeper.properties( zookeeper properties we are giving here to start zookeeper)
+    6) Start kafka server using below cmd from kafka folder
+          cmd : kafka-server-start.bat server.properties  (server properties we are giving here to start server )
+     Note : Zookeeper server start 1st then kafka server
+    7) Create kafka topic using cmd from kafka/bin/windows folder
+       kafka-topic.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partiations 1 --topic demo-sbms-topic
+    8) View created topics using cmd
+      cmd : kafka-topics.bat --list --bootstrap-server localhost:9092
+   
+##############################
+Kafka Producer App Development
+##############################
+
+==========================================================
+1) Create Spring Boot application with below dependencies
+==========================================================
+
+<dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    
+    
+================================
+2) Create Kafka Constants class 
+================================
+
+public class AppConstants {
+
+    public static final String TOPIC = "ashokit_order_topic";
+    public static final String HOST = "localhost:9092";
+
+}
+
+=======================================
+3) Create Model class to represent data
+=======================================
+@Data
+public class Order {
+
+    private String id;
+    private Double price;
+    private String email;
+    
+}
+
+======================================= 
+4) Create Kafka Producer Config class 
+=======================================
+
+@Configuration
+public class KafkaProduceConfig {
+
+    @Bean
+    public ProducerFactory<String, Order> producerFactory() {
+
+        Map<String, Object> configProps = new HashMap<>();
+
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConstants.HOST);              //this load th url
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);      // name for topic  
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);      // json format data for topic
+
+        return new DefaultKafkaProducerFactory<>(configProps);                                    // add config prop into Producer Factory
+    }
+
+    @Bean
+    public KafkaTemplate<String, Order> kafkaTemplate() {                                        // add producer factory to constructor of Kafka template
+        return new KafkaTemplate<>(producerFactory());
+    }
+
+}
+
+============================
+4) Create Service Class 
+============================
+
+@Service
+public class OrderService {
+
+    @Autowired
+    private KafkaTemplate<String, Order> kafkaTemplate;
+
+    public String addMsg(Order order) {
+
+        // publish msg to kafka topic
+        kafkaTemplate.send(AppConstants.TOPIC, order);          // send topic name and topic data into kafka topic
+
+        return "Msg Published To Kafka Topic";
+    }
+}
+
+
+=================================
+5) Create RestController classs
+==============================
+
+@RestController
+public class OrderRestController {
+
+    @Autowired
+    private OrderService service;
+
+    @PostMapping("/order")
+    public String createOrder(@RequestBody Order order) {
+        String msg = service.addMsg(order);
+        return msg;
+    }
+
+}
+
+
+#################################
+Kafka Subscriber App Development
+#################################
+
+=====================================================
+1) Develop spring boot app with below dependencies
+=====================================================
+
+<dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+==========================
+2) Create Constants class
+=========================
+
+
+public class KafkaConstants {
+
+    public static final String TOPIC = "ashokit_order_topic";
+    public static final String HOST = "localhost:9092";
+
+}
+
+===============================
+3) Create Model class
+===============================
+
+@Data
+public class Order {
+
+    private String id;
+    private Double price;
+    private String email;
+
+}
+
+
+===================================
+4) Create Consumer Config
+===================================
+
+@Configuration
+public class KafkaConsumerConfig {
+
+    @Bean
+    public ConsumerFactory<String, Order> consumerFactory() {
+
+        Map<String, Object> configProps = new HashMap<String, Object>();
+
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConstants.HOST);
+        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), new JsonDeserializer<>());
+
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Order> kafkaListnerFactory() {   // this listner method listen the data immediately whenever the data added 
+                                                                                            // into the topic
+        ConcurrentKafkaListenerContainerFactory<String, Order> factory = 
+                new ConcurrentKafkaListenerContainerFactory<>();
+
+        factory.setConsumerFactory(consumerFactory());
+
+        return factory;
+    }
+
+}
+============================================
+5) Add below method in boot app start class
+============================================
+
+@KafkaListener(topics = AppConstants.TOPIC, groupId="group_ashokit_order")     // with the help of this @kafkaListner annotation only ,topic data is read
+public void subscribeMsg(String order) {
+        System.out.print("*** Msg Recieved From Kafka *** :: ");
+        System.out.println(order);
+    //logic
+}
+
+==========================================================
+6) Run the producer application & Consumer application
+==========================================================
+
+####### Send Request to Producer app and observe Subscriber app console  ############
+
+
+{
+    "id" : "OD101",
+    "price" : 200.00,
+    "email" : "smith@gmail.com"
+}
+
+
+==============
+Git Hub Repo
+=============
+
+Producer App : https://github.com/ashokitschool/spring_boot_kafka_producer.git
+
+Subscriber App: https://github.com/ashokitschool/spring_boot_kafka_consumer.git
+
+
+Note : Can we set up this kafka enviorment in AWS : no , AWS have there own Amazon SQS (Simple Queue Service)
+----------------------------------------------------------------------------------------------------------------
+

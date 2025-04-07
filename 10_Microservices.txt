@@ -1,0 +1,331 @@
+
+
+1) Expalin the difference between Monolith and Microservices application
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Monolith Application
+   --------------------
+   -> If we develop all the functionalities in one single application then it is called as Monolith Application 
+   -> Advantages 
+		1) Development is easy 
+		2) Deployment is easy 
+		3) Performance 
+		4) Easy Testing 
+		5) Easy Debugging 
+		6) KT is easy 
+   -> Dis-Advantages 
+		1) Single point of failure 
+		2) Whole Application Re-Deployment 
+		3) Scalability ( Increasing & Decreasing resources based on demand ) 
+		4) Reliability (Strong) 
+		5) Availability (Zero Downtime) 
+
+   MicroServices application
+   -------------------------
+    -> If we develop the functionalities in multiple services/apis then it is called as Microservices Architecture Based Application. 
+    -> Every Microservice will have its own goal 
+    -> Microservices is a not a technology, not a framework, not an API , it is an architectural design pattern
+    -> The main aim of microservices is to develop app with loosely coupling
+    -> Microservices based application means collection of rest apis.
+    -> Microservices means independetly deployable and executable services.
+    -> Advantages 
+      ------------
+		1) Loosely coupled 
+		2) Fast Development 
+		3) Quick Releases 
+		4) Flexibility 
+		5) Scalability 
+		6) No Single Point of failure 
+		7) Technology independence 
+	->Challenges 
+	  ----------
+		1) Bounded context (identifying no.of services to develop) 
+		2) Lot of configurations 
+		3) Visibility 
+		4) Testing is difficult 
+		5) Debugging
+
+2) Explain the Microservices archictecture
+  +++++++++++++++++++++++++++++++++++++++++++
+   -> There is no standard architecture for Microservices development
+   -> According to the project requirement , Microservices architecture is customize.
+   -> Microservices architecture is develop in below module like
+			1) Service Registry
+			2) Admin Server
+			3) Zipkin Server
+			4) API Gateway
+			5) Config Server
+			6) Backend Services (REST APIs)
+			7) Feign Client - for interservice communication
+			8) Kafka (Apache Kafka)
+			9) Redis (Redis Cache)
+			10) Docker
+
+ 3) Explain the Service Registry(Discovery Service / Eureka Server) module in Microservices
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		-> Service Registry is used to maintain list of all the services at one point in the project.
+		-> Service Registry provides the registered services information like Name of service, url of service, status of service
+		-> How many no.of instances available for each service going to maintain by service registery.
+		(1 service = 1 api ( 1 api how many objects are created , its api name , status is maintain by service registery))
+		( explain with ex : we have 20 microservices , each micro name , how many objects created , its status is maintain)
+		-> We can use Eureka Server as a service registry
+		-> Eureka server provided by Spring Cloud Netflix library
+		-> To develop the service registry module
+		  ---------------------------------------
+		  -> Create the spring boot project with dependency ->  EurekaServer (spring-cloud-starter-netflix-eureka-server)
+		  -> After that the start class is with Configure @EnableEurekaServer annotation 
+      -> then we need to Configure the properties in application.yml file
+      -> server.port: 8761
+      -> eureka.client.register-with-eureka: false
+      -> Note : Service-Registry port number is 8761 because clients services can discover service-registry and register automatically with service-registry.
+                If service-registry port number is different then we need to register clients with service-registry manually.
+      -> Once application started we can access Eureka Dashboard using below URL
+	     	 URL : http://localhost:8761/
+ 
+  4) Explain Admin Server module in Microservices
+     ++++++++++++++++++++++++++++++++++++++++++++
+      -> In every microservice module we add Actuators to monitor and manage our applications
+      -> Like that we have lot of microservices module and there actuators 
+      -> So Monitoring and managing all the apis seperatley is one challenging task
+      -> To overcome this challange Admin Servce provide the service
+      -> Admin Server Provides an UI to monitor and manage all the apis at one place using actuator endpoints.
+      -> developement the Admin Server module
+		  ---------------------------------------
+		    -> Create the spring boot project with dependency -> admin server
+		    -> Configure @EnableAdminServer annotation at start class
+        -> Change Port Number (Optional)( note put port number in series like 1111, 2222)
+        -> Run the boot application
+        -> Access application URL in browser (We can see Admin Server UI) 
+        -> http://localhost:1111/
+
+  5) Explain Zipkin Server module in microservices
+     +++++++++++++++++++++++++++++++++++++++++++++
+		-> Zipkin server is used for Distributed tracing
+		-> Distributed tracking means through Zipkin Server we can tract and monitor which api is taking more time to process request.
+		-> Using Zipkin we can understand how many apis take more time to process the request.
+		-> developement the Zipkin Server module
+		  ---------------------------------------
+		1) Download Zipin Jar file : URL : https://zipkin.io/pages/quickstart.html
+		2) Run that zipkin jar file  using command -$ java -jar <jar-name>
+		3) Zipkin Server Runs on Port Number 9411
+		4) Access zipkin server dashboard	URL : http://localhost:9411/
+
+	6) How to develop the Microservice based REST api 
+	  ++++++++++++++++++++++++++++++++++++++++++++++++
+	  -> If we develop any REST api with the help of microservices then in every microservice we need to add the dependency
+	     of conncected microservices like 
+	  ->  - eureka-discovery-client
+				- zipkin
+				- admin-client
+				- openfeign etc
+    -> Configure @EnableDiscoveryClient in start class
+    -> Configure properties in application.yml file
+    ->server.port= 2222
+    -> spring.application.name= GREET-API
+    -> spring.boot.admin.client.url: http://localhost:9090/
+    -> eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka
+    -> management.endpoints.web.exposure.include: '*'
+    -> Run the application and check all urls like admin , zipkin , rest, actuators etc
+
+  7) Explain API Gateway module in Microservices
+     ++++++++++++++++++++++++++++++++++++++++++++
+		-> API Gateway is used to manage all the backend apis of our application
+		-> API Gateway acts as mediator between user requests and backend apis
+		-> API Gateway acts as entrypoint for all backend apis
+		-> It contains  2 types of logics
+				1) Filter logic  : To validate the request (go / no-go)
+				2) Router logic  : forward request to particular backend-api based on URL Pattern
+						/hotels => hotels - api
+						/flights => flights - api
+						/trains => trains - api
+		-> Note: Using Filters we can implement security also for our application.
+		-> We can validate client given token in the request using Filter for security purpose
+    -> We can write request and response tracking logic in Filter
+    -> Filters are used to manipulate request & response of our application
+    -> Any cross-cutting logics like security, logging, moniroing can be implemented using Filters
+    -> development the API Gateway module
+		  ---------------------------------------
+		   -> Create Spring boot application with dependencies :-eureka-client ,cloud-gateway
+       -> Configure @EnableDiscoveryClient annotation at boot start class
+       -> Configure API Gateway Routings in application.yml file like below
+		-------------------application.yml file---------------------------
+				server.port=3333
+
+				spring.cloud.gateway.routes-id= welcome-api
+				spring.cloud.gateway.routes-uri= lb://WELCOME-API
+				spring.cloud.gateway.predicates-Path=/welcome
+		    spring.cloud.gateway.routes-spring.cloud.gateway.routes-id: greet-api
+		    spring.cloud.gateway.routes- uri: lb://GREET-API
+		    spring.cloud.gateway.predicates-Path=/greet
+
+				application.name= CLOUD-API-GATEWAY
+
+  8) Explain Config server module in microservice
+     +++++++++++++++++++++++++++++++++++++++++++++
+    -> While developing the application what ever the configuring required for our application like DB Props, SMTP props, Kafka Props, App Messages etc...
+    -> That config properties we are configured in application.properties or application.yml file
+    -> And this application.properties or application.yml file we are going to be packaged along with our application (it will be part of our app jar file)
+    -> If we want to make any changes to properties then we again we need to re-package and re-deploy our application  which is time consuming process.
+    -> To avoid this problem, we have to seperate our project code and project config properties files.
+    -> To externalize the config properties from the application we can use Cloud Config Server.
+    -> Config Server is part of Spring Cloud Library.
+    -> We maintain all application configuration properties files on Git repository
+    -> And through this GIT repository the config server will load the configuration properties for our application based on our application-name.
+    -> Our microservices will get configuration properties from Config server and config server will load them from git hub repo.
+     Developement fo Config Server App
+     ----------------------------------
+		     1) Create Git Repository Git Repo : https://github.com/ashokitschool/configuration_properties
+		     2) Create the yml files files required for projects
+				 3) yml file name as application name
+					  ex: app name : Admin api   =>  admin.yml
+					      app name : Caseworker  =>  caseworker.yml
+		     4) Create Spring boot application with spring-cloud-config-server dependency
+		     5) Write @EnableConfigServer annotation at boot start class
+		     6) Write Configure in application.yml file 
+							server:
+							  port: 9090
+
+							spring:
+							  cloud:
+							    config:
+							      server:
+							        git:
+							          uri: https://github.com/ashokitschool/configuration_properties
+							          clone-on-start: true
+							management:
+							  security:
+							    enabled: false
+		     7) Run Config Server application
+		     8) This application run the configuration from repository
+     Config Server Client Development
+    ----------------------------------
+			1) Create Caseworker Spring Boot application with config-client dependencies
+			2) Configure configuration properties into ConfigServer url in application.yml file like below
+					server:
+					  port: 9091
+					spring:
+					  config:
+					    import: optional:configserver:http://localhost:9090
+					  application:	
+					    name: welcome
+
+   9) Explain the development of the Backend APi
+     ++++++++++++++++++++++++++++++++++++++++++
+			-> Backend apis contains business logic
+			-> Backend apis are also called as REST APIs / services / microservices
+				 Ex: payment-api, cart-api, flights-api, hotels-api
+			-> Note: Backend api can register as client for Service Registry, Admin server & Zipkin server (It is optional)
+
+	 10) Explain the InterService communication between the microservices
+      ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      -> Interservice communication means one microservice is accessing the services of another microservice 
+         of the same application by using Service Registry
+      -> FeignClient dependency is used for interservice communication and it is part of spring cloud module
+      -> When we are using FeignClient we no need mention URL of the api to access. Using service name feign client
+         will get service URL from service registry.
+      -> Feign Client uses Ribbon to perform Client side load balancing.
+      Working with FeignClient 
+      ------------------------
+      1) Add openfeign dependency in app those app wants to communicate with another
+      2) add @EnableFeignClients annotation in start class
+      
+=============
+FeignClient
+============
+
+-> It is provided by spring cloud libraries
+
+-> It is used for Inter Service Communication
+
+-> Inter service communication means one api is accessing another api using Service Registry. 
+
+Note: External communication means accessing third party apis.
+
+-> When we are using FeignClient we no need mention URL of the api to access. Using service name feign client will get service URL from service registry.
+
+-> Feign Client uses Ribbon to perform Client side load balancing.
+
+
+=> Add @EnableFeignClients dependency in GREET-API boot start class
+
+=> Create FeignClient interface like below
+
+@FeignClient(name = "WELCOME-API")
+public interface WelcomeApiClient {
+	
+	@GetMapping("/welcome")
+	public String invokeWelcomeMsg();
+
+}
+
+=> Inject feign client into GreetRestController like below
+
+@RestController
+public class GreetRestController {
+	
+	@Autowired
+	private WelcomeApiClient welcomeClient;
+	
+	@GetMapping("/greet")
+	public String getGreetMsg() {
+		
+		String welcomeMsg = welcomeClient.invokeWelcomeMsg();
+		
+		String greetMsg = "Good Morning, ";
+		
+		return greetMsg.concat(welcomeMsg);
+	}
+
+}
+
+=> Run the applications and access greet-api method
+
+	(It should give combined response)
+
+=============
+Apache Kafka
+=============
+
+-> Kafka is a message broker
+
+-> Kafka works based on Publisher - Subscriber model
+
+-> To send msgs from one app to another app we will use Kafka as a mediator.
+
+-> Using Kafka we can develop Event Driven Microservices based applications.
+
+============
+Redis Cache
+============
+
+-> In our application we will have 2 types of tables
+
+
+	1) Transaction tables (app will insert/update/delete records)
+
+	2) Non-Transactional tables (app will only retrieve records)
+
+
+Note: It is not recommended to load non-transactional tables data from db everytime.
+
+-> To reduce no.of round trips between Java app and Database we will use cache.
+
+
+-> Redis is used for distributed cache implementation.
+
+
+5) Have you work on Load Balancing in Microservices , Explain
+  +++++++++++++++++++++++++++++++++++++++++++++++++
+
+6) Have you work on Auto Scaling ,Explain
+   +++++++++++++++++++++++++++++++++++++++
+
+7) Explain API Gateway Desingn pattern in microservices
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+8) Expalin Radis Cache design pattern in Microservices
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+9) Explain Circuit Breaker Design pattern
+  +++++++++++++++++++++++++++++++++++++++
+
+10) 
