@@ -1,0 +1,205 @@
+
+
+Spring Boot      spring boot 2.1.0 -  2017  
+                 Spring 5.1.2 is compatible version for spring boot 2.0.1 
+                 Spring data JPA added in this Spring Boot Version
+------------
+
+1) Explain the Architecture of Spring boot
+  ----------------------------------------
+  -> SPring boot application we develop into different layers 
+  ->
+
+                            COntains Business Logic                        Contains Persistance Logic 
+                          DTO class       |                                            |
+FrontEnd <= Controller Layer   |    Service Layer        Respository Layer        DAO Layer   => DB
+              |
+       Json Format Data
+
+
+
+
+1) What is Spring Boot framework and what are the  main features of spring boot FW
+  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ -> Spring boot is another way to develop spring based applications with auto configuration , POM starter , Embeded server and Actuators and due to this  rapid development
+    of the application can be possible .
+ -> Auto configuration means  
+     - Starting IOC container automatically
+    - Creating Connection Pool
+    - Creation SMTP Connections
+    - Web Application Deployment to server
+    - Depedency Injections etc....
+    - Annotattions supports
+ -> POM stater means nothing but dependencies that we use to develop our application
+    - web-starter
+    - jdbc-starter
+    - security-starter
+    - mail-starter
+ -> Embeded Servers  - provide web server to run our web applications
+    - Tomcat (default)
+    - Jetty
+    - Netty
+ > Actuators are used to monitor and manage our application. Actuators providing production-ready features for our application.
+    a) How many classes loaded
+    b) how many objects created
+    c) how many threads are running
+    d) URL Mappings Available
+    e) Health of the project etc...
+-> Rapid Development means fast development. We can focus only on business logic because Boot will take care of configurations.
+
+
+
+ 2) Difference between Spring and Spring Boot FW
+   +++++++++++++++++++++++++++++++++++++++++++++++
+   80 % spring and spring boot FW are same only difference are 
+
+   point 1 : Spring support Monolitic Architecture                    SB support microserives architecture
+
+   point 2 : In spring FW we have to configure the                   in SB FW there is auto configuration concept 
+             dependicies manually                                     through which depencies are automatically configured based in requiredment
+
+   point 3 : In spring we have to manually deploy the project         SB supports internally embeded server like tomcat , jetty etc
+             on server , for that all setup we have to do manually 
+
+   point 4 : spring have lot of compatibility issues                   no compatability issues
+            compatabality issues means for this version this 
+            jar files requried
+
+   point 5 : due to lot of configuration issues  developer head ache is there so they develop SB
+
+
+ 3) Explain the project structure of spring boot application
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> WHen ever we create the Spring boot application the first there is one root folder is create 
+    -> that root folder is our project Name - 09-Spring-Boot-App  -------------- Project Name (root folder)
+    -> In this root folder there are 6 sub folders 
+    -> 3 related to src folder and next 3 related to 1 is maven dependencies folder ,2 is target folder , 3rd is pom.xml
+    -> src/main/java       which contains - Application.java   (This is start class) (Application starts from here ,just right click and start)
+                           We will write our source code under src/main/java folder
+    -> src/main/resources  which contains - application.properties or application.yml  (All configuration related properties add here )
+                           We will create our configuration files under src/main/resources folder
+    -> src/test/java       which contains - ApplicationTests.java
+                           We will create Junit class under src/test/java folder
+    -> Maven Dependencies   (It contains jars which got downloaded for project)
+    -> target             (it contains .class files)
+    -> pom.xml            (All Maven dependicies configuration file)
+                          Project dependencies we will configure in pom.xml file
+
+
+ 4) Expalin what is start class in Spring Boot? and explain internals of run() method
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> Start class means every spring boot applciation is executed form this start class 
+    -> When we create any spring boot application the one defaut Application.java file is created this is start class 
+    -> And in this start class two main functionalities are available 1 is class is annotated with @SpringBootApplication
+       and 2nd is run() method
+      @SpringBootApplication
+      public class Application {
+          public static void main(String[] args) {
+              SpringApplication.run(Application.class, args);
+          }
+      }
+    -> @SpringBootApplication is equals to 3 annotation i.e @ Configuration , @EnableAutoConfiguration , @ComponentScan
+    -> And run (..) method which contains bootstrapping logic. 
+    -> Bootstrapping logic means the logic required to execute the Spring boot application and it contains 
+            - start and stop watch
+            - start listners
+            - prepareEnv
+            - print Banner
+            - create IOC container
+            - refresh Container
+            - stop that stop watch
+            - print time taken to start application
+            - call runners
+            - return IOC reference
+
+ 5) Explain How IOC container will start in Spring Boot ?
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++
+    -> In spring boot application the run() method will be execute the IOC container based on the dependency we added to create the application
+    -> For spring boot-starter, run( ) method using "AnnotationConfigApplicationContext" class to start IOC container
+    -> For spring boot-starter-web, run ( ) method using "AnnotationConfigServletWebServerApplicationContext" to start IOC
+    -> For starter-webflux, run ( ) method using "AnnotationConfigReactiveWebServerApplicationContext" to start IOC
+    -> spring boot-starter is used to create standalone applications
+    -> spring boot-starter-web dependency is used to develop web applications
+    -> spring boot-starter-webflux is dependency is used to develop applications with Reactive Programming
+
+ 6) Explain what is  Runners in Spring Boot
+    ++++++++++++++++++++++++++++++++++++++++
+    -> When we deploy the application on server and only once we want to execute any logic if this requirement is there then we use runner concept
+    -> Runners are getting called at the end of run ( ) method
+    -> To implement Runner in SB application They given 2 inteface
+         1) ApplicationRunner inteface 
+         2) CommandLineRunner inteface
+    -> Both runners are functional interface. They have only one abstract method i.e run (..) method
+    -> Use cases
+      ---------------
+      1) send email to management once application started
+      2) read data from db tables and store into cache memory
+
+      @Component
+      public class CacheManager implements ApplicationRunner {
+
+          @Override
+          public void run(ApplicationArguments args) throws Exception {
+              System.out.println("Logic executing to load data into cache....");
+          }
+      }
+
+      @Component
+      public class SendAppStartMail implements CommandLineRunner {
+
+          @Override
+          public void run(String... args) throws Exception {
+              System.out.println("logic executing to send email....");
+          }
+      }
+
+ 
+ 7) Explain @SpringBootApplication annotation
+   ++++++++++++++++++++++++++++++++++++++++++
+    -> This annotation is used with start class of the spring boot application
+    -> This annotation is equals to 3 annotations 
+       1) @SpringBootConfiguration
+       2) @EnableAutoConfiguration
+       3) @ComponentScan
+    -> Without this annotation we cannot start our application
+
+ 8) What is Banner in Spring Boot
+    ++++++++++++++++++++++++++++++
+    -> While execution of the spring boot application in console we see the spring logo that is called as Banner in Spring boot
+    -> We can customize that banner also  by creating "banner.txt" file under src/main/resources
+    -> We can keep our company name or project name as Banner text in Ascii format
+    -> Note: Generate Ascii text from here : https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Ashok%20IT
+    -> Spring Boot banner having below 3 modes
+    1) console  ---- > it is default mode
+    2) log
+    3) off
+    -> Note: If we set banner mode as off then banner will not printed
+       spring.main.banner-mode = off
+
+9) How you troubleshooting in your application
+   ---------------------------------------------
+   -> by running the application in Debugging mode
+
+
+
+
+
+1) What is Spring and what are the main features of spring framework
+2) What is Depenency Injection and types of DI
+3) What is IOC in Spring and what are the different ways to create the IOC container , how to start the IOC contianer
+4) What is Spring Bean or Bean or spring BEan class
+5) What is difference between Constructor and Setter Injection
+6) What is mean by Bean Scope and What are the Bean Scope provided by SPring FW and its annotations
+7)  What is Autowiring in Spring and What are the different modes of it 
+8) What are Stereotype annotation
+9) What is Spring Configuration file an spring Configuration 
+10) What is Bean Wiring
+11) What is difference between @Component and @Bean
+12) What is the use of @Qualifier and @Primary and @Required annotation in SPring FW
+13) What are lifecycle methods in Spring and What are different ways of writing lefecycle methods in Spring
+14) What is POJO and What is POM.xml
+15) What are the Modules available in SPring FW Explain them 
+16) What is Lombok
+17) Expalain the annoations which are available in Spring FW
+
+https://whatsapp.com/channel/0029Vaww5BzGzzKWwmvM4I1o

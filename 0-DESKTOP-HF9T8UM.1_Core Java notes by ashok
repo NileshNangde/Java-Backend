@@ -25,7 +25,7 @@
 
 5) Compare JDK vs JRE vs JVM
    -------------------------
-   => To develop, compile and run Java Programs we require JDK To only run Java Programs, JRE is enough
+   => To develop, compile and run Java Programs we require JDK ,  To only run Java Programs => JRE is enough.
       JVM's main responsibility is converting Byte code instructions to machine understandable format.
 
 6) What is a Token? how many types?
@@ -125,7 +125,7 @@
         ⦁	Volatile Variables
         ⦁	public static final variables : final- means  values are fixed after initialization and cannot be modified 
             static means:when we need a value to be shared across multiple instances
-            real time seneraios : 1)api url :public static final String API_BASE_URL = "http"--
+            real time seneraios : 1) api url :public static final String API_BASE_URL = "http"--
                                   2) Constant Classes:  public static final int ERROR_NOT_FOUND = 404;
                                   3) Mathematical Constants:public static final double PI = 3.14159;
                       
@@ -1003,12 +1003,26 @@ class UserDefinedThread implements Runnable{
     -----------------------------------------
    => If more than one thread is waiting for an object, we can notify all the threads by using notifyAll methods.
 
-150) What is difference between Collection and Collection
------------------------------------------------------------
-Feature              Collection (Interface)               Collections (Utility Class)
-Type                  Interface                           Utility class with static methods
-Purpose            Represents a group of objects          Provides utility methods for 
-                      (e.g., List, Set)                     working with collections
-Contains           Methods for adding, removing,            Methods for sorting, reversing, searching, etc.
-                      and querying elements
-Example Classes    List, Set, Queue                      Collections.sort(), Collections.reverse()
+150) What is difference between Collection Collection framework and Collections
+--------------------------------------------------------------------------------
+  -> COllection :  
+   -------------- -> Collection are used to store group of values / objects in growable format means dynamically increase 
+                 -> We can store any type of data in Collections (homogeneous and heterogeneous).
+                 -> Collections providing predifined methods to insert , update , delete , retrive , sort etc
+                 -> Collections.sort() , reverse etc
+
+  -> Collection framework :
+  -----------------------  -> Framework means readymade software // means predefine method  to sort , insert , update , delete
+                           -> Collections is called as framework because it is providing predefine interfaces , classes and methods
+                              to perform operations on data
+  -> COllectios :  same as collections framework , this is interface having list ,set, map interfaces 
+
+ 151) What is the hiercarchy of the collection framework
+ --------------------------------------------------------
+    iterable 
+       |
+    collection 
+        What is super interface for all collections : Iterable
+      - All collections are interface
+      - List , Set , Queue are in Collection family and Map is in another family
+

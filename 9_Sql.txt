@@ -1,0 +1,532 @@
+
+
+Data Base or DBMS
+#################
+
+1) What is DB , Types , Modes , Advantages
+------------------------------------------
+ -> DB IS COLLECTION OF INFORMATION AND THIS INFORMATION IS INTER RELATED WITH EACH OTHER .
+    BY USING DATABASE WE CAN STORE, MODIFY, SELECT AND DELETE DATA FROM DATABASE WITH SECURITY MANNER
+
+ -> TYPES DATABASES:
+	1) OLTP (ONLINE TRANSACTION PROCESSING)  -> ORGANIZATIONS ARE MAINTAINE THIS OLTP FOR STORING “DAY - TO - DAY DATA FOR “RUNNING BUSINESS EX:ORACLE, MYSQL
+	2) OLAP (ONLINE ANALYTICAL PROCESSING)   -> USED FOR DATA ANALYSIS (OR) DATA SUMMERIZED (OR) HISTORY OF DATA TO STORE OF PARTICULAR BUSSINESS. EX: DATAWAREHOUSE
+ 
+ -> MODES OR MODEL :
+    1. HIERARCHICAL DATABASE MANAGEMENT SYSTEM (HDBMS)
+	2. NETWORK DATABASE MANAGEMENT SYSTEM      (NDBMS)
+	3. RELATIONAL DATABASE MANAGEMENT SYSTEM    RDBMS)  -> MEANS STORING DATA IN A TABLE STRUCTURE i.e. ROWS AND COLUMNS FORMAT.
+	i) OBJECT RELATIONAL DBMS(ORDBMS)
+	ii) OBJECT ORIENTED RELATIONAL DBMS(OORDBMS)
+ 
+ -> ADVANTAGES OF DBMS:
+	1. TO REDUCE DATA REDUNDANCY.
+	2. TO AVOID DATAINCONSISTANCY.
+	3. EASY TO ACCESS DATA.
+	4. EASY TO MANIPULATE DATA.
+	5. MORE SECURITY (AUTHENTICATION & AUTHORIZATION)
+	7. SUPPORTING DATA SHARING
+	
+2) WHAT ARE THE DIFFERENT TYPES OF DATATYPES IN DATABASE  -> 6 TYPES
+----------------------------------------------------------
+ -> 1) NUMERIC DATATYPES
+     -> TWO TYPES : i) INT ii) NUMBER (P, S)
+
+	2) CHARACTER DATATYPES/ STRING DATATYES
+	 -> MEANS STRING FORMAT DATA -> 2 TYPES 1) CHARACTER ONLY  2) ALPHANUMERIC
+	 -> CHARACTER HAVE -> UNICODE MEANS ALL LANGUAGE SUPPORT
+	                   -> NON UNICODE -> ONLY ENGLISH LANGUAGE SUPPORT
+	                      -> CHAR
+	                      -> VARCHAR2(SIZE) -> UTPO 4000 CHAR SUPPORT
+	3) LONG DATATYPE  -> WILL STORE NON-UNICODE & UNICODE CHAR -> SIZE 2GB MAXIMUN
+	4) DATE DATATYPES -> TO STORE DATE AND TIMESTAMP IN DB
+	5) RAW & LONG RAW DATATYPES -> FOR STORING IMAGE / AUDIO / VIDEO FILES IN THE FORM BINARY FORMAT -> MAX 2GB
+	6) LOB DATATYPES (LARGE OBJECTS DATATYPES)
+	   i) BLOB (BINARY LARGE OBJECT)    : STORING IMAGE / AUDIO / VIDEO FILES IN .THE MAXIMUM SIZE IS 4GB.
+	   ii) CLOB (CHARACTER LARGE OBJECT): STORING NON-UNICODE CHARACTERS.THE MAXIMUM SIZE IS 4GB.
+	   iii)NCLOB (NATIONAL CHARACTERS LARGE OBJECT): STORING UNICODE CHARACTERS.THE MAXIMUM SIZE IS 4GB.
+
+3) WHAT IS SQL AND WHAT ARE THE SUB-LANGUAGES OF SQL
+----------------------------------------------------
+ -> Sql is called as Structured Querry Language and it is develop by IBM , intilly it is called as SEQUEL 
+ -> It is also called as CLI(common language interface) because this language is used to communicate with RDBMS databse like MYSQL , ORacle etc
+ -> THE LANGUAGE WHICH IS USED TO COMMUNICATE WITH DATABASE.
+ -> SQL predefine queries are case sensitives and ends with ; semicolon
+ 
+	 5 sub languages of SQL
+	 -----------------------
+		 1) Data Definition Language(DDL):
+			  -> create, alter ,truncate, Drop
+		     -> New features: Recyclebin , Flashback , Purge
+
+		 2) Data Manipulation Language(DML):
+			  -> insert ,update , delete
+			  -> New commands: insert all , merge
+
+		 3) Data Retrieval / Query Language(DRL / DQL):
+			  -> select
+
+		 4) Transaction Control Language(TCL):
+			  -> commit, rollback, savepoint
+
+		 5) Data Control Language(DCL):
+			  -> grant ,revoke
+
+4) Expalin Data Defination language
+   ---------------------------------
+   1) create command : used to create new table in DB
+      ex: CREATE TABLE CASEWORKER (CID INT, CNAME CHAR (10), SFEE NUMBER (6,2));
+
+   2) Alter : to modify table structure in DB
+      4 main commands : 
+      Alter-add ex: ALTER TABLE CASEWORKER ADD CADDRESS VARCHAR2(30);
+      alter-modify: ALTER TABLE CASEWORKER MODIFY CNAME VARCHAR2(20);
+      alter-rename: ALTER TABLE CASEWORKER RENAME COLUMN CNAME TO CASEWORKERNAMES;
+      alter-drop  : ALTER TABLE CASEWORKER DROP COLUMN CFEE;   drop means delete
+   3) Rename : used to rename the table name
+      ex:  RENAME CASEWORKER TO CASEWORKER_MODULE;
+   4) Drop : to drop table from DB
+      ex: DROP TABLE CASEWORKER
+   5) Truncate : to delete all rows but not coloums , and not support where clause thats why all rows delete
+      ex: TRUNCATE TABLE CASEWORKER;
+
+5) Explain Data Manipulation Language
+--------------------------------------
+  -> For insert , update and delete the data SQL have data manipulation language
+  -> Insert : insert command is used to used to insert the rows into the table
+              ex: CREATE TABLE STUDENT (STID INT, SNAME VARCHAR2(10), SFEE NUMBER (10));
+              Data insert:
+                  INSERT INTO STUDENT VALUES (1021,'SAI',2500);
+                  or
+                  INSERT INTO STUDENT (STID, SNAME) VALUES (1022,'SMITH'); for specific row insert
+              Null insert: 
+                  INSERT INTO EMP VALUES (NULL, NULL, NULL);
+                  or
+                  INSERT INTO EMP (EID, ENAME, EADDRESS) VALUES (NULL, NULL, NULL);
+  -> Update : to update all rows or to update single row (by using where clause)
+               note: with update command we use SET clause
+               ex: UPDATE STUDENT SET SNAME='JONES', SFEE=6500 WHERE STID=1027;
+                   UPDATE EMP SET COMM=500;
+                   UPDATE EMP SET SAL=NULL;
+                   UPDATE EMP SET SAL=5000 WHERE SAL IS NULL;
+  -> Delete: To delete rows from table or to delete specific row using where clause
+             Ex: DELETE FROM STUDENT;   -> all row delete
+                 DELETE FROM EMP WHERE COMM IS NULL;
+
+6) What is difference between DDL Truncate command and DML Delete cmd
+   -------------------------------------------------------------------
+   Delete : command in DML 
+            Supports where clause 
+            Can delete specific row
+            Delete data can restore using rollback cmd
+   Truncate: cmd in DDL
+             not support where clause
+             delete all rows 
+             data not recover and fast in execution
+
+7) Explain Data QUery Language
+   ----------------------------
+   Select : select cmd is only the cmd to use to retrive the row data from DB at one time or specific with where clause
+           ex: SELECT * FROM DEPT;
+					(OR)
+					SELECT DEPTNO, DNAME, LOC FROM DEPT;
+					SELECT * FROM EMP WHERE JOB='CLERK';
+					SELECT * FROM EMP WHERE COMM IS NULL;
+					SELECT * FROM EMP WHERE COMM IS NOT NULL;
+	* represent all coloumns
+
+8) Explain what are the different operator available in SQL
+  --------------------------------------------------------
+		1> assignment operator			=>		=
+		----------------------------------------
+		    ex:  select * from emp where empno = 7788;
+					update emp set sal=78000 where ename = 'smith';
+					delete from emp where deptno = 10;
+
+		2> arithmetic operators			=>		+, - ,*,/  note Arithmatic operator with null value always null ex: 100+null = null
+		------------------------------------------------
+		3> relational operators			=>		<,>,<=,>=, != (or) <>
+		---------------------------------------------------------
+		4> logical operators				=>		AND,OR,NOT
+		--------------------------------------------------
+		5> set operators		: is used to combined the results of two select statements as a single set of values.
+		  =>		union       : combined two tables values without duplicates.
+		         union all   : combined two tables values with duplicates.
+		         intersect   : return a common values.
+		         minus       : return uncommon values from the left side select query.
+		--------------------------------------------------------------------
+		6> special operators				=>		(+ve) operator			(-ve) operator
+														==============			===============
+													IN	( like present in)		   NOT IN
+															BETWEEN						NOT BETWEEN
+															IS NULL						IS NOT NULL   (nul not equal to zero or space)
+															LIKE							NOT LIKE
+         
+         IN       syntax: where <colum name> in(value1,value2,value3,....);
+         Between  syntax: where <column name> between <low value> and <high value>;
+         IS NULL        : where <column name> is null;	
+         LIKE           : wildcard operators of like are 2 % and _(space),
+                          % - to represent the remaining group of char's after selected character in the expression.
+                          _ - counting a single character in the expression.
+
+
+
+9) Arithmatic operators queries
+  ------------------------------
+		Ex:
+		waq to display employees salaries after adding 1000/-?
+		SQL> SELECT SAL OLD_SALARY,SAL+1000 NEW_SALARY FROM EMP;
+
+		Ex:
+		waq to display empno,ename,sal and annual salary of employees
+		from emp table?
+		SQL> SELECT EMPNO,ENAME,SAL BASIC_SALARY,SAL*12 ANNUAL_SALARY
+		     FROM EMP;
+
+		Ex:
+		waq to display empno,ename,deptno,sal and annual salary of employees
+		from emp table who are working under deptno is 10?
+		SQL> SELECT EMPNO,ENAME,DEPTNO,SAL BASIC_SALARY,SAL*12 ANNUAL_SALARY
+		     FROM EMP WHERE DEPTNO=10;
+
+		Ex:
+		waq to display employees salaries after increment of 10%?
+		SQL> SELECT SAL BEFORE_INCREMENT,SAL+SAL*10/100 AFTER_INCREMENT
+		  2  FROM EMP;
+
+		Ex:
+		waq to update employee salaries with the increment of 5% in emp
+		table who are working as a "manager"?
+		SQL> UPDATE EMP SET SAL=SAL+SAL*0.05 WHERE JOB='MANAGER';
+
+10) Relational operators queries
+  ------------------------------
+		Ex:
+		waq to display employees who are joined before 1981?
+		SQL> SELECT * FROM EMP WHERE HIREDATE < '01-JAN-81';
+
+		Ex:
+		waq to display employees who are joined AFTER 1981?
+		SQL> SELECT * FROM EMP WHERE HIREDATE > '31-DEC-81';
+
+11) Logical operators queries
+  ----------------------------
+      waq to display employees whose name is "smith" and working as a "clerk" ?
+		SQL> SELECT * FROM EMP WHERE ENAME='SMITH' AND JOB='CLERK';
+
+		Ex:
+		waq to display employees who are joined in the year of 1981?
+		SQL> SELECT * FROM EMP WHERE (HIREDATE>='01-JAN-81') AND (HIREDATE<='31-DEC-81');
+
+		Ex:
+		waq to display employees who are working as a "analyst"
+		or whose salary is more than 1500?
+		SQL> SELECT * FROM EMP WHERE JOB='ANALYST' OR SAL>1500;
+
+		Ex:
+		waq to display employees whose empno is 7369,7788,7900?
+		SQL> SELECT * FROM EMP WHERE EMPNO=7369 OR EMPNO=7788 OR EMPNO=7900;
+
+		Ex:
+		waq to display employees who are not working as a "clerk" and "salesman"?
+		SQL> SELECT * FROM EMP WHERE NOT JOB='CLERK' AND NOT JOB='SALESMAN';
+
+12) SET operators examples
+  ---------------------------
+     BASIC RULES:
+		1. no.of columns should be same in both select queries.
+		2. order of columns and datatypes of columns must be match in both select queries.
+      EX:
+		SQL> SELECT * FROM EMP_HYD;
+
+		       EID ENAME             SAL
+		---------- ---------- ----------
+		      1021 SMITH           85000
+		      1022 ALLEN           65000
+		      1023 WARD            47000
+
+		SQL> SELECT * FROM EMP_CHENNAI;
+
+		       EID ENAME             SAL
+		---------- ---------- ----------
+		      1021 SMITH           85000
+		      1024 MILLER          58000
+		      1025 JONES           38000
+
+		EX:
+		waq to display all employees details who are working in nareshit organization?
+		SQL> SELECT * FROM EMP_HYD UNION ALL SELECT * FROM EMP_CHENNAI;
+									(OR)
+		SQL> SELECT * FROM EMP_HYD UNION  SELECT * FROM EMP_CHENNAI;
+
+		EX:
+		waq to display employees who are working in hyd but not in chennai branch?
+		SQL> SELECT * FROM EMP_HYD MINUS SELECT * FROM EMP_CHENNAI;
+
+		EX:
+		waq to display employees who are working in both branches?
+		SQL> SELECT * FROM EMP_HYD INTERSECT SELECT * FROM EMP_CHENNAI;
+
+13) Special operators examples
+   -----------------------------
+		Ex:
+		waq to list out the employees whose empno is 7369,7788,7900?
+		SQL> SELECT * FROM EMP WHERE EMPNO IN(7369,7788,7900); 
+
+		Ex:
+		waq to list out the employees whose empno is not 7369,7788,7900?
+		SQL> SELECT * FROM EMP WHERE EMPNO NOT IN(7369,7788,7900); 
+
+		Ex:
+		waq to display employees whose salary is between 1500 to 3000?
+		SQL> SELECT * FROM EMP WHERE SAL BETWEEN 1500 AND 3000;
+			
+		Ex:
+		waq to display employees who are joined in the year of 1981?
+		SQL> SELECT * FROM EMP WHERE HIREDATE BETWEEN '01-JAN-81' AND '31-DEC-81';
+
+		Ex:
+		waq to display employees who are notjoined in the year of 1981?
+		SQL> SELECT * FROM EMP WHERE HIREDATE NOT BETWEEN '01-JAN-81' AND '31-DEC-81';
+
+		Ex:
+		waq to display employees whose commission is null?
+		SQL> SELECT * FROM EMP WHERE COMM IS NULL;
+
+		Ex:
+		waq to display employees whose commission is not null?
+		SQL> SELECT * FROM EMP WHERE COMM IS NOT NULL;
+
+		Ex:
+		waq to display empno,ename,sal,comm and sal+comm from emp table whose name is "allen"?
+		SQL> SELECT EMPNO,ENAME,SAL,COMM,SAL+COMM FROM EMP 2  WHERE ENAME='ALLEN';
+
+		Ex:
+		waq to display empno,ename,sal,comm and sal+comm from emp table whose name is "SMITH"?
+		SQL> SELECT EMPNO,ENAME,SAL,COMM,SAL+COMM FROM EMP 2  WHERE ENAME='SMITH';
+
+		Ex:
+		waq to display employees whose name starts with "S" char?
+		SELECT * FROM EMP WHERE ENAME LIKE 'S%';
+
+		EX:
+		to display employees whose name ends with 'K'?
+		SELECT * FROM EMP WHERE ENAME LIKE '%K';
+
+		Ex:
+		to display employees whose name is having 'I'?
+		SQL> SELECT * FROM EMP WHERE ENAME LIKE '%I%';
+
+		Ex:
+		to display employees whose name is having 4 char's?
+		SELECT * FROM EMP WHERE ENAME LIKE '____';
+
+		Ex:
+		to display employees whose name is having the second character is "O"?
+		SQL> SELECT * FROM EMP WHERE ENAME LIKE '_O%';
+
+		Ex:
+		to display employees whose name starts with "M" and ends with "N" characters?
+		SQL> SELECT * FROM EMP WHERE ENAME LIKE 'M%N';
+
+		Ex:
+		to display employees who are joined in 1981?
+		SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%81';
+
+		Ex:
+		to display employees who are joined in the month of "december"?
+		SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%DEC%';
+
+		Ex:
+		to display employees who are joined in the month of "JUNE","DEC"?
+		SQL> SELECT * FROM EMP WHERE HIREDATE LIKE '%JUN%' 2  OR HIREDATE LIKE '%DEC%';
+
+		EX:
+		waq to display customers whose name is having "@" symbol?
+		SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%@%';
+
+		EX:
+		waq to display customers whose name is having "#" symbol?
+		SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%#%';
+
+		EX:
+		waq to display customers whose name is having "_" symbol?
+		SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%_%';
+
+		EX:
+		SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%\_%'ESCAPE'\';
+		SQL> SELECT * FROM CUSTOMER WHERE CNAME LIKE '%\%%'ESCAPE'\';
+
+		EX:
+		waq to display employees whose name not starts with "S" char?
+		SQL> SELECT * FROM EMP WHERE ENAME NOT LIKE 'S%';
+
+14) Explain what are the predefine functions available in SQL
+  -----------------------------------------------------------
+   -> SQL have two types of predefine function 
+		  A) Single Row Functions (Scalar Functions)
+		  B) Multiple Row Functions (Grouping Functions
+
+15) Expalin what is mean by Clause and Types of clause in SQL
+  ------------------------------------------------------------
+   -> Clause : Sql Pre-Define Query which providing additional facilities like 
+      Filtering Rows, Sorting Values, Grouping Similar Values, Finding
+   -> types of Clause :
+      Where    - Filtering Rows (Before Grouping Data)
+                 Note: "Where" Clause Can Be Used In "Select " ,"Update" And "Delete" Commands Only
+	   Order by - Sorting Values               -> Used In "Select" Command Only.
+	   Group by - Grouping Similar Data
+	   Having   - Filtering Rows (After Grouping Data)
+	   Rollup   - Finding Sub Total & Grand Total (Single Column)      special clause
+	   Cube     - Finding Sub Total & Grand Total (Multiple Columns
+
+16) Examples of Clauses in SQL 
+  ----------------------------
+		Ex1:
+		Waq to Display Employee Salaries In Ascending Order?
+		 Select * From EMP Order by Sal;
+		(Or) 
+		Select Sal from EMP Order by Sal;
+
+		Ex2:
+		Waq to Arrange Employee Names In Descending Order?
+		Select Ename from EMP Order by Ename Desc;
+
+		Ex3:
+		Waq to Display Employee Who Are Working In The Deptno Is 20 and Arrange Those Employee Salaries In Descending Order?
+		Select * From EMP Where Deptno=20 Order By Sal Desc;
+
+		Ex4:
+		Waq to Arrange Employee Deptno's In Ascending Order And Those Employee Salaries in Descending Order From Each Deptno Wise?
+		Select * From EMP Order By Deptno, Sal Desc;
+
+		Ex:
+		Sql> Select * From EMP Order by 6;
+		Sql> Select Ename, Job, Sal from EMP Order by 3;
+		Sql> Select Ename, Sal from EMP Order by 2;
+		Sql> Select Sal from EMP Order by 1;
+
+		Ex:
+		Sql> Select * From EMP Order By Comm Nulls First;
+		Sql> Select * From Emp Order By Comm Desc Nulls Last;
+
+		Ex1:
+		Waq to Find Out No. Of Employee Working In Each Job?
+		Select Job,Count(*) Num_Of_Employee From Emp Group By Job;
+
+		Ex2:
+		Waq To Calculate Department Number Wise Total Salary ?
+		Select Deptno,Sum(Sal) Total_Salary From Emp Group By Deptno Order By Deptno;
+
+		Ex3:
+		Waq To Display No.Of Employee Working In Each Job Along With Deptno Wise ?
+		Select Job,Deptno,Count(*) Num_Of_Employee From Emp Group By Job,Deptno;
+
+		Ex4:
+		Waq To Calculate Deptno Wise Totalsalary Where Deptno's Are 10,20 ?
+		Select Deptno,Sum(Sal) Total_Salary From Emp Where Deptno In(10,20) Group By Deptno;
+
+		Ex5:
+		Waq To Calculate Deptno Wise Avg,Min,Max Salaries ?
+		Select Deptno,Avg(Sal) Avgsal,Min(Sal) Minsal,Max(Sal) Maxsal From Emp Group By Deptno Order By Deptno; 
+
+		Ex1:
+		Waq To Find Out No.Of Employee Of Each Job In Which Job No.Of Employee Are More Than 3 ?
+		Select Job,Count(*) From Emp Group By Job Having Count(*)>3;
+
+		Ex2:
+		Waq To Display Sum Of Salary Of Deptno's From Emp Table.If Sum Of Salary Of Deptno Is Less Than 9000 ?
+		Select Deptno,Sum(Sal) From Emp Group By Deptno Having Sum (Sal)<9000
+
+15) What is the order of execution of Clauses
+   ------------------------------------------
+	   > From
+		> Where
+		> Group By
+		> Having
+		> Select
+		> Order By
+
+16) What id Difference between Where and Having Clause
+  ----------------------------------------------------
+
+17) Explain what is DataIntegrity in SQL 
+  --------------------------------------
+   -> DataIntegrity means string the data into the database in Consistency and Accuracy format 
+   -> And we can store this Accurate and COnsistant data into two ways 1) Using Constraints 2) using Triggers
+   -> If we use Constraints we use Primary key , Foreign key , Unique etc
+   -> If we use Triggers then User define format we store data
+
+18) Explain the Primary key
+  --------------------------
+   -> Primary key does not allow to store any dublicate value and any null value into the database
+   -> And 1 table have only one Primary Key
+   -> Primary key is combination of UNIQUE and NOT NULL
+   -> Column level PK
+   -> Ex: CREATE TABLE Admin (AId INT PRIMARY KEY, ANAME VARCHAR2(10));
+   -> Table level PK
+   -> CREATE TABLE TEST8(PCODE INT,PNAME VARCHAR2(10),PRIMARY KEY(PCODE,PNAME));
+
+19) Expalin Composite Primary Key 
+-------------------------------------
+
+20) Explain Foreign Key(Refrence key) 
+---------------------------
+  -> Foreign key is used to make relation bertween two tables 
+  -> imp points about Foreign key 
+     -> Both coloumn data type match
+     -> Those table PK then Parent table and those Foreign key then CHild table
+     -> Foreign key allows dublicate and null
+  -> CREATE TABLE DEPT1(DEPTNO INT PRIMARY KEY, DNAME VARCHAR2(10));
+  -> CREATE TABLE EMP1(EID INT PRIMARY KEY, ENAME VARCHAR2(10),DEPTNO INT REFERENCES DEPT1(DEPTNO));
+
+
+21) Explain Sub-Query in SQL
+  ---------------------------
+     Query inside Query is SubQuery
+     ex: sub-query= outer query+ inner-query
+     ex: SELECT * FROM EMP WHERE SAL= (SELECT MAX(SAL) FROM EMP);
+
+		EX2:
+		WHOSE EMPLOYEE JOB IS SAME AS THE JOB OF 'SMITH’?
+		SELECT * FROM EMP WHERE JOB= (SELECT JOB FROM EMP WHERE ENAME='SMITH');
+
+		EX3:
+		WHOSE SALARY IS MORE THAN MAX.SALARY OF THE JOB IS "SALESMAN"?
+		SELECT * FROM EMP WHERE SAL> (SELECT MAX(SAL) FROM EMP WHERE JOB='SALESMAN');
+
+		EX4:
+		WHOSE EMPLOYEE JOB IS SAME AS THE JOB OF "BLAKE" AND WHO ARE EARNINGSALARY MORE THAN "BLAKE" SALARY?
+		SELECT * FROM EMP WHERE JOB= (SELECT JOB FROM EMP WHERE ENAME='BLAKE')AND SAL> (SELECT SAL FROM EMP WHERE ENAME='BLAKE');
+
+		EX5:
+		DISPLAY SENIOR EMPLOYEE?
+		SELECT * FROM EMP WHERE HIREDATE=(SELECT MIN(HIREDATE) FROM EMP);
+
+		EX6:
+		TO FIND SECOND HIGH. SALARY FROM EMP TABLE ?
+		SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP);
+		 
+		EX7:
+		WASQ DISPLAY EMPLOYEE DETAILS WHO ARE GETTING SECOND HIGH. SALARY IN EMP TABLE?
+		SELECT * FROM EMP WHERE SAL= (SELECT MAX(SAL) FROM EMP WHERE SAL< (SELECT MAX(SAL) FROM EMP));
+
+		EX8:
+		DISPLAY EMPLOYEE DETAILS WHO ARE GETTING 3RD HIGH. SALARY IN EMP TABLE?
+		SELECT * FROM EMP WHERE SAL=(SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP WHERE SAL<(SELECT MAX(SAL) FROM EMP)));
+
+		EX9:
+		TO DISPLAY NO. OF EMPLOYEE OF DEPARTMENT NUMBERS.IN WHICH DEPTNO NO. OF EMPLOYEE IS LESS THAN THE NO. OF EMPLOYEE OF DEPTNO IS 20?
+		SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)<(SELECT COUNT(*) FROM EMP WHERE DEPTNO=20);
+
+		EX10:
+		SUM OF SALARY OF JOBS.IF SUM OF SALARY OF JOBS ARE MORE THAN SUM OF SALARY OF THE JOB IS 'CLERK’?
+		SELECT JOB,SUM(SAL) FROM EMP GROUP BY JOB HAVING SUM(SAL)>(SELECT SUM(SAL) FROM EMP WHERE JOB='CLERK');
+
+		EX11:
+		TO UPDATE EMPLOYEE SALARY WITH MAX.SALARY OF EMP TABLE WHOSE EMPNO IS 7900?
+		UPDATE EMP SET SAL=(SELECT MAX(SAL) FROM EMP) WHERE EMPNO=7900;
+
+		EX12:
+		WASQ TO DELETE EMPLOYEE DETAILS FROM EMP TABLE WHOSE JOB IS SAME AS THE JOB OF 'SCOTT’?
+      DELETE FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE ENAME='SCOTT');

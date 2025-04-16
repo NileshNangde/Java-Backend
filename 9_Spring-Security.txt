@@ -1,0 +1,69 @@
+
+SPring security 5.1 version we are using 
+-----------------------------------------
+
+
+1) What is Security in API's and How the Spring security works
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-> For every web application or Rest API  Security is very important 
+-> To protect our application & application data we need to implement security logic
+-> We protect our applications against (CSRF)  Cross-Site Request Forgery ,session fixation, and clickjacking. attacks.
+-> This CSRF attact contain code so they can customize our applcaiton according to there use
+-> Spring Security is one framework develop by spring team to secure our web applications / REST APIs
+-> Its major function is to manage authentication and authorization at both the Web request and method invocation levels. 
+-> Spring security works on the following four core concepts 
+		Authentication – means it verifying the credentials
+		Authorization –  means after verifying the credentials that user can access the specific functionality
+		Password Storage – How is the password stored? In Memory or a database.
+		Servlet Filters – Are there any new filters that we need to add or just use the default ones provided by the spring team?
+
+-> To work with spring security we need to add the security  starter dependency in pom.xml 
+-> This dependency secure all our http url's , we need to customized the security configuration in our project 
+-> like /login /register this url's we dont secure , we secure url's like  /balance , /transfer etc 
+-> Spring security Framework provide different security configurations like : 
+    1) default security     not use 
+    2) JDBC Authentication  out-dated
+    3) OAuth 2.0            hot in market ( google,facebook, twitter authtication )  // without signin , login with google is the OAuth security
+    4) JWT                  hot in market
+
+
+2) Explain the Default Security of Spring Security Framework
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-> When we add Security starter dependency in our application then by default all application url's are going to be secure
+-> To access this url's by default one user and password  is generated on the console.
+-> default user is user and password is randomly generated
+-> Through postman and web app (by Login form) we provide the credentials to the rest api
+-> To access secured REST API from postman, we need to set Auth values in POSTMAN to send the request
+	Auth : Basic Auth
+    Username : user
+	Password : <copy-from-console>
+-> We can override Spring Security Default Credentials -> in application.properties file or application.yml 
+------------------------------------------------------
+	spring.security.user.name=ashokit
+	spring.security.user.password=ashokit@123
+-> How to Secure the specific URL Patterns in default Security
+---------------------------------------------------------------
+    @Configuration
+	@EnableWebSecurity
+	public class SecurityConfigurer {
+
+		@Bean
+		public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception{
+			
+			http.authorizeHttpRequests((request) -> request
+					.antMatchers("/","/login","/about", "/swagger-ui.html").permitAll()
+					.anyRequest().authenticated()
+			).formLogin();
+			
+			return http.build();
+		}
+	}
+
+ 3) Explain the OAuth 2.0 Security 
+  +++++++++++++++++++++++++++++++++
+  -> SUppose one customer wants to access our application without providing its credentials to our application like userName and password
+  -> Then in this case we give signIn with Google, twitter, github etc  
+  -> here our application redirect to user to Google , where he allready signIn , he gives gives his userName and passsword there 
+  -> If Google sends the OAuth token to our applcaiton the user provide correct credentials and with that token the user access our application
+  -> Without providing the user credentials to our application
+  -> Here Google is all ready high more secure so we no need to use high security in our application 

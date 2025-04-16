@@ -1882,7 +1882,8 @@
                1)  git clone vs git fetch
                2)  git push  vs git pull
                3)  git stash   and git stash apply
-               5)  git merge  vs  got rebase
+               5)  git merge  vs  git rebase
+               5)  git revert vs  git restore(revert - discard staging area changes    |  restore - discaed local repo changes )
                git clone :
                -----------
                 -> It downloads entire repository (including its history) from the remote server to your local machine.
@@ -1931,6 +1932,11 @@
                      Manually edit the files to resolve conflicts.
                      Add the resolved files using git add.
                      Commit the changes using git commit.
+            When conflict happent what to do
+            --------------------------------
+             When we execute 'git pull' there is a chance of getting conflicts. 
+             We need to resolve the conflict and we should push the code without conflicts.
+
 
 
   41) Explain what is Agile Technology
@@ -3178,6 +3184,17 @@ Usage: Useful for triggering a graceful shutdown of the application.
      -> Note : service based company - devops team handle this
            product based company - developer will handle this
 
+  86) How do you get the log msg of your application    : url:5601
+   ----------------------------------------------
+   -> devops team provided us kibana url 
+   -> through the url kibana dashboard is open 
+   -> this is one web page 
+   -> we will  search or get all log msgs based on date and  time 
+   -> search : exception   time : last 15 minutes  -> get the exception
+     what is kibana port number 
+     -------------------------
+      port : 5601
+  -> to get the log msg of the application we can use splunk software also  , but it is commercial
   
   81) Java Arrays
    ++++++++++++++
